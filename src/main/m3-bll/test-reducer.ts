@@ -4,6 +4,6 @@ export type ActionTypes = typeof action
 const initState = {}
 export type StateType = typeof initState
 
-export const loginReducer = (state: StateType = initState, action: ActionTypes): StateType => {
+export const testReducer = (state: StateType = initState, action: ActionTypes): StateType => {
   return state
 }

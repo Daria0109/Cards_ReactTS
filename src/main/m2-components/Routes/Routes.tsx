@@ -14,7 +14,8 @@ export const PATH = {
   SIGNUP: '/signup',
   PROFILE: '/profile',
   UPDATE: '/update-password',
-  ENTER: '/enter-password'
+  ENTER: '/enter-password',
+  ERROR404: '/404'
 }
 
 export const Routes = () => {
@@ -27,8 +28,9 @@ export const Routes = () => {
         <Route path={PATH.PROFILE} render={() => <Profile/>}/>
         <Route path={PATH.UPDATE} render={() => <UpdatePassword/>}/>
         <Route path={PATH.ENTER} render={() => <EnterPassword/>}/>
+        <Route path={PATH.ERROR404} render={() => <Error404/>}/>
 
-        <Route render={() => <Error404/>}/>
+        <Route render={() => <Redirect to={PATH.ERROR404}/>}/>
       </Switch>
     </div>
 }
