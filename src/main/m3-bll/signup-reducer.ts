@@ -1,9 +1,79 @@
-const action = {type: 'SOME-ACTION'}
-export type ActionTypes = typeof action
+import { ThunkDispatch } from "redux-thunk"
+import { registrationAPI } from "../m4-dal/registrationAPI";
+import {AppRootStateType} from "./store";
 
-const initState = {}
-export type StateType = typeof initState
+enum sungUpAction {
+  email = 'email',
+  password = 'password',
+  auth = 'auth',
+  error = 'error'
+}
+export const ChangeEmail = (valueEmail: string) => ({type: sungUpAction.email, valueEmail}as const)
+export type changeEmailType = ReturnType<typeof ChangeEmail>
 
-export const signupReducer = (state: StateType = initState, action: ActionTypes): StateType => {
+export const ChangePassword = (valuePassword: string) => ({type: sungUpAction.password, valuePassword}as const)
+export type changePasswordType = ReturnType<typeof ChangePassword>
+export const getLoginMe = (auth: boolean) => ({type: sungUpAction.auth, auth }as const)
+export type authType = ReturnType<typeof getLoginMe>
+export const errorMessage = (error: string) => ({type: sungUpAction.error, error} as const)
+export type errorMessageType = ReturnType<typeof errorMessage>
+
+export  const getRegistrationMe = (registrationData: regData) => {
+  return async (dispatch: ThunkDispatch<AppRootStateType, unknown, ActionType>) => {
+    try {
+      const data = await registrationAPI.registrationMe(registrationData)
+      if (data.data.addedUser) {
+        dispatch(getLoginMe(true))
+          //console.log(data.data)
+      }
+    } catch (e){
+      dispatch(errorMessage(e.response.data.error))
+    } finally{  }
+  }
+}
+
+export type ActionType = changeEmailType | changePasswordType | authType | errorMessageType
+
+export type regData = {
+  email: string
+  password: string
+}
+const registrationInitState = {
+  email: '',
+  password: '',
+  authRegistration: false,
+  error: ''
+}
+export type RegistrationStateType = typeof registrationInitState
+
+export const signupReducer = (state: RegistrationStateType = registrationInitState, action: ActionType): RegistrationStateType => {
+  switch (action.type) {
+    case sungUpAction.email: {
+      return {
+        ...state,
+        email: action.valueEmail,
+        error: ''
+      }
+    }
+    case sungUpAction.password: {
+      return {
+        ...state,
+        password: action.valuePassword,
+        error: ''
+      }
+    }
+    case sungUpAction.auth: {
+      return {
+        ...state,
+        authRegistration: action.auth
+      }
+    }
+    case sungUpAction.error: {
+      return {
+        ...state,
+        error: action.error
+      }
+    }
+  }
   return state
 }
