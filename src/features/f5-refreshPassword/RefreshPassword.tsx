@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const UpdatePassword = () => {
+export const RefreshPassword = () => {
   return <>
     UpdatePassword
   </>
