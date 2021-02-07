@@ -13,8 +13,8 @@ export const PATH = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   PROFILE: '/profile',
-  UPDATE: '/update-password',
-  ENTER: '/enter-password',
+  UPDATE: '/refresh',
+  ENTER: '/set',
   ERROR404: '/404'
 }
 
