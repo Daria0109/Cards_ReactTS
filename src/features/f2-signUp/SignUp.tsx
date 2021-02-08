@@ -9,6 +9,7 @@ export const SignUp = () => {
   const password = useSelector<AppRootStateType, string>(state=> state.signUp.password)
   const auth = useSelector<AppRootStateType, boolean>(state=> state.signUp.authRegistration)
   const error = useSelector<AppRootStateType, string>(state=> state.signUp.error)
+  const status = useSelector<AppRootStateType, string>(state=> state.app.status)
   const dispatch = useDispatch()
 
   const changeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +29,7 @@ export const SignUp = () => {
 
 
   return <div>
+    {status === 'loading' && <div>Please wait</div>}
     <input type="text" placeholder={"email"} value={email} onChange={changeEmail} />
     <input type="text" placeholder={"password"} value={password} onChange={changePassword}/>
     <button onClick={onSubmit}>Sing Up</button>
