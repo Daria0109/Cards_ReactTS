@@ -3,7 +3,7 @@ import {loginReducer} from './login-reducer';
 import {profileReducer} from './profile-reducer';
 import {testReducer} from './test-reducer';
 import {signupReducer} from './signup-reducer';
-import {enterPasswordReducer} from './enterPassword-reducer';
+import {setPasswordReducer} from './setPassword-reducer';
 import {refreshPasswordReducer} from './refreshPassword-reducer';
 import thunk from 'redux-thunk'
 
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   login: loginReducer,
   profile: profileReducer,
   signUp: signupReducer,
-  enterPassword: enterPasswordReducer,
+  enterPassword: setPasswordReducer,
   updatePassword: refreshPasswordReducer
 })
 

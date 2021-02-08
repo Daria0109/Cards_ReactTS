@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect, Route, Switch } from 'react-router-dom';
+import {Redirect, Route, Switch, useParams} from 'react-router-dom';
 import {Test} from '../../../features/f0-test/Test';
 import {Login} from '../../../features/f1-login/Login';
 import {SignUp} from '../../../features/f2-signUp/SignUp';
@@ -14,11 +14,13 @@ export const PATH = {
   SIGNUP: '/signup',
   PROFILE: '/profile',
   REFRESH: '/refresh',
-  SET: '/set',
+  SET: '/set/:token',
   ERROR404: '/404'
 }
 
+
 export const Routes = () => {
+
   return <div>
       <Switch>
         <Route path={"/"} exact render={() => <Redirect to={PATH.LOGIN}/>}/>
@@ -27,6 +29,7 @@ export const Routes = () => {
         <Route path={PATH.SIGNUP} render={() => <SignUp/>}/>
         <Route path={PATH.PROFILE} render={() => <Profile/>}/>
         <Route path={PATH.REFRESH} render={() => <RefreshPassword/>}/>
+        <Route path={'/set'} exact render={() => <SetPassword/>}/>
         <Route path={PATH.SET} render={() => <SetPassword/>}/>
         <Route path={PATH.ERROR404} render={() => <Error404/>}/>
 

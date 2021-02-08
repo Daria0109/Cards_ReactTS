@@ -14,11 +14,11 @@ export const RefreshPassword = () => {
   const [emailValue, setEmailValue] = useState('gooduser@grr.la')
 
   const changeEmailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setError(null))
     setEmailValue(e.currentTarget.value)
   }
   const sendEmailHandler = () => {
     dispatch(sendEmail(emailValue))
+    dispatch(setError(null))
   }
 
   return <>
@@ -36,7 +36,7 @@ export const RefreshPassword = () => {
     {isEmailSent &&
     <div className={s.sent}>
       <p>Success!</p>
-      <p>Check your email!</p>
+      <p>The link was sent to your email!</p>
     </div>}
 
     {error &&
