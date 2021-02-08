@@ -6,15 +6,22 @@ import {AppRootStateType} from "./store";
 enum sungUpAction {
 	email = 'email',
 	password = 'password',
+	confirm = 'confirm',
 	auth = 'auth',
 	error = 'error'
 }
 export const ChangeEmail = (valueEmail: string) => ({type: sungUpAction.email, valueEmail} as const)
 export type changeEmailType = ReturnType<typeof ChangeEmail>
+
 export const ChangePassword = (valuePassword: string) => ({type: sungUpAction.password, valuePassword} as const)
 export type changePasswordType = ReturnType<typeof ChangePassword>
+
+export const ConfirmPassword = (confirmPassword: string) => ({type: sungUpAction.confirm, confirmPassword} as const)
+export type confirmPasswordType = ReturnType<typeof ConfirmPassword>
+
 export const getLoginMe = (auth: boolean) => ({type: sungUpAction.auth, auth} as const)
 export type authType = ReturnType<typeof getLoginMe>
+
 export const errorMessage = (error: string) => ({type: sungUpAction.error, error} as const)
 export type errorMessageType = ReturnType<typeof errorMessage>
 
@@ -34,7 +41,13 @@ export const getRegistrationMe = (registrationData: regData) => {
 		}
 	}
 }
-export type ActionType = changeEmailType | changePasswordType | authType | errorMessageType | SetAppStatusActionType
+export type ActionType = changeEmailType
+	| changePasswordType
+	| authType
+	| errorMessageType
+	| SetAppStatusActionType
+	| confirmPasswordType
+
 export type regData = {
 	email: string
 	password: string
@@ -42,6 +55,7 @@ export type regData = {
 const registrationInitState = {
 	email: '',
 	password: '',
+	confirmPassword: '',
 	authRegistration: false,
 	error: ''
 }
@@ -59,6 +73,13 @@ export const signupReducer = (state: RegistrationStateType = registrationInitSta
 			return {
 				...state,
 				password: action.valuePassword,
+				error: ''
+			}
+		}
+		case sungUpAction.confirm: {
+			return {
+				...state,
+				confirmPassword: action.confirmPassword,
 				error: ''
 			}
 		}
