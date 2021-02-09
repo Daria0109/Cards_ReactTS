@@ -40,7 +40,7 @@ export const SignUp = () => {
 
 
   return <div className={style.wrapperSingUp}>
-    {status === 'loading' && <div>Please wait</div>}
+    {status === 'loading' && <div>Please wait...</div>}
     <input type="text" placeholder={"email"} value={email} onChange={changeEmailHandler} />
     <input type="text" placeholder={"password"} value={password} onChange={changePasswordHandler}/>
     <input type="text" placeholder={"Confirm password"} value={confirmPassword} onChange={confirmPasswordHandler}/>
@@ -49,7 +49,6 @@ export const SignUp = () => {
       sergdiag19@gmail.com
       11111111
     </div>
-
-    {error && <div>{error}</div>}
+    {error && <div className={style.error}>{error}</div>}
   </div>
 }
