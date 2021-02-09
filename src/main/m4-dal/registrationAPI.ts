@@ -1,5 +1,5 @@
 import axios from "axios";
-import {RegData} from '../m3-bll/signup-reducer';
+import {RegDataType} from '../m3-bll/signup-reducer';
 
 const instance = axios.create({
 	baseURL: "http://localhost:7542/2.0/",
@@ -7,7 +7,7 @@ const instance = axios.create({
 })
 
 export const registrationAPI = {
-	registrationMe(registrationData: RegData) {
+	registrationMe(registrationData: RegDataType) {
 		return instance.post("/auth/register", registrationData)
 			.then(res => res)
 	}

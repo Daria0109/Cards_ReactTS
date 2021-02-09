@@ -1,103 +1,69 @@
-import {ThunkDispatch} from "redux-thunk";
-import {AppRootStateType} from "./store";
-import {loginAPI} from "../m4-dal/loginAPI";
+import {loginAPI} from '../m4-dal/loginAPI';
+import {Dispatch} from 'redux';
 
-enum loginAction {
-  email = 'email',
-  password = 'password',
-  rememberMe = 'rememberMe',
-  auth = 'auth',
-  error = 'error'
+// A c t i o n s
+export const setIsLoggedIn = (isLogged: boolean) => ({
+  type: 'cards/login/SET-IS-LOGGED-IN', isLogged
+} as const)
+export const setError = (errorText: string) => ({
+  type: 'cards/login/SET-ERROR', errorText
+} as const)
+export const setUserName = (userName: string) => ({
+  type: 'cards/login/SET-USER-NAME', userName
+} as const)
+export type LoginActionsType = ReturnType<typeof setIsLoggedIn>
+  | ReturnType<typeof setError>
+  | ReturnType<typeof setUserName>
+
+
+// S t a t e
+const loginInitState = {
+  isLoggedIn: false,
+  error: null as string | null,
+  userName: null as string | null
 }
+export type LoginStateType = typeof loginInitState
 
 
-export const ChangeEmailLogin = (valueEmail: string) => ({type: loginAction.email, valueEmail} as const)
-export type changeEmailType = ReturnType<typeof ChangeEmailLogin>
-
-export const ChangePasswordLogin = (valuePassword: string) => ({type: loginAction.password, valuePassword} as const)
-export type changePasswordType = ReturnType<typeof ChangePasswordLogin>
-
-export const ChangeRememberMeLogin = (checkedRememberMe: boolean) => ({type: loginAction.rememberMe, checkedRememberMe} as const)
-export type changeRememberMeType = ReturnType<typeof ChangeRememberMeLogin>
-
-export const getProfileMe = (auth: boolean) => ({type: loginAction.auth, auth} as const)
-export type authLoginType = ReturnType<typeof getProfileMe>
-
-export const errorMessage = (error: string) => ({type: loginAction.error, error} as const)
-export type errorMessageType = ReturnType<typeof errorMessage>
-
-export type ActionType = changeEmailType
-  | changePasswordType
-  | changeRememberMeType
-  | authLoginType
-  | errorMessageType
-
-export const loginMe = (loginData: loginData) => {
-  return async (dispatch: ThunkDispatch<AppRootStateType, unknown, ActionType>) => {
-    try {
-      const data = await loginAPI.login(loginData)
-      console.log(data.data)
-      dispatch(getProfileMe(true))
-    }
-    catch (e) {
-      // const error = e.response
-      //   ? e.response.data.error
-      //   : (e.message + ', more details in the console');
-        dispatch(errorMessage(e.response.data.error))
-    }
-    finally {
-
-    }
-  }
-}
-
-export type loginData = {
+// T h u n k
+export type LoginDataType = {
   email: string
   password: string
   rememberMe: boolean
 }
-
-const loginInitState = {
-  email: '',
-  password: '',
-  rememberMe: false,
-  auth: false,
-  error: ''
+export const loginMe = (loginData: LoginDataType) => {
+  return async (dispatch: Dispatch<LoginActionsType>) => {
+    try {
+      const data = await loginAPI.login(loginData)
+      console.log(data)
+      dispatch(setIsLoggedIn(true))
+    } catch (error) {
+      dispatch(setError(error.response ? error.response.data.error
+        : error.message ? error.message
+          : 'Some error occurred'))
+    } finally {}
+  }
 }
-export type StateType = typeof loginInitState
 
-export const loginReducer = (state: StateType = loginInitState, action: ActionType): StateType => {
-  switch (action.type){
-    case loginAction.email: {
+// R e d u c e r
+export const loginReducer = (state: LoginStateType = loginInitState, action: LoginActionsType): LoginStateType => {
+  switch (action.type) {
+    case 'cards/login/SET-ERROR':
       return {
         ...state,
-        email: action.valueEmail,
+        error: action.errorText
       }
-    }
-    case loginAction.password: {
+    case 'cards/login/SET-IS-LOGGED-IN':
       return {
         ...state,
-        password: action.valuePassword,
+        isLoggedIn: action.isLogged
       }
-    }
-    case loginAction.rememberMe: {
+    case 'cards/login/SET-USER-NAME':
       return {
         ...state,
-        rememberMe: action.checkedRememberMe
+        userName: action.userName
       }
-    }
-    case loginAction.error: {
-      return {
-        ...state,
-        error: action.error
-      }
-    }
-    case loginAction.auth: {
-      return {
-        ...state,
-        auth: action.auth
-      }
-    }
-}
-  return state
+    default:
+      return state
+  }
 }

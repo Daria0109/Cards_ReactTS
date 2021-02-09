@@ -58,7 +58,7 @@ export const SignUp = () => {
     </div>
     {validateError && <div className={style.error}>{validateError}</div>}
     <div>
-    <NavLink to={PATH.LOGIN} className={s.link} activeClassName={s.active}>Login</NavLink>
+    <NavLink to={PATH.LOGIN}>Login</NavLink>
     </div>
   </div>
 }

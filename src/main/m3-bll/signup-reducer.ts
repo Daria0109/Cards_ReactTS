@@ -21,11 +21,11 @@ export type RegistrationStateType = typeof RegistrationInitState
 
 
 // T h u n k
-export type RegData = {
+export type RegDataType = {
   email: string
   password: string
 }
-export const signUp = (registrationData: RegData) => {
+export const signUp = (registrationData: RegDataType) => {
   return async (dispatch: Dispatch<SignUpActionType | SetAppStatusActionType>) => {
     try {
       dispatch(setAppStatusAC('loading'))

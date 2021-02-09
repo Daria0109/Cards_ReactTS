@@ -1,12 +1,12 @@
 import axios from "axios";
-import {loginData} from "../m3-bll/login-reducer";
+import {LoginDataType} from '../m3-bll/login-reducer';
 
 const instance = axios.create({
 	baseURL: "http://localhost:7542/2.0/",
 	//baseURL: "https://neko-back.herokuapp.com/2.0",
 })
 
-type responseLoginType = {
+type ResponseLoginType = {
 	created: string
 	email: string
 	isAdmin: boolean
@@ -21,6 +21,14 @@ type responseLoginType = {
 	_id: string
 }
 
+
+export const loginAPI = {
+	login(loginData: LoginDataType) {
+		return instance.post<ResponseLoginType>("auth/login", loginData)
+			.then(res => res.data)
+	}
+}
+
 // created: "2021-02-07T19:05:49.207Z"
 // email: "sergdiag19@gmail.com"
 // isAdmin: false
@@ -33,9 +41,3 @@ type responseLoginType = {
 // verified: false
 // __v: 0
 // _id: "60203a0d5c268c2adcce842a"
-
-export const loginAPI = {
-	login(loginData: loginData) {
-		return instance.post<responseLoginType>("auth/login", loginData)
-	}
-}
