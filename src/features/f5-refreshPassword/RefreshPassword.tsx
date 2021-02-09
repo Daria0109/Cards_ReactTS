@@ -7,8 +7,8 @@ import {AppRootStateType} from '../../main/m3-bll/store';
 import s from './RefreshPassword.module.css'
 
 export const RefreshPassword = () => {
-  const isEmailSent = useSelector<AppRootStateType, boolean>(state => state.updatePassword.isEmailSent)
-  const error = useSelector<AppRootStateType, string | null>(state => state.updatePassword.error)
+  const isEmailSent = useSelector<AppRootStateType, boolean>(state => state.refreshPassword.isEmailSent)
+  const error = useSelector<AppRootStateType, string | null>(state => state.refreshPassword.error)
   const dispatch = useDispatch();
 
   const [emailValue, setEmailValue] = useState('gooduser@grr.la')
@@ -21,14 +21,13 @@ export const RefreshPassword = () => {
     dispatch(setError(null))
   }
 
-  return <>
-    Refresh Password
+  return <div className={s.wrapper}>
     {!isEmailSent &&
     <div className={s.editBlock}>
-      <div>
+      <div className={s.itemForm}>
         <input placeholder='Enter email...' value={emailValue} onChange={changeEmailHandler}/>
       </div>
-      <div>
+      <div className={s.itemForm}>
         <button onClick={sendEmailHandler}>Send</button>
       </div>
     </div>}
@@ -45,5 +44,5 @@ export const RefreshPassword = () => {
     <div>
     <NavLink to={PATH.LOGIN}>Login</NavLink>
     </div>
-  </>
+  </div>
 }

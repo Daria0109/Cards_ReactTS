@@ -10,8 +10,8 @@ type ParamsType = {
 }
 
 export const SetPassword = () => {
-  const isPasswordChanged = useSelector<AppRootStateType, boolean>(state => state.enterPassword.isPasswordChanged)
-  const requestError = useSelector<AppRootStateType, string | null>(state => state.enterPassword.error)
+  const isPasswordChanged = useSelector<AppRootStateType, boolean>(state => state.setPassword.isPasswordChanged)
+  const requestError = useSelector<AppRootStateType, string | null>(state => state.setPassword.error)
   const dispatch = useDispatch();
 
   const {token} = useParams<ParamsType>()
@@ -37,6 +37,10 @@ export const SetPassword = () => {
       setValidateError('The password values must be equal to!')
       return
     }
+    if (!token) {
+      setValidateError('Send your email on Refresh Page!')
+      return
+    }
     if (token && pass1 === pass2) {
       dispatch(setPassword(pass1, token))
       setValidateError('')
@@ -48,13 +52,12 @@ export const SetPassword = () => {
     return <Redirect to={'/login'}/>
   }
 
-  return <>
-    Set new Password
-    <div>
+  return <div className={s.wrapper}>
+    <div className={s.itemForm}>
       <input placeholder='New password...' value={passValue1} onChange={changePass1Handler}/>
     </div>
-    <div>
-      <input placeholder='New password...' value={passValue2} onChange={changePass2Handler}/>
+    <div className={s.itemForm}>
+      <input placeholder='Confirm password...' value={passValue2} onChange={changePass2Handler}/>
     </div>
 
     {validateError &&
@@ -67,8 +70,8 @@ export const SetPassword = () => {
       {requestError}
     </div>}
 
-    <div>
+    <div className={s.itemForm}>
       <button onClick={setPassHandler}>Set new Password</button>
     </div>
-  </>
+  </div>
 }

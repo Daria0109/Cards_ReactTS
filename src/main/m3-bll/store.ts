@@ -13,8 +13,8 @@ const rootReducer = combineReducers({
   login: loginReducer,
   profile: profileReducer,
   signUp: signupReducer,
-  enterPassword: setPasswordReducer,
-  updatePassword: refreshPasswordReducer,
+  setPassword: setPasswordReducer,
+  refreshPassword: refreshPasswordReducer,
   app: appReducer
 })
 

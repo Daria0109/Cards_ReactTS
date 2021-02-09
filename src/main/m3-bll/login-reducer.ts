@@ -5,7 +5,7 @@ import {Dispatch} from 'redux';
 export const setIsLoggedIn = (isLogged: boolean) => ({
   type: 'cards/login/SET-IS-LOGGED-IN', isLogged
 } as const)
-export const setError = (errorText: string) => ({
+export const setError = (errorText: string | null) => ({
   type: 'cards/login/SET-ERROR', errorText
 } as const)
 export const setUserName = (userName: string) => ({

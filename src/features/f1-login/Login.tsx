@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import style from '../f2-signUp/SingUp.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {loginMe} from '../../main/m3-bll/login-reducer';
+import {loginMe, setError} from '../../main/m3-bll/login-reducer';
 import {NavLink, Redirect} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
-import s from '../../main/m2-components/Header/Header.module.css';
+import s from './Login.module.css'
+
 
 export const Login = () => {
   const [email, setEmail] = useState('')
@@ -27,6 +27,7 @@ export const Login = () => {
   }
   const onSubmit = () => {
     dispatch(loginMe({email, password, rememberMe}))
+    dispatch(setError(null))
   }
 
   if (isLoggedIn) {
@@ -34,22 +35,24 @@ export const Login = () => {
   }
 
   return (
-    <div className={style.wrapperSingUp}>
-      <div>
+    <div className={s.wrapperLogin}>
+      <div className={s.itemForm}>
         <input type="text" placeholder={'email'} value={email} onChange={changeEmailHandler}/>
       </div>
-      <div>
+      <div className={s.itemForm}>
         <input type="text" placeholder={'password'} value={password} onChange={changePasswordHandler}/>
       </div>
-      <div>
+      <div className={s.itemForm}>
         <input type="checkbox" checked={rememberMe}
                onChange={changeRememberMeHandler}/><span>RememberMe</span>
       </div>
-      {error && <div className={style.error}>{error}</div>}
+      {error && <div className={s.error}>{error}</div>}
       <div>
       <NavLink to={PATH.REFRESH}>Forget password?</NavLink>
       </div>
+      <div className={s.itemForm}>
       <button onClick={onSubmit}>Log In</button>
+      </div>
       <div>
       <NavLink to={PATH.SIGNUP}>Sign Up</NavLink>
       </div>

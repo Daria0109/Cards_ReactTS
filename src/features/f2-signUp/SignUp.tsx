@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import { AppRootStateType } from '../../main/m3-bll/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from '../../main/m3-bll/store';
 import {NavLink, Redirect} from 'react-router-dom';
-import style from "./SingUp.module.css"
-import {signUp} from '../../main/m3-bll/signup-reducer';
+import s from './SingUp.module.css'
+import {setError, signUp} from '../../main/m3-bll/signup-reducer';
 import {PATH} from '../../main/m2-components/Routes/Routes';
-import s from '../../main/m2-components/Header/Header.module.css';
 
 export const SignUp = () => {
   const [email, setEmail] = useState('')
@@ -13,8 +12,9 @@ export const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [validateError, setValidateError] = useState('')
 
-  const isSignUp = useSelector<AppRootStateType, boolean>(state=> state.signUp.isSignUp)
-  const status = useSelector<AppRootStateType, string>(state=> state.app.status)
+  const isSignUp = useSelector<AppRootStateType, boolean>(state => state.signUp.isSignUp)
+  const requestError = useSelector<AppRootStateType,string | null>(state => state.signUp.error)
+  const status = useSelector<AppRootStateType, string>(state => state.app.status)
   const dispatch = useDispatch()
 
   const changeEmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,30 +35,33 @@ export const SignUp = () => {
     }
     if (pass1 === pass2) {
       dispatch(signUp({email, password}))
+      setValidateError('')
+      dispatch(setError(null))
     }
   }
 
-  if( isSignUp ) {
+  if (isSignUp) {
     return <Redirect to={'/login'}/>
   }
 
-  return <div className={style.wrapperSingUp}>
+  return <div className={s.wrapperSingUp}>
     {status === 'loading' && <div>Please wait...</div>}
-    <div>
-    <input type="text" placeholder={"email"} value={email} onChange={changeEmailHandler} />
+    <div className={s.itemForm}>
+      <input type="text" placeholder={'email'} value={email} onChange={changeEmailHandler}/>
+    </div>
+    <div className={s.itemForm}>
+      <input type="text" placeholder={'password'} value={password} onChange={changePasswordHandler}/>
+    </div>
+    <div className={s.itemForm}>
+      <input type="text" placeholder={'Confirm password'} value={confirmPassword} onChange={confirmPasswordHandler}/>
+    </div>
+    {validateError && <div className={s.error}>{validateError}</div>}
+    {requestError && <div className={s.error}>{requestError}</div>}
+    <div className={s.itemForm}>
+      <button onClick={onSubmit}>Sing Up</button>
     </div>
     <div>
-    <input type="text" placeholder={"password"} value={password} onChange={changePasswordHandler}/>
-    </div>
-    <div>
-    <input type="text" placeholder={"Confirm password"} value={confirmPassword} onChange={confirmPasswordHandler}/>
-    </div>
-    <div>
-    <button onClick={onSubmit}>Sing Up</button>
-    </div>
-    {validateError && <div className={style.error}>{validateError}</div>}
-    <div>
-    <NavLink to={PATH.LOGIN}>Login</NavLink>
+      <NavLink to={PATH.LOGIN}>Login</NavLink>
     </div>
   </div>
 }

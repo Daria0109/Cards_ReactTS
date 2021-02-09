@@ -6,7 +6,7 @@ import {Dispatch} from 'redux';
 export const setIsSignUp = (isSignUp: boolean) => ({
   type: 'cards/signUp/SET-IS-SIGN-UP', isSignUp
 } as const)
-export const setError = (errorText: string) => ({
+export const setError = (errorText: string | null) => ({
   type: 'cards/signUp/SET-ERROR', errorText
 } as const)
 export type SignUpActionType = ReturnType<typeof setIsSignUp>
