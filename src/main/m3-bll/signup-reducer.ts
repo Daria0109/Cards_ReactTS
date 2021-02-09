@@ -1,100 +1,62 @@
-import {ThunkDispatch} from "redux-thunk"
-import {registrationAPI} from "../m4-dal/registrationAPI";
-import {setAppStatusAC, SetAppStatusActionType} from "./app-reducer";
-import {AppRootStateType} from "./store";
+import {registrationAPI} from '../m4-dal/registrationAPI';
+import {setAppStatusAC, SetAppStatusActionType} from './app-reducer';
+import {Dispatch} from 'redux';
 
-enum sungUpAction {
-	email = 'email',
-	password = 'password',
-	confirm = 'confirm',
-	auth = 'auth',
-	error = 'error'
+// A c t i o n s
+export const setIsSignUp = (isSignUp: boolean) => ({
+  type: 'cards/signUp/SET-IS-SIGN-UP', isSignUp
+} as const)
+export const setError = (errorText: string) => ({
+  type: 'cards/signUp/SET-ERROR', errorText
+} as const)
+export type SignUpActionType = ReturnType<typeof setIsSignUp>
+  | ReturnType<typeof setError>
+
+// S t a t e
+const RegistrationInitState = {
+  isSignUp: false,
+  error: null as string | null
 }
-export const ChangeEmail = (valueEmail: string) => ({type: sungUpAction.email, valueEmail} as const)
-export type changeEmailType = ReturnType<typeof ChangeEmail>
-
-export const ChangePassword = (valuePassword: string) => ({type: sungUpAction.password, valuePassword} as const)
-export type changePasswordType = ReturnType<typeof ChangePassword>
-
-export const ConfirmPassword = (confirmPassword: string) => ({type: sungUpAction.confirm, confirmPassword} as const)
-export type confirmPasswordType = ReturnType<typeof ConfirmPassword>
-
-export const getLoginMe = (auth: boolean) => ({type: sungUpAction.auth, auth} as const)
-export type authType = ReturnType<typeof getLoginMe>
-
-export const errorMessage = (error: string) => ({type: sungUpAction.error, error} as const)
-export type errorMessageType = ReturnType<typeof errorMessage>
+export type RegistrationStateType = typeof RegistrationInitState
 
 
-export const getRegistrationMe = (registrationData: regData) => {
-	return async (dispatch: ThunkDispatch<AppRootStateType, unknown, ActionType>) => {
-		try {
-			dispatch(setAppStatusAC("loading"))
-			const data = await registrationAPI.registrationMe(registrationData)
-			if (data.data.addedUser) {
-				dispatch(getLoginMe(true))
-			}
-		} catch (e) {
-			dispatch(errorMessage(e.response.data.error))
-		} finally {
-			dispatch(setAppStatusAC("succeeded"))
-		}
-	}
+// T h u n k
+export type RegData = {
+  email: string
+  password: string
 }
-export type ActionType = changeEmailType
-	| changePasswordType
-	| authType
-	| errorMessageType
-	| SetAppStatusActionType
-	| confirmPasswordType
+export const signUp = (registrationData: RegData) => {
+  return async (dispatch: Dispatch<SignUpActionType | SetAppStatusActionType>) => {
+    try {
+      dispatch(setAppStatusAC('loading'))
+      await registrationAPI.registrationMe(registrationData)
+      dispatch(setIsSignUp(true))
+    } catch (error) {
+      dispatch(setError(error.response ? error.response.data.error
+				: error.message ? error.message
+					: 'Some error occurred'))
+    } finally {
+      dispatch(setAppStatusAC('succeeded'))
+    }
+  }
+}
 
-export type regData = {
-	email: string
-	password: string
-}
-const registrationInitState = {
-	email: '',
-	password: '',
-	confirmPassword: '',
-	authRegistration: false,
-	error: ''
-}
-export type RegistrationStateType = typeof registrationInitState
-export const signupReducer = (state: RegistrationStateType = registrationInitState, action: ActionType): RegistrationStateType => {
-	switch (action.type) {
-		case sungUpAction.email: {
-			return {
-				...state,
-				email: action.valueEmail,
-				error: ''
-			}
-		}
-		case sungUpAction.password: {
-			return {
-				...state,
-				password: action.valuePassword,
-				error: ''
-			}
-		}
-		case sungUpAction.confirm: {
-			return {
-				...state,
-				confirmPassword: action.confirmPassword,
-				error: ''
-			}
-		}
-		case sungUpAction.auth: {
-			return {
-				...state,
-				authRegistration: action.auth
-			}
-		}
-		case sungUpAction.error: {
-			return {
-				...state,
-				error: action.error
-			}
-		}
-	}
-	return state
+// R e d u c e r
+export const signupReducer = (state: RegistrationStateType = RegistrationInitState, action: SignUpActionType): RegistrationStateType => {
+  switch (action.type) {
+    case 'cards/signUp/SET-IS-SIGN-UP': {
+      return {
+        ...state,
+        isSignUp: action.isSignUp
+      }
+    }
+    case 'cards/signUp/SET-ERROR': {
+      return {
+        ...state,
+        error: action.errorText
+      }
+    }
+    default:
+      return state
+  }
 }

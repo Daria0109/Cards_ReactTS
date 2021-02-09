@@ -1,15 +1,49 @@
 import axios from "axios";
-import {regData} from "../m3-bll/signup-reducer";
+import {RegData} from '../m3-bll/signup-reducer';
 
 const instance = axios.create({
 	baseURL: "http://localhost:7542/2.0/",
 	//baseURL: "https://neko-back.herokuapp.com/2.0",
 })
 
-type responseData<T> = {
-	addedUser: {}
-	error: T
+export const registrationAPI = {
+	registrationMe(registrationData: RegData) {
+		return instance.post("/auth/register", registrationData)
+			.then(res => res)
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// type responseData<T> = {
+// 	addedUser: {}
+// 	error: T
+// }
 // {"error":"not valid email/password /ᐠ-ꞈ-ᐟ\\",
 // 	"in":"createUser",
 // 	"isEmailValid":true,
@@ -44,9 +78,3 @@ type responseData<T> = {
 // request: XMLHttpRequest {readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, onreadystatechange: ƒ, …}
 // status: 201
 // statusText: "Created"
-
-export const registrationAPI = {
-	registrationMe(registrationData: regData) {
-		return instance.post<responseData<{ error: string }>>("/auth/register", registrationData)
-	}
-}
