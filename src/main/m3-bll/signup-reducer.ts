@@ -1,5 +1,5 @@
 import {registrationAPI} from '../m4-dal/registrationAPI';
-import {setAppStatusAC, SetAppStatusActionType} from './app-reducer';
+import {AppActionsType, setAppStatus,} from './app-reducer';
 import {Dispatch} from 'redux';
 
 // A c t i o n s
@@ -26,17 +26,18 @@ export type RegDataType = {
   password: string
 }
 export const signUp = (registrationData: RegDataType) => {
-  return async (dispatch: Dispatch<SignUpActionType | SetAppStatusActionType>) => {
+  return async (dispatch: Dispatch<SignUpActionType | AppActionsType>) => {
     try {
-      dispatch(setAppStatusAC('loading'))
-      await registrationAPI.registrationMe(registrationData)
+      dispatch(setAppStatus('loading'))
+      const data = await registrationAPI.registrationMe(registrationData)
       dispatch(setIsSignUp(true))
+      console.log(data)
     } catch (error) {
       dispatch(setError(error.response ? error.response.data.error
 				: error.message ? error.message
 					: 'Some error occurred'))
     } finally {
-      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setAppStatus('succeeded'))
     }
   }
 }

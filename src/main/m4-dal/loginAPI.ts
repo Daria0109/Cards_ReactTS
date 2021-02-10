@@ -3,10 +3,11 @@ import {LoginDataType} from '../m3-bll/login-reducer';
 
 const instance = axios.create({
 	baseURL: "http://localhost:7542/2.0/",
-	//baseURL: "https://neko-back.herokuapp.com/2.0",
+	// baseURL: "https://neko-back.herokuapp.com/2.0/",
+	withCredentials: true,
 })
 
-type ResponseLoginType = {
+type ResponseUserType = {
 	created: string
 	email: string
 	isAdmin: boolean
@@ -24,10 +25,17 @@ type ResponseLoginType = {
 
 export const loginAPI = {
 	login(loginData: LoginDataType) {
-		return instance.post<ResponseLoginType>("auth/login", loginData)
+		return instance.post<ResponseUserType>("auth/login", loginData)
+			.then(res => res.data)
+	},
+	me() {
+		return instance.post<ResponseUserType>("auth/me", {})
 			.then(res => res.data)
 	}
 }
+
+
+
 
 // created: "2021-02-07T19:05:49.207Z"
 // email: "sergdiag19@gmail.com"

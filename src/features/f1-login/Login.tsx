@@ -1,20 +1,26 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {loginMe, setError} from '../../main/m3-bll/login-reducer';
+import {loginMe} from '../../main/m3-bll/login-reducer';
 import {NavLink, Redirect} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import s from './Login.module.css'
+import {setError, setIsInitializedProfile} from '../../main/m3-bll/app-reducer';
 
 
 export const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('abcabc@grr.la')
+  const [password, setPassword] = useState('8888888888')
   const [rememberMe, setRememberMe] = useState(false)
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
   const error = useSelector<AppRootStateType, string | null>(state => state.login.error)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setIsInitializedProfile(false))
+    dispatch(setError(null))
+  }, [])
 
   const changeEmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value)

@@ -1,0 +1,16 @@
+.loading {
+    width: max-content;
+    margin: 100px auto;
+    text-align: center;
+}
+.profile {
+    text-align: center;
+    width: max-content;
+    margin: 100px auto;
+    font-size: 36px;
+    color: #0c2143;
+}
+.profile span {
+    color: #cc1b08;
+    font-weight: bold;
+}
