@@ -5,7 +5,7 @@ import {loginMe} from '../../main/m3-bll/login-reducer';
 import {NavLink, Redirect} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import s from './Login.module.css'
-import {setError, setIsInitializedProfile} from '../../main/m3-bll/app-reducer';
+import {setError, setIsInitializedProfile} from '../../main/m3-bll/profile-reducer';
 
 
 export const Login = () => {
@@ -14,12 +14,16 @@ export const Login = () => {
   const [rememberMe, setRememberMe] = useState(false)
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+  const isInitialized = useSelector<AppRootStateType, boolean>(state => state.profile.isInitialized)
+  const userName = useSelector<AppRootStateType, string | null>(state => state.profile.userName)
   const error = useSelector<AppRootStateType, string | null>(state => state.login.error)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(setIsInitializedProfile(false))
-    dispatch(setError(null))
+    if (!userName) {
+      dispatch(setIsInitializedProfile(false))
+      dispatch(setError(null))
+    }
   }, [])
 
   const changeEmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +40,7 @@ export const Login = () => {
     dispatch(setError(null))
   }
 
-  if (isLoggedIn) {
+  if (isLoggedIn && !isInitialized) {
     return <Redirect to={'/profile'}/>
   }
 

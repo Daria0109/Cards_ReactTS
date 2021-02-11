@@ -1,6 +1,6 @@
 import {loginAPI} from '../m4-dal/loginAPI';
 import {Dispatch} from 'redux';
-import {ProfileActionsTypes, setUserName} from './profile-reducer';
+import {ProfileActionsTypes, setIsInitializedProfile, setUserName} from './profile-reducer';
 
 // A c t i o n s
 export const setIsLoggedIn = (isLogged: boolean) => ({
@@ -9,7 +9,6 @@ export const setIsLoggedIn = (isLogged: boolean) => ({
 export const setError = (errorText: string | null) => ({
   type: 'cards/login/SET-ERROR', errorText
 } as const)
-
 export type LoginActionsType = ReturnType<typeof setIsLoggedIn>
   | ReturnType<typeof setError>
 
@@ -18,7 +17,6 @@ export type LoginActionsType = ReturnType<typeof setIsLoggedIn>
 const loginInitState = {
   isLoggedIn: false,
   error: null as string | null,
-
 }
 export type LoginStateType = typeof loginInitState
 
@@ -40,7 +38,22 @@ export const loginMe = (loginData: LoginDataType) => {
       dispatch(setError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
-    } finally {}
+    }
+  }
+}
+export const logout = () => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const data = await loginAPI.logout()
+      dispatch(setIsLoggedIn(false))
+      dispatch(setIsInitializedProfile(false))
+      dispatch(setUserName(null))
+      console.log(data)
+    } catch (error) {
+      dispatch(setError(error.response ? error.response.data.error
+        : error.message ? error.message
+          : 'Some error occurred'))
+    }
   }
 }
 
@@ -57,7 +70,7 @@ export const loginReducer = (state: LoginStateType = loginInitState, action: Log
         ...state,
         isLoggedIn: action.isLogged
       }
-    default:
+       default:
       return state
   }
 }
