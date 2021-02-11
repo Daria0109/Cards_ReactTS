@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect, Route, Switch, useParams} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import {Test} from '../../../features/f0-test/Test';
 import {Login} from '../../../features/f1-login/Login';
 import {SignUp} from '../../../features/f2-signUp/SignUp';
