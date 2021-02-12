@@ -70,7 +70,7 @@ export const loginReducer = (state: LoginStateType = loginInitState, action: Log
         ...state,
         isLoggedIn: action.isLogged
       }
-       default:
+    default:
       return state
   }
 }

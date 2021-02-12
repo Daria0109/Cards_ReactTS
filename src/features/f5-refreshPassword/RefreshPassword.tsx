@@ -11,7 +11,7 @@ export const RefreshPassword = () => {
   const error = useSelector<AppRootStateType, string | null>(state => state.refreshPassword.error)
   const dispatch = useDispatch();
 
-  const [emailValue, setEmailValue] = useState('gooduser@grr.la')
+  const [emailValue, setEmailValue] = useState('')
 
   const changeEmailHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.currentTarget.value)
