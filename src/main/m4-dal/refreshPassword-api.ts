@@ -14,7 +14,7 @@ export const refreshPasswordAPI = {
       from: 'test-front-admin <ai73a@yandex.by>',
       message: '<div style=\'background-color: lime; padding: 15px\'>' +
         ' password recovery link:' +
-        ' <a href=\'http://localhost:3000/#/set/$token$\'> link</a></div>'
+        ' <a href=\'https://daria0109.github.io/Cards_ReactTS/#/set/$token$\'> link</a></div>'
     }).then(res => res)
   }
 }
