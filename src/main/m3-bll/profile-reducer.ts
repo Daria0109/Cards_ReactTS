@@ -1,8 +1,8 @@
 // A c t i o n s
 import {Dispatch} from 'redux';
-import {LoginActionsType, setIsLoggedIn} from './login-reducer';
-import {loginAPI} from '../m4-dal/loginAPI';
 import {AppActionsType} from './app-reducer';
+import {authActions, AuthActionsType} from './auth-reducer';
+import {authAPI} from '../m4-dal/authAPI';
 
 export const setUserName = (userName: string | null) => ({
   type: 'cards/profile/SET-USER-NAME', userName
@@ -51,11 +51,11 @@ export const profileReducer = (state: ProfileStateType = profileInitState, actio
 
 // T h u n k
 export const initializeProfile = () => {
-  return async (dispatch: Dispatch<AppActionsType | ProfileActionsTypes | LoginActionsType>) => {
+  return async (dispatch: Dispatch<AppActionsType | ProfileActionsTypes | AuthActionsType>) => {
     try {
-      const data = await loginAPI.me()
+      const data = await authAPI.me()
       dispatch(setUserName(data.name))
-      dispatch(setIsLoggedIn(true))
+      dispatch(authActions.setIsLoggedIn(true))
       dispatch(setIsInitializedProfile(true))
 
     } catch (error) {

@@ -14,14 +14,15 @@ export const PATH = {
   SIGNUP: '/signup',
   PROFILE: '/profile',
   REFRESH: '/refresh',
-  SET: '/set/:token',
+  SET_TOKEN: '/set/:token',
+  SET: '/set',
   ERROR404: '/404'
 }
 
 
 export const Routes = () => {
 
-  return <div>
+  return <>
       <Switch>
         <Route path={"/"} exact render={() => <Redirect to={PATH.PROFILE}/>}/>
         <Route path={PATH.LOGIN} render={() => <Login/>}/>
@@ -29,11 +30,11 @@ export const Routes = () => {
         <Route path={PATH.SIGNUP} render={() => <SignUp/>}/>
         <Route path={PATH.PROFILE} render={() => <Profile/>}/>
         <Route path={PATH.REFRESH} render={() => <RefreshPassword/>}/>
-        <Route path={'/set'} exact render={() => <SetPassword/>}/>
-        <Route path={PATH.SET} render={() => <SetPassword/>}/>
+        <Route path={PATH.SET} exact render={() => <SetPassword/>}/>
+        <Route path={PATH.SET_TOKEN} render={() => <SetPassword/>}/>
         <Route path={PATH.ERROR404} render={() => <Error404/>}/>
 
         <Route render={() => <Redirect to={PATH.ERROR404}/>}/>
       </Switch>
-    </div>
+    </>
 }

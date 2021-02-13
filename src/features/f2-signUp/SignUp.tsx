@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
 import {NavLink, Redirect} from 'react-router-dom';
 import s from './SingUp.module.css'
-import {setError, signUp} from '../../main/m3-bll/signup-reducer';
 import {PATH} from '../../main/m2-components/Routes/Routes';
+import {authActions, signUp} from '../../main/m3-bll/auth-reducer';
 
 export const SignUp = () => {
   const [email, setEmail] = useState('')
@@ -12,8 +12,8 @@ export const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [validateError, setValidateError] = useState('')
 
-  const isSignUp = useSelector<AppRootStateType, boolean>(state => state.signUp.isSignUp)
-  const requestError = useSelector<AppRootStateType,string | null>(state => state.signUp.error)
+  const isSignUp = useSelector<AppRootStateType, boolean>(state => state.auth.isSignUp)
+  const requestError = useSelector<AppRootStateType,string | null>(state => state.auth.signUpError)
   const status = useSelector<AppRootStateType, string>(state => state.app.status)
   const dispatch = useDispatch()
 
@@ -36,7 +36,7 @@ export const SignUp = () => {
     if (pass1 === pass2) {
       dispatch(signUp({email, password}))
       setValidateError('')
-      dispatch(setError(null))
+      dispatch(authActions.setSignUpError(null))
     }
   }
 
@@ -44,24 +44,25 @@ export const SignUp = () => {
     return <Redirect to={'/login'}/>
   }
 
-  return <div className={s.wrapperSingUp}>
+  return <div className={s.container}>
+    <h2 className={s.title}>Sign Up</h2>
     {status === 'loading' && <div>Please wait...</div>}
     <div className={s.itemForm}>
-      <input type="text" placeholder={'email'} value={email} onChange={changeEmailHandler}/>
+      <input type="text" placeholder={'Enter email...'} value={email} onChange={changeEmailHandler}/>
     </div>
     <div className={s.itemForm}>
-      <input type="text" placeholder={'password'} value={password} onChange={changePasswordHandler}/>
+      <input type="text" placeholder={'Enter password...'} value={password} onChange={changePasswordHandler}/>
     </div>
     <div className={s.itemForm}>
-      <input type="text" placeholder={'Confirm password'} value={confirmPassword} onChange={confirmPasswordHandler}/>
+      <input type="text" placeholder={'Confirm password...'} value={confirmPassword} onChange={confirmPasswordHandler}/>
     </div>
     {validateError && <div className={s.error}>{validateError}</div>}
     {requestError && <div className={s.error}>{requestError}</div>}
+
     <div className={s.itemForm}>
-      <button onClick={onSubmit}>Sing Up</button>
+      <button className={s.button} onClick={onSubmit}>Submit</button>
     </div>
-    <div>
-      <NavLink to={PATH.LOGIN}>Login</NavLink>
-    </div>
+
+      <NavLink to={PATH.LOGIN} className={s.link}>Log In</NavLink>
   </div>
 }

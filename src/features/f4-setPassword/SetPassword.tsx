@@ -1,17 +1,17 @@
 import React, {ChangeEvent, useState} from 'react';
 import {Redirect, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {setError, setPassword} from '../../main/m3-bll/setPassword-reducer';
 import s from './SetPassword.module.css'
 import {AppRootStateType} from '../../main/m3-bll/store';
+import {authActions, setPassword} from '../../main/m3-bll/auth-reducer';
 
 type ParamsType = {
   token?: string | undefined
 }
 
 export const SetPassword = () => {
-  const isPasswordChanged = useSelector<AppRootStateType, boolean>(state => state.setPassword.isPasswordChanged)
-  const requestError = useSelector<AppRootStateType, string | null>(state => state.setPassword.error)
+  const isPasswordChanged = useSelector<AppRootStateType, boolean>(state => state.auth.isPasswordChanged)
+  const requestError = useSelector<AppRootStateType, string | null>(state => state.auth.setPasswordError)
   const dispatch = useDispatch();
 
   const {token} = useParams<ParamsType>()
@@ -44,7 +44,7 @@ export const SetPassword = () => {
     if (token && pass1 === pass2) {
       dispatch(setPassword(pass1, token))
       setValidateError('')
-      dispatch(setError(null))
+      dispatch(authActions.setPasswordError(null))
     }
   }
 
@@ -52,12 +52,13 @@ export const SetPassword = () => {
     return <Redirect to={'/login'}/>
   }
 
-  return <div className={s.wrapper}>
+  return <div className={s.container}>
+    <h2 className={s.title}>Set new password</h2>
     <div className={s.itemForm}>
-      <input placeholder='New password...' value={passValue1} onChange={changePass1Handler}/>
+      <input type='text' placeholder='New password...' value={passValue1} onChange={changePass1Handler}/>
     </div>
     <div className={s.itemForm}>
-      <input placeholder='Confirm password...' value={passValue2} onChange={changePass2Handler}/>
+      <input type='text' placeholder='Confirm password...' value={passValue2} onChange={changePass2Handler}/>
     </div>
 
     {validateError &&
@@ -71,7 +72,7 @@ export const SetPassword = () => {
     </div>}
 
     <div className={s.itemForm}>
-      <button onClick={setPassHandler}>Set new Password</button>
+      <button className={s.button}  onClick={setPassHandler}>Submit</button>
     </div>
   </div>
 }

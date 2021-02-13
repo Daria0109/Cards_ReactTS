@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {loginMe} from '../../main/m3-bll/login-reducer';
+import {login} from '../../main/m3-bll/auth-reducer';
 import {NavLink, Redirect} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import s from './Login.module.css'
@@ -13,10 +13,10 @@ export const Login = () => {
   const [password, setPassword] = useState('8888888888')
   const [rememberMe, setRememberMe] = useState(false)
 
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   const isInitialized = useSelector<AppRootStateType, boolean>(state => state.profile.isInitialized)
   const userName = useSelector<AppRootStateType, string | null>(state => state.profile.userName)
-  const error = useSelector<AppRootStateType, string | null>(state => state.login.error)
+  const error = useSelector<AppRootStateType, string | null>(state => state.auth.loginError)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export const Login = () => {
     setRememberMe(e.currentTarget.checked)
   }
   const onSubmit = () => {
-    dispatch(loginMe({email, password, rememberMe}))
+    dispatch(login({email, password, rememberMe}))
     dispatch(setError(null))
   }
 
@@ -45,27 +45,27 @@ export const Login = () => {
   }
 
   return (
-    <div className={s.wrapperLogin}>
+    <div className={s.container}>
+      <h2 className={s.title}>Log in</h2>
       <div className={s.itemForm}>
-        <input type="text" placeholder={'email'} value={email} onChange={changeEmailHandler}/>
+        <input type="text" placeholder={'Enter email...'} value={email} onChange={changeEmailHandler}/>
       </div>
       <div className={s.itemForm}>
-        <input type="text" placeholder={'password'} value={password} onChange={changePasswordHandler}/>
+        <input type="text" placeholder={'Enter password...'} value={password} onChange={changePasswordHandler}/>
       </div>
-      <div className={s.itemForm}>
-        <input type="checkbox" checked={rememberMe}
-               onChange={changeRememberMeHandler}/><span>RememberMe</span>
+      <div className={`${s.itemForm} ${s.itemFormCheck}`}>
+        <input id='remember' type="checkbox" checked={rememberMe}
+               onChange={changeRememberMeHandler}/>
+        <label htmlFor='remember'>Remember me</label>
       </div>
       {error && <div className={s.error}>{error}</div>}
-      <div>
-      <NavLink to={PATH.REFRESH}>Forget password?</NavLink>
+      <div className={s.forgot}>
+        <NavLink to={PATH.REFRESH} className={s.link}>Forgot your password?</NavLink>
       </div>
       <div className={s.itemForm}>
-      <button onClick={onSubmit}>Log In</button>
+        <button className={s.button} onClick={onSubmit}>Submit</button>
       </div>
-      <div>
-      <NavLink to={PATH.SIGNUP}>Sign Up</NavLink>
-      </div>
+        <NavLink to={PATH.SIGNUP} className={s.link}>Sign Up</NavLink>
     </div>
   )
 }

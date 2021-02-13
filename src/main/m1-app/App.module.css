@@ -1,0 +1,28 @@
+.mainPage {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #ffecd5;
+
+}
+.mainPage:after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    bottom: 10%;
+    left: 2%;
+    width: 600px;
+    height: 500px;
+    background-image: url("/src/assets/main-bg.png");
+    background-repeat: no-repeat;
+}
+.mainContainer {
+    width: 1200px;
+    max-width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /*border: 1px solid black;*/
+}
