@@ -41,7 +41,7 @@ export const SignUp = () => {
   }
 
   if (isSignUp) {
-    return <Redirect to={'/login'}/>
+    return <Redirect to={PATH.SIGNUP}/>
   }
 
   return <div className={s.container}>

@@ -1,25 +1,28 @@
 // A c t i o n s
 import {Dispatch} from 'redux';
-import {AppActionsType} from './app-reducer';
+import {AppActionsType, setAppStatus} from './app-reducer';
 import {authActions, AuthActionsType} from './auth-reducer';
 import {authAPI} from '../m4-dal/authAPI';
 
-export const setUserName = (userName: string | null) => ({
+export const setUserData = (userName: string, cardsCount: number, userId: string) => ({
   type: 'cards/profile/SET-USER-NAME', userName
 } as const)
 export const setIsInitializedProfile = (isInitialized: boolean) => ({
   type: 'cards/app/SET-IS-INITIALIZED', isInitialized
 } as const)
-export const setError = (errorText: string | null) => ({
+export const setProfileError = (errorText: string | null) => ({
   type: 'cards/app/SET-ERROR', errorText
 } as const)
-export type ProfileActionsTypes = ReturnType<typeof setUserName>
+export type ProfileActionsTypes = ReturnType<typeof setUserData>
   | ReturnType<typeof setIsInitializedProfile>
-  | ReturnType<typeof setError>
+  | ReturnType<typeof setProfileError>
 
 // S t a t e
 const profileInitState = {
-  userName: null as string | null,
+  userName: '',
+  publicCardPacksCount: 0,
+  userId: '',
+  avatar: '',
   isInitialized: false,
   error: null as string | null
 }
@@ -53,16 +56,22 @@ export const profileReducer = (state: ProfileStateType = profileInitState, actio
 export const initializeProfile = () => {
   return async (dispatch: Dispatch<AppActionsType | ProfileActionsTypes | AuthActionsType>) => {
     try {
+      dispatch(setAppStatus('loading'))
       const data = await authAPI.me()
-      dispatch(setUserName(data.name))
+      dispatch(setUserData(data.name, data.publicCardPacksCount, data._id))
       dispatch(authActions.setIsLoggedIn(true))
       dispatch(setIsInitializedProfile(true))
+      console.log('Initialized', data)
 
     } catch (error) {
-      dispatch((setError(error.response ? error.response.data.error
+      dispatch((setProfileError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred')))
-      await setTimeout(() => dispatch(setIsInitializedProfile(true)), 2000)
+      console.log('NOT Initialized')
+
+    } finally {
+
+      dispatch(setAppStatus('succeeded'))
     }
   }
 }

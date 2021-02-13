@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {login} from '../../main/m3-bll/auth-reducer';
+import {authActions, login} from '../../main/m3-bll/auth-reducer';
 import {NavLink, Redirect} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import s from './Login.module.css'
-import {setError, setIsInitializedProfile} from '../../main/m3-bll/profile-reducer';
 
 
 export const Login = () => {
   const [email, setEmail] = useState('abcabc@grr.la')
-  const [password, setPassword] = useState('8888888888')
+  const [password, setPassword] = useState('777777777')
   const [rememberMe, setRememberMe] = useState(false)
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
@@ -19,12 +18,6 @@ export const Login = () => {
   const error = useSelector<AppRootStateType, string | null>(state => state.auth.loginError)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (!userName) {
-      dispatch(setIsInitializedProfile(false))
-      dispatch(setError(null))
-    }
-  }, [])
 
   const changeEmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value)
@@ -37,11 +30,11 @@ export const Login = () => {
   }
   const onSubmit = () => {
     dispatch(login({email, password, rememberMe}))
-    dispatch(setError(null))
+    dispatch(authActions.setLoginError(null))
   }
 
-  if (isLoggedIn && !isInitialized) {
-    return <Redirect to={'/profile'}/>
+  if (isLoggedIn) {
+    return <Redirect to={PATH.PROFILE}/>
   }
 
   return (

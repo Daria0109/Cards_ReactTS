@@ -1,26 +1,26 @@
 import {Dispatch} from 'redux';
-import {ProfileActionsTypes, setIsInitializedProfile, setUserName} from './profile-reducer';
+import {ProfileActionsTypes, setUserData} from './profile-reducer';
 import {AppActionsType, setAppStatus} from './app-reducer';
 import {authAPI} from '../m4-dal/authAPI';
 
 // A c t i o n s
 export const authActions = {
   setIsLoggedIn: (isLogged: boolean) => ({
-    type: 'cards/login/SET-IS-LOGGED-IN', isLogged} as const),
+    type: 'cards/auth/SET-IS-LOGGED-IN', isLogged} as const),
   setLoginError: (errorText: string | null) => ({
-    type: 'cards/login/SET-ERROR', errorText} as const),
+    type: 'cards/auth/SET-LOGIN-ERROR', errorText} as const),
   setIsSignUp: (isSignUp: boolean) => ({
-    type: 'cards/signUp/SET-IS-SIGN-UP', isSignUp} as const),
+    type: 'cards/auth/SET-IS-SIGN-UP', isSignUp} as const),
   setSignUpError: (errorText: string | null) => ({
-    type: 'cards/signUp/SET-ERROR', errorText} as const),
+    type: 'cards/auth/SET-SIGNUP-ERROR', errorText} as const),
   setIsEmailSent: (isSent: boolean) => ({
-    type: 'cards/refreshPassword/SET-IS-EMAIL-SENT', isSent} as const),
+    type: 'cards/auth/SET-IS-EMAIL-SENT', isSent} as const),
   setRefreshPasswordError: (errorText: string | null) => ({
-    type: 'cards/refreshPassword/SET-ERROR', errorText} as const),
+    type: 'cards/auth/SET-REFRESH-ERROR', errorText} as const),
   setIsPasswordChanged: (isChanged: boolean) => ({
-    type: 'cards/setPassword/SET-IS-PASSWORD-CHANGED', isChanged} as const),
+    type: 'cards/auth/SET-IS-PASSWORD-CHANGED', isChanged} as const),
   setPasswordError: (errorText: string | null) => ({
-    type: 'cards/error/SET-ERROR', errorText} as const)
+    type: 'cards/auth/SET-PASSWORD-ERROR', errorText} as const)
 }
 type ActionsType<T> = T extends {[key: string]: infer U} ? U : never
 export type AuthActionsType = ReturnType<ActionsType<typeof authActions>>
@@ -49,13 +49,14 @@ export const signUp = (registrationData: RegDataType) => {
   return async (dispatch: Dispatch<AuthActionsType | AppActionsType>) => {
     try {
       dispatch(setAppStatus('loading'))
-      const data = await authAPI.signUp(registrationData)
+      await authAPI.signUp(registrationData)
       dispatch(authActions.setIsSignUp(true))
-      console.log(data)
+      console.log('SignUn')
     } catch (error) {
       dispatch(authActions.setSignUpError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
+      console.log('NOT SignUn')
     } finally {
       dispatch(setAppStatus('succeeded'))
     }
@@ -71,57 +72,58 @@ export const login = (loginData: LoginDataType) => {
     try {
       const data = await authAPI.login(loginData)
       console.log(data)
+      dispatch(setUserData(data.name, data.publicCardPacksCount, data._id))
       dispatch(authActions.setIsLoggedIn(true))
-      dispatch(setUserName(data.name))
+      console.log('LogIn')
+
     } catch (error) {
       dispatch(authActions.setLoginError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
+      console.log('NOT LogIn')
     }
   }
 }
 export const logout = () => {
   return async (dispatch: Dispatch) => {
     try {
-      const data = await authAPI.logout()
+      await authAPI.logout()
       dispatch(authActions.setIsLoggedIn(false))
-      dispatch(setIsInitializedProfile(false))
-      dispatch(setUserName(null))
-      console.log(data)
+      console.log('LogOut')
     } catch (error) {
       dispatch(authActions.setLoginError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
+      console.log('NOT LogOut')
+
     }
   }
 }
 export const sendEmail = (email: string) => {
   return async (dispatch: Dispatch) => {
     try {
-      const data = await authAPI.sendEmail(email)
+      await authAPI.sendEmail(email)
       dispatch(authActions.setIsEmailSent(true))
-      console.log(data.data)
+      console.log('Email is sent')
     } catch (error) {
       dispatch(authActions.setRefreshPasswordError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
-      console.log(error.response.data.error)
-      console.log(error.message)
+      console.log('Email is NOT sent')
     }
   }
 }
 export const setPassword = (password: string, token: string) => {
   return async (dispatch: Dispatch) => {
     try {
-      const data = await authAPI.setPassword(password, token)
+      await authAPI.setPassword(password, token)
       dispatch(authActions.setIsPasswordChanged(true))
-      console.log(data)
+      console.log('Password set')
     } catch(error) {
       dispatch(authActions.setPasswordError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
-      console.log(error.response.data.error)
-      console.log(error.message)
+      console.log('Password NOT set')
     }
   }
 }
@@ -129,44 +131,44 @@ export const setPassword = (password: string, token: string) => {
 // R e d u c e r
 export const authReducer = (state: AuthStateType = authInitState, action: AuthActionsType): AuthStateType => {
   switch (action.type) {
-    case 'cards/login/SET-ERROR':
+    case 'cards/auth/SET-LOGIN-ERROR':
       return {
         ...state,
         loginError: action.errorText
       }
-    case 'cards/login/SET-IS-LOGGED-IN':
+    case 'cards/auth/SET-IS-LOGGED-IN':
       return {
         ...state,
         isLoggedIn: action.isLogged
       }
-    case 'cards/signUp/SET-IS-SIGN-UP': {
+    case 'cards/auth/SET-IS-SIGN-UP': {
       return {
         ...state,
         isSignUp: action.isSignUp
       }
     }
-    case 'cards/signUp/SET-ERROR': {
+    case 'cards/auth/SET-SIGNUP-ERROR': {
       return {
         ...state,
         signUpError: action.errorText
       }
     }
-    case 'cards/refreshPassword/SET-IS-EMAIL-SENT':
+    case 'cards/auth/SET-IS-EMAIL-SENT':
       return {
         ...state,
         isEmailSent: action.isSent
       }
-    case 'cards/refreshPassword/SET-ERROR':
+    case 'cards/auth/SET-REFRESH-ERROR':
       return {
         ...state,
         refreshPasswordError: action.errorText
       }
-    case 'cards/setPassword/SET-IS-PASSWORD-CHANGED':
+    case 'cards/auth/SET-IS-PASSWORD-CHANGED':
       return {
         ...state,
         isPasswordChanged: action.isChanged
       }
-    case 'cards/error/SET-ERROR':
+    case 'cards/auth/SET-PASSWORD-ERROR':
       return {
         ...state,
         setPasswordError: action.errorText

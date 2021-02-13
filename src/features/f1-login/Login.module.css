@@ -11,8 +11,6 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    position: relative;
-    z-index: 99;
 }
 .title {
     font-family: 'Comfortaa_Bold', sans-serif;

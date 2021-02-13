@@ -2,19 +2,21 @@
     width: 100vw;
     min-height: 100vh;
     background-color: #ffecd5;
-
-}
-.mainPage:after {
-    content: '';
-    position: absolute;
-    z-index: 0;
-    bottom: 10%;
-    left: 2%;
-    width: 600px;
-    height: 500px;
     background-image: url("/src/assets/main-bg.png");
     background-repeat: no-repeat;
+    background-position: 5% 65%;
+
 }
+/*.mainPage:after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    z-index: 0;*/
+/*    bottom: 10%;*/
+/*    left: 2%;*/
+/*    width: 600px;*/
+/*    height: 500px;*/
+/*    */
+/*}*/
 .mainContainer {
     width: 1200px;
     max-width: 100%;
