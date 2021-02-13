@@ -9,14 +9,14 @@ import {logout} from '../../m3-bll/auth-reducer';
 export const Header = () => {
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   const dispatch = useDispatch()
+  const logoutBtnStyle = isLoggedIn ? s.button : `${s.button} ${s.hidden}`
 
   const logoutHandler = () => {
     dispatch(logout())
   }
 
   return <div className={s.header}>
-    {isLoggedIn &&
-    <button className={s.button} onClick={logoutHandler}>Log Out</button>}
+    <button className={logoutBtnStyle} onClick={logoutHandler}>Log Out</button>
 
     <ul className={s.menu}>
       <li className={s.menuItem}>

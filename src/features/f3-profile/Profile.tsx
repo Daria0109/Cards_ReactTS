@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
 import {Redirect} from 'react-router-dom';
 import s from './Profile.module.css'
-import {logout} from '../../main/m3-bll/auth-reducer';
 import {initializeProfile, setProfileError} from '../../main/m3-bll/profile-reducer';
 import {Preloader} from '../../main/m2-components/Preloader/Preloader';
 import {PATH} from '../../main/m2-components/Routes/Routes';
@@ -15,8 +14,9 @@ import defaultAvatar from './../../assets/default-avatar.png'
 export const Profile = () => {
   const [isFirst, setIsFirst] = useState(true)
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+  const userId = useSelector<AppRootStateType, string | null>(state => state.profile.userId)
   const userName = useSelector<AppRootStateType, string | null>(state => state.profile.userName)
-  const cardsCount = useSelector<AppRootStateType, number>(state => state.profile.publicCardPacksCount)
+  const cardsCount = useSelector<AppRootStateType, number | null>(state => state.profile.publicCardPacksCount)
   const userAvatar = useSelector<AppRootStateType, string>(state => state.profile.avatar)
   const isInitialized = useSelector<AppRootStateType, boolean>(state => state.profile.isInitialized)
   const initializeError = useSelector<AppRootStateType, null | string>(state => state.profile.error)
@@ -26,7 +26,7 @@ export const Profile = () => {
   let timerId: any;
 
   useEffect(() => {
-    if (!userName) {
+    if (!userId) {
       dispatch(initializeProfile())
     }
     return function cleanup () {
@@ -54,16 +54,12 @@ export const Profile = () => {
   }
 
   return <div className={s.profile}>
-    {userName &&
-    <div className={s.userProfile}>
-      {!userAvatar && <div className={s.avatar}><img src={defaultAvatar} alt={userName}/></div>}
+    {isLoggedIn && <div className={s.userProfile}>
+      {!userAvatar && <div className={s.avatar}><img src={defaultAvatar} alt={'Avatar'}/></div>}
       <div className={s.data}>
         <div className={s.dataRow}>Name: <span>{userName}</span></div>
         <div className={s.dataRow}>Count of Cards: <span>{cardsCount}</span></div>
       </div>
-      {/*<div>*/}
-      {/*  <button onClick={logoutHandler}>Log Out</button>*/}
-      {/*</div>*/}
     </div>}
     {initializeError && <div className={s.initializedError}>{initializeError}</div>}
     {logoutError && <div className={s.error}>{logoutError}</div>}

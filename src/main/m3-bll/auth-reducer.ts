@@ -71,7 +71,6 @@ export const login = (loginData: LoginDataType) => {
   return async (dispatch: Dispatch<AuthActionsType | ProfileActionsTypes>) => {
     try {
       const data = await authAPI.login(loginData)
-      console.log(data)
       dispatch(setUserData(data.name, data.publicCardPacksCount, data._id))
       dispatch(authActions.setIsLoggedIn(true))
       console.log('LogIn')
@@ -89,6 +88,7 @@ export const logout = () => {
     try {
       await authAPI.logout()
       dispatch(authActions.setIsLoggedIn(false))
+      dispatch(setUserData(null, null, null))
       console.log('LogOut')
     } catch (error) {
       dispatch(authActions.setLoginError(error.response ? error.response.data.error
