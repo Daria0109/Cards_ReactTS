@@ -15,7 +15,7 @@ export const Login = () => {
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-  const error = useSelector<AppRootStateType, string | null>(state => state.auth.loginError)
+  const requestLoginError = useSelector<AppRootStateType, string | null>(state => state.auth.loginError)
   const dispatch = useDispatch()
 
 
@@ -51,7 +51,7 @@ export const Login = () => {
                onChange={changeRememberMeHandler}/>
         <label htmlFor='remember'>Remember me</label>
       </div>
-      {error && <div className={s.error}>{error}</div>}
+
       <div className={s.forgot}>
         <NavLink to={PATH.REFRESH} className={s.link}>Forgot your password?</NavLink>
       </div>
@@ -61,6 +61,9 @@ export const Login = () => {
         <NavLink to={PATH.SIGNUP} className={s.link}>Sign Up</NavLink>
 
       {appStatus === 'loading' && <div className={s.overflow}>Please, wait...</div>}
+
+
+      {requestLoginError && <div className={s.requestError}>{requestLoginError}</div>}
 
     </div>
   )

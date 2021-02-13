@@ -8,6 +8,7 @@ import {Preloader} from '../../main/m2-components/Preloader/Preloader';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 import defaultAvatar from './../../assets/default-avatar.png'
+import {authActions} from '../../main/m3-bll/auth-reducer';
 
 
 
@@ -20,7 +21,6 @@ export const Profile = () => {
   const userAvatar = useSelector<AppRootStateType, string>(state => state.profile.avatar)
   const isInitialized = useSelector<AppRootStateType, boolean>(state => state.profile.isInitialized)
   const initializeError = useSelector<AppRootStateType, null | string>(state => state.profile.error)
-  const logoutError = useSelector<AppRootStateType, null | string>(state => state.auth.loginError)
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   const dispatch = useDispatch();
   let timerId: any;
@@ -29,6 +29,7 @@ export const Profile = () => {
     if (!userId) {
       dispatch(initializeProfile())
     }
+    dispatch(authActions.setLoginError(null))
     return function cleanup () {
       clearTimeout(timerId)
     }
@@ -64,7 +65,6 @@ export const Profile = () => {
       </div>
     </div>}
     {initializeError && <div className={s.initializedError}>{initializeError}</div>}
-    {logoutError && <div className={s.error}>{logoutError}</div>}
 
   </div>
 }

@@ -10,7 +10,7 @@ import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 export const RefreshPassword = () => {
   const isEmailSent = useSelector<AppRootStateType, boolean>(state => state.auth.isEmailSent)
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-  const error = useSelector<AppRootStateType, string | null>(state => state.auth.refreshPasswordError)
+  const sendEmailError = useSelector<AppRootStateType, string | null>(state => state.auth.refreshPasswordError)
   const dispatch = useDispatch();
 
   const [emailValue, setEmailValue] = useState('')
@@ -24,14 +24,16 @@ export const RefreshPassword = () => {
   }
 
   return <div className={s.container}>
-    <h2 className={s.title}>Forgot your password?</h2>
     {!isEmailSent &&
-    <div className={s.editBlock}>
-      <div className={s.itemForm}>
-        <input type='text' placeholder='Enter email...' value={emailValue} onChange={changeEmailHandler}/>
-      </div>
-      <div className={s.itemForm}>
-        <button className={s.button} onClick={sendEmailHandler} disabled={appStatus === 'loading'}>Send</button>
+    <div>
+      <h2 className={s.title}>Forgot your password?</h2>
+      <div className={s.editBlock}>
+        <div className={s.itemForm}>
+          <input type='text' placeholder='Enter email...' value={emailValue} onChange={changeEmailHandler}/>
+        </div>
+        <div className={s.itemForm}>
+          <button className={s.button} onClick={sendEmailHandler} disabled={appStatus === 'loading'}>Send</button>
+        </div>
       </div>
     </div>}
 
@@ -41,9 +43,9 @@ export const RefreshPassword = () => {
       <p>The link was sent to your email!</p>
     </div>}
 
-    {error &&
-    <div className={s.error}>{error}</div>}
-    <NavLink className={s.link} to={PATH.LOGIN}>Login</NavLink>
+    {sendEmailError && <div className={s.requestError}>{sendEmailError}</div>}
+
+    <NavLink className={s.link} to={PATH.LOGIN}>Log In</NavLink>
 
     {appStatus === 'loading' && <div className={s.overflow}>Please, wait...</div>}
 

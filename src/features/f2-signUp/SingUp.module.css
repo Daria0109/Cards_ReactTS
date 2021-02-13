@@ -71,3 +71,25 @@ input[type=text] {
     font-weight: bold;
     pointer-events: none;
 }
+.requestError {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #775298;
+    padding: 10px 5px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+}
+.validateError {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #cc1b08;
+    padding: 10px 5px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+}

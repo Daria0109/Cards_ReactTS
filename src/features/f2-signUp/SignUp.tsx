@@ -15,7 +15,7 @@ export const SignUp = () => {
 
   const isSignUp = useSelector<AppRootStateType, boolean>(state => state.auth.isSignUp)
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-  const requestError = useSelector<AppRootStateType,string | null>(state => state.auth.signUpError)
+  const requestSignUpError = useSelector<AppRootStateType,string | null>(state => state.auth.signUpError)
   const status = useSelector<AppRootStateType, string>(state => state.app.status)
   const dispatch = useDispatch()
 
@@ -23,9 +23,11 @@ export const SignUp = () => {
     setEmail(e.currentTarget.value)
   }
   const changePasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValidateError('')
     setPassword(e.currentTarget.value)
   }
   const confirmPasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValidateError('')
     setConfirmPassword(e.currentTarget.value)
   }
   const onSubmit = () => {
@@ -37,13 +39,12 @@ export const SignUp = () => {
     }
     if (pass1 === pass2) {
       dispatch(signUp({email, password}))
-      setValidateError('')
       dispatch(authActions.setSignUpError(null))
     }
   }
 
   if (isSignUp) {
-    return <Redirect to={PATH.SIGNUP}/>
+    return <Redirect to={PATH.LOGIN}/>
   }
 
   return <div className={s.container}>
@@ -58,8 +59,8 @@ export const SignUp = () => {
     <div className={s.itemForm}>
       <input type="text" placeholder={'Confirm password...'} value={confirmPassword} onChange={confirmPasswordHandler}/>
     </div>
-    {validateError && <div className={s.error}>{validateError}</div>}
-    {requestError && <div className={s.error}>{requestError}</div>}
+    {validateError && <div className={s.validateError}>{validateError}</div>}
+    {requestSignUpError && <div className={s.requestError}>{requestSignUpError}</div>}
     <div className={s.itemForm}>
       <button className={s.button} onClick={onSubmit} disabled={appStatus === 'loading'}>Submit</button>
     </div>

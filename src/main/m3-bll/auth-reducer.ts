@@ -20,7 +20,9 @@ export const authActions = {
   setIsPasswordChanged: (isChanged: boolean) => ({
     type: 'cards/auth/SET-IS-PASSWORD-CHANGED', isChanged} as const),
   setPasswordError: (errorText: string | null) => ({
-    type: 'cards/auth/SET-PASSWORD-ERROR', errorText} as const)
+    type: 'cards/auth/SET-PASSWORD-ERROR', errorText} as const),
+  setRequestError: (error: string) => ({
+    type: 'cards/auth/SET-REQUEST-ERROR', error} as const)
 }
 type ActionsType<T> = T extends {[key: string]: infer U} ? U : never
 export type AuthActionsType = ReturnType<ActionsType<typeof authActions>>
@@ -35,7 +37,9 @@ const authInitState = {
   isEmailSent: false,
   refreshPasswordError: null as string | null,
   isPasswordChanged: false,
-  setPasswordError: null as string | null
+  setPasswordError: null as string | null,
+
+  requestError: 'Errrrrrrrrrrrrrrrror'
 }
 export type AuthStateType = typeof authInitState
 
@@ -184,6 +188,11 @@ export const authReducer = (state: AuthStateType = authInitState, action: AuthAc
       return {
         ...state,
         setPasswordError: action.errorText
+      }
+    case 'cards/auth/SET-REQUEST-ERROR':
+      return {
+        ...state,
+        requestError: action.error
       }
     default:
       return state
