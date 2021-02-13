@@ -32,7 +32,7 @@ export const Profile = () => {
     return function cleanup () {
       clearTimeout(timerId)
     }
-  }, [])
+  }, [userId])
 
   if (appStatus === 'loading') {
     return <Preloader/>
@@ -49,9 +49,11 @@ export const Profile = () => {
     }, 2000)
   }
 
-  if (isInitialized && !isLoggedIn) {
-    return <Redirect to={PATH.LOGIN}/>
-  }
+
+  //
+  // if (!isLoggedIn && isInitialized) {
+  //   return <Redirect to={PATH.LOGIN}/>
+  // }
 
   return <div className={s.profile}>
     {isLoggedIn && <div className={s.userProfile}>

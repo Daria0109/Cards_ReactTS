@@ -5,6 +5,7 @@ import {NavLink, Redirect} from 'react-router-dom';
 import s from './SingUp.module.css'
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import {authActions, signUp} from '../../main/m3-bll/auth-reducer';
+import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 
 export const SignUp = () => {
   const [email, setEmail] = useState('')
@@ -13,6 +14,7 @@ export const SignUp = () => {
   const [validateError, setValidateError] = useState('')
 
   const isSignUp = useSelector<AppRootStateType, boolean>(state => state.auth.isSignUp)
+  const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
   const requestError = useSelector<AppRootStateType,string | null>(state => state.auth.signUpError)
   const status = useSelector<AppRootStateType, string>(state => state.app.status)
   const dispatch = useDispatch()
@@ -58,11 +60,12 @@ export const SignUp = () => {
     </div>
     {validateError && <div className={s.error}>{validateError}</div>}
     {requestError && <div className={s.error}>{requestError}</div>}
-
     <div className={s.itemForm}>
-      <button className={s.button} onClick={onSubmit}>Submit</button>
+      <button className={s.button} onClick={onSubmit} disabled={appStatus === 'loading'}>Submit</button>
     </div>
-
       <NavLink to={PATH.LOGIN} className={s.link}>Log In</NavLink>
+
+    {appStatus === 'loading' && <div className={s.overflow}>Please, wait...</div>}
+
   </div>
 }

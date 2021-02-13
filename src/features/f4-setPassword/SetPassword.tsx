@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import s from './SetPassword.module.css'
 import {AppRootStateType} from '../../main/m3-bll/store';
 import {authActions, setPassword} from '../../main/m3-bll/auth-reducer';
+import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 
 type ParamsType = {
   token?: string | undefined
@@ -11,6 +12,7 @@ type ParamsType = {
 
 export const SetPassword = () => {
   const isPasswordChanged = useSelector<AppRootStateType, boolean>(state => state.auth.isPasswordChanged)
+  const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
   const requestError = useSelector<AppRootStateType, string | null>(state => state.auth.setPasswordError)
   const dispatch = useDispatch();
 
@@ -72,7 +74,11 @@ export const SetPassword = () => {
     </div>}
 
     <div className={s.itemForm}>
-      <button className={s.button}  onClick={setPassHandler}>Submit</button>
+      <button className={s.button} onClick={setPassHandler}  disabled={appStatus === 'loading'}>Submit</button>
     </div>
+
+
+    {appStatus === 'loading' && <div className={s.overflow}>Please, wait...</div>}
+
   </div>
 }

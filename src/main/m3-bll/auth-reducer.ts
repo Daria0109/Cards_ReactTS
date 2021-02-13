@@ -68,8 +68,9 @@ export type LoginDataType = {
   rememberMe: boolean
 }
 export const login = (loginData: LoginDataType) => {
-  return async (dispatch: Dispatch<AuthActionsType | ProfileActionsTypes>) => {
+  return async (dispatch: Dispatch<AuthActionsType | ProfileActionsTypes | AppActionsType>) => {
     try {
+      dispatch(setAppStatus('loading'))
       const data = await authAPI.login(loginData)
       dispatch(setUserData(data.name, data.publicCardPacksCount, data._id))
       dispatch(authActions.setIsLoggedIn(true))
@@ -80,12 +81,15 @@ export const login = (loginData: LoginDataType) => {
         : error.message ? error.message
           : 'Some error occurred'))
       console.log('NOT LogIn')
+    } finally {
+      dispatch(setAppStatus('succeeded'))
     }
   }
 }
 export const logout = () => {
   return async (dispatch: Dispatch) => {
     try {
+      // dispatch(setAppStatus('loading'))
       await authAPI.logout()
       dispatch(authActions.setIsLoggedIn(false))
       dispatch(setUserData(null, null, null))
@@ -96,12 +100,15 @@ export const logout = () => {
           : 'Some error occurred'))
       console.log('NOT LogOut')
 
+    } finally {
+      // dispatch(setAppStatus('succeeded'))
     }
   }
 }
 export const sendEmail = (email: string) => {
   return async (dispatch: Dispatch) => {
     try {
+      dispatch(setAppStatus('loading'))
       await authAPI.sendEmail(email)
       dispatch(authActions.setIsEmailSent(true))
       console.log('Email is sent')
@@ -110,12 +117,15 @@ export const sendEmail = (email: string) => {
         : error.message ? error.message
           : 'Some error occurred'))
       console.log('Email is NOT sent')
+    } finally {
+      dispatch(setAppStatus('succeeded'))
     }
   }
 }
 export const setPassword = (password: string, token: string) => {
   return async (dispatch: Dispatch) => {
     try {
+      dispatch(setAppStatus('loading'))
       await authAPI.setPassword(password, token)
       dispatch(authActions.setIsPasswordChanged(true))
       console.log('Password set')
@@ -124,6 +134,8 @@ export const setPassword = (password: string, token: string) => {
         : error.message ? error.message
           : 'Some error occurred'))
       console.log('Password NOT set')
+    } finally {
+      dispatch(setAppStatus('succeeded'))
     }
   }
 }

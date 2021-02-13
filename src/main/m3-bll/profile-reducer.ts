@@ -5,7 +5,7 @@ import {authActions, AuthActionsType} from './auth-reducer';
 import {authAPI} from '../m4-dal/authAPI';
 
 export const setUserData = (userName: string | null, cardsCount: number | null, userId: string | null) => ({
-  type: 'cards/profile/SET-USER-NAME', userName, userId, cardsCount
+  type: 'cards/profile/SET-USER-DATA', userName, userId, cardsCount
 } as const)
 export const setIsInitializedProfile = (isInitialized: boolean) => ({
   type: 'cards/app/SET-IS-INITIALIZED', isInitialized
@@ -31,10 +31,12 @@ export type ProfileStateType = typeof profileInitState
 // R d u c e r
 export const profileReducer = (state: ProfileStateType = profileInitState, action: ProfileActionsTypes): ProfileStateType => {
   switch (action.type) {
-    case 'cards/profile/SET-USER-NAME':
+    case 'cards/profile/SET-USER-DATA':
       return {
         ...state,
-        userName: action.userName
+        userName: action.userName,
+        publicCardPacksCount: action.cardsCount,
+        userId: action.userId
       }
     case 'cards/app/SET-IS-INITIALIZED':
       return {
