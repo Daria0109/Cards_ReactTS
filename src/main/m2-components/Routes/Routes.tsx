@@ -7,11 +7,13 @@ import {Profile} from '../../../features/f3-profile/Profile';
 import {Error404} from '../../../features/f6-error404/Error404';
 import {RefreshPassword} from '../../../features/f5-refreshPassword/RefreshPassword';
 import {SetPassword} from '../../../features/f4-setPassword/SetPassword';
+import { Card } from '../../../features/f7-card/Card';
 
 export const PATH = {
   TEST: '/test',
   LOGIN: '/login',
   SIGNUP: '/signup',
+  CARD: '/card',
   PROFILE: '/profile',
   REFRESH: '/refresh',
   SET_TOKEN: '/set/:token',
@@ -26,6 +28,7 @@ export const Routes = () => {
       <Switch>
         <Route path={"/"} exact render={() => <Redirect to={PATH.PROFILE}/>}/>
         <Route path={PATH.LOGIN} render={() => <Login/>}/>
+        <Route path={PATH.CARD} render={() => <Card/>}/>
         <Route path={PATH.TEST} render={() => <Test/>}/>
         <Route path={PATH.SIGNUP} render={() => <SignUp/>}/>
         <Route path={PATH.PROFILE} render={() => <Profile/>}/>

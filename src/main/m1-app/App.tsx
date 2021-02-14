@@ -16,7 +16,7 @@ export const App = () => {
     <HashRouter>
       <Header/>
       <div className={s.mainContainer}>
-      <Routes/>
+        <Routes/>
       </div>
     </HashRouter>
     </div>
