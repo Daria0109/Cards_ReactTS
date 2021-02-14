@@ -15,8 +15,9 @@ export const Header = () => {
   }
 
   return <div className={s.header}>
-    {isLoggedIn &&
-    <button className={s.button} onClick={logoutHandler}>Log Out</button>}
+    {isLoggedIn
+      ? <button className={s.button} onClick={logoutHandler}>Log Out</button>
+      : <NavLink to={PATH.LOGIN} className={s.button}>Log In</NavLink>}
 
     <ul className={s.menu}>
       <li className={s.menuItem}>
@@ -36,12 +37,12 @@ export const Header = () => {
       {/*</li>*/}
 
       <li className={s.menuItem}>
-        <NavLink to={PATH.REFRESH} className={s.link} activeClassName={s.active}>Refresh password</NavLink>
+        <NavLink to={PATH.REFRESH} className={s.link} activeClassName={s.active}>Forgot your password?</NavLink>
       </li>
 
-      <li className={s.menuItem}>
-        <NavLink to={PATH.SET} className={s.link} activeClassName={s.active}>Set password</NavLink>
-      </li>
+      {/*<li className={s.menuItem}>*/}
+      {/*  <NavLink to={PATH.SET} className={s.link} activeClassName={s.active}>Set password</NavLink>*/}
+      {/*</li>*/}
     </ul>
 
 

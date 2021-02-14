@@ -4,8 +4,8 @@ import {AppActionsType, setAppStatus} from './app-reducer';
 import {authActions, AuthActionsType} from './auth-reducer';
 import {authAPI} from '../m4-dal/authAPI';
 
-export const setUserData = (userName: string, cardsCount: number, userId: string) => ({
-  type: 'cards/profile/SET-USER-NAME', userName
+export const setUserData = (userName: string | null, cardsCount: number | null, userId: string | null) => ({
+  type: 'cards/profile/SET-USER-DATA', userName, userId, cardsCount
 } as const)
 export const setIsInitializedProfile = (isInitialized: boolean) => ({
   type: 'cards/app/SET-IS-INITIALIZED', isInitialized
@@ -19,9 +19,9 @@ export type ProfileActionsTypes = ReturnType<typeof setUserData>
 
 // S t a t e
 const profileInitState = {
-  userName: '',
-  publicCardPacksCount: 0,
-  userId: '',
+  userName: null as string | null,
+  publicCardPacksCount: null as number | null,
+  userId: null as string | null,
   avatar: '',
   isInitialized: false,
   error: null as string | null
@@ -31,10 +31,12 @@ export type ProfileStateType = typeof profileInitState
 // R d u c e r
 export const profileReducer = (state: ProfileStateType = profileInitState, action: ProfileActionsTypes): ProfileStateType => {
   switch (action.type) {
-    case 'cards/profile/SET-USER-NAME':
+    case 'cards/profile/SET-USER-DATA':
       return {
         ...state,
-        userName: action.userName
+        userName: action.userName,
+        publicCardPacksCount: action.cardsCount,
+        userId: action.userId
       }
     case 'cards/app/SET-IS-INITIALIZED':
       return {
@@ -58,10 +60,10 @@ export const initializeProfile = () => {
     try {
       dispatch(setAppStatus('loading'))
       const data = await authAPI.me()
-      dispatch(setUserData(data.name, data.publicCardPacksCount, data._id))
       dispatch(authActions.setIsLoggedIn(true))
       dispatch(setIsInitializedProfile(true))
-      console.log('Initialized', data)
+      dispatch(setUserData(data.name, data.publicCardPacksCount, data._id))
+      console.log('Initialized')
 
     } catch (error) {
       dispatch((setProfileError(error.response ? error.response.data.error
@@ -70,7 +72,6 @@ export const initializeProfile = () => {
       console.log('NOT Initialized')
 
     } finally {
-
       dispatch(setAppStatus('succeeded'))
     }
   }

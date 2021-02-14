@@ -1,9 +1,11 @@
 import React, {ChangeEvent, useState} from 'react';
-import {Redirect, useParams} from 'react-router-dom';
+import {NavLink, Redirect, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import s from './SetPassword.module.css'
 import {AppRootStateType} from '../../main/m3-bll/store';
 import {authActions, setPassword} from '../../main/m3-bll/auth-reducer';
+import {RequestStatusType} from '../../main/m3-bll/app-reducer';
+import {PATH} from '../../main/m2-components/Routes/Routes';
 
 type ParamsType = {
   token?: string | undefined
@@ -11,7 +13,8 @@ type ParamsType = {
 
 export const SetPassword = () => {
   const isPasswordChanged = useSelector<AppRootStateType, boolean>(state => state.auth.isPasswordChanged)
-  const requestError = useSelector<AppRootStateType, string | null>(state => state.auth.setPasswordError)
+  const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+  const requestSetPasswordError = useSelector<AppRootStateType, string | null>(state => state.auth.setPasswordError)
   const dispatch = useDispatch();
 
   const {token} = useParams<ParamsType>()
@@ -38,7 +41,7 @@ export const SetPassword = () => {
       return
     }
     if (!token) {
-      setValidateError('Send your email on Refresh Page!')
+      setValidateError('Send your email for updating the password!')
       return
     }
     if (token && pass1 === pass2) {
@@ -62,17 +65,25 @@ export const SetPassword = () => {
     </div>
 
     {validateError &&
-    <div className={s.error}>
+    <div className={s.validateError}>
       {validateError}
     </div>}
 
-    {requestError &&
-    <div className={s.error}>
-      {requestError}
+    {requestSetPasswordError &&
+    <div className={s.requestError}>
+      {requestSetPasswordError}
     </div>}
 
     <div className={s.itemForm}>
-      <button className={s.button}  onClick={setPassHandler}>Submit</button>
+      <button className={s.button} onClick={setPassHandler}  disabled={appStatus === 'loading'}>Submit</button>
     </div>
+
+    <div className={s.forgot}>
+      <NavLink to={PATH.REFRESH} className={s.link}>Forgot your password?</NavLink>
+    </div>
+
+
+    {appStatus === 'loading' && <div className={s.overflow}>Please, wait...</div>}
+
   </div>
 }

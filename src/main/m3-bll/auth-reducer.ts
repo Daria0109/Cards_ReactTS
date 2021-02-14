@@ -20,7 +20,9 @@ export const authActions = {
   setIsPasswordChanged: (isChanged: boolean) => ({
     type: 'cards/auth/SET-IS-PASSWORD-CHANGED', isChanged} as const),
   setPasswordError: (errorText: string | null) => ({
-    type: 'cards/auth/SET-PASSWORD-ERROR', errorText} as const)
+    type: 'cards/auth/SET-PASSWORD-ERROR', errorText} as const),
+  setRequestError: (error: string) => ({
+    type: 'cards/auth/SET-REQUEST-ERROR', error} as const)
 }
 type ActionsType<T> = T extends {[key: string]: infer U} ? U : never
 export type AuthActionsType = ReturnType<ActionsType<typeof authActions>>
@@ -35,7 +37,9 @@ const authInitState = {
   isEmailSent: false,
   refreshPasswordError: null as string | null,
   isPasswordChanged: false,
-  setPasswordError: null as string | null
+  setPasswordError: null as string | null,
+
+  requestError: 'Errrrrrrrrrrrrrrrror'
 }
 export type AuthStateType = typeof authInitState
 
@@ -68,10 +72,10 @@ export type LoginDataType = {
   rememberMe: boolean
 }
 export const login = (loginData: LoginDataType) => {
-  return async (dispatch: Dispatch<AuthActionsType | ProfileActionsTypes>) => {
+  return async (dispatch: Dispatch<AuthActionsType | ProfileActionsTypes | AppActionsType>) => {
     try {
+      dispatch(setAppStatus('loading'))
       const data = await authAPI.login(loginData)
-      console.log(data)
       dispatch(setUserData(data.name, data.publicCardPacksCount, data._id))
       dispatch(authActions.setIsLoggedIn(true))
       console.log('LogIn')
@@ -81,14 +85,18 @@ export const login = (loginData: LoginDataType) => {
         : error.message ? error.message
           : 'Some error occurred'))
       console.log('NOT LogIn')
+    } finally {
+      dispatch(setAppStatus('succeeded'))
     }
   }
 }
 export const logout = () => {
   return async (dispatch: Dispatch) => {
     try {
+      // dispatch(setAppStatus('loading'))
       await authAPI.logout()
       dispatch(authActions.setIsLoggedIn(false))
+      dispatch(setUserData(null, null, null))
       console.log('LogOut')
     } catch (error) {
       dispatch(authActions.setLoginError(error.response ? error.response.data.error
@@ -96,12 +104,15 @@ export const logout = () => {
           : 'Some error occurred'))
       console.log('NOT LogOut')
 
+    } finally {
+      // dispatch(setAppStatus('succeeded'))
     }
   }
 }
 export const sendEmail = (email: string) => {
   return async (dispatch: Dispatch) => {
     try {
+      dispatch(setAppStatus('loading'))
       await authAPI.sendEmail(email)
       dispatch(authActions.setIsEmailSent(true))
       console.log('Email is sent')
@@ -110,12 +121,15 @@ export const sendEmail = (email: string) => {
         : error.message ? error.message
           : 'Some error occurred'))
       console.log('Email is NOT sent')
+    } finally {
+      dispatch(setAppStatus('succeeded'))
     }
   }
 }
 export const setPassword = (password: string, token: string) => {
   return async (dispatch: Dispatch) => {
     try {
+      dispatch(setAppStatus('loading'))
       await authAPI.setPassword(password, token)
       dispatch(authActions.setIsPasswordChanged(true))
       console.log('Password set')
@@ -124,6 +138,8 @@ export const setPassword = (password: string, token: string) => {
         : error.message ? error.message
           : 'Some error occurred'))
       console.log('Password NOT set')
+    } finally {
+      dispatch(setAppStatus('succeeded'))
     }
   }
 }
@@ -172,6 +188,11 @@ export const authReducer = (state: AuthStateType = authInitState, action: AuthAc
       return {
         ...state,
         setPasswordError: action.errorText
+      }
+    case 'cards/auth/SET-REQUEST-ERROR':
+      return {
+        ...state,
+        requestError: action.error
       }
     default:
       return state
