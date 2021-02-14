@@ -32,9 +32,9 @@ export const Header = () => {
       {/*  <NavLink to={PATH.LOGIN} className={s.link} activeClassName={s.active}>Login</NavLink>*/}
       {/*</li>*/}
 
-      {/*<li className={s.menuItem}>*/}
-      {/*  <NavLink to={PATH.SIGNUP} className={s.link} activeClassName={s.active}>Sign Up</NavLink>*/}
-      {/*</li>*/}
+      <li className={s.menuItem}>
+        <NavLink to={PATH.CARD} className={s.link} activeClassName={s.active}>Card</NavLink>
+      </li>
 
       <li className={s.menuItem}>
         <NavLink to={PATH.REFRESH} className={s.link} activeClassName={s.active}>Forgot your password?</NavLink>
