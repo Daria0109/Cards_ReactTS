@@ -11,6 +11,6 @@ const instance = axios.create({
 export const cardAPI = {
 	getCard(pageCount: number) {
 		return instance.get(`cards/pack?&pageCount=${pageCount}` )
-		//return instance.get(`cards/pack` )
+		//return instance.get(`cards/pack` ) bla
 	}
 }
