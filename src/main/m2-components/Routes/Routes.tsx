@@ -4,20 +4,21 @@ import {Test} from '../../../features/f0-test/Test';
 import {Login} from '../../../features/f1-login/Login';
 import {SignUp} from '../../../features/f2-signUp/SignUp';
 import {Profile} from '../../../features/f3-profile/Profile';
-import {Error404} from '../../../features/f6-error404/Error404';
+import {Error404} from '../../../features/f7-error404/Error404';
 import {RefreshPassword} from '../../../features/f5-refreshPassword/RefreshPassword';
 import {SetPassword} from '../../../features/f4-setPassword/SetPassword';
-import { Card } from '../../../features/f7-card/Card';
+import {Packs} from '../../../features/f6-packs/Packs';
 
 export const PATH = {
   TEST: '/test',
   LOGIN: '/login',
   SIGNUP: '/signup',
-  CARD: '/card',
   PROFILE: '/profile',
   REFRESH: '/refresh',
   SET_TOKEN: '/set/:token',
   SET: '/set',
+  PACKS: '/packs-of-cards',
+  CARDS: '/cards',
   ERROR404: '/404'
 }
 
@@ -28,10 +29,10 @@ export const Routes = () => {
       <Switch>
         <Route path={"/"} exact render={() => <Redirect to={PATH.PROFILE}/>}/>
         <Route path={PATH.LOGIN} render={() => <Login/>}/>
-        <Route path={PATH.CARD} render={() => <Card/>}/>
         <Route path={PATH.TEST} render={() => <Test/>}/>
         <Route path={PATH.SIGNUP} render={() => <SignUp/>}/>
         <Route path={PATH.PROFILE} render={() => <Profile/>}/>
+        <Route path={PATH.PACKS} render={() => <Packs/>}/>
         <Route path={PATH.REFRESH} render={() => <RefreshPassword/>}/>
         <Route path={PATH.SET} exact render={() => <SetPassword/>}/>
         <Route path={PATH.SET_TOKEN} render={() => <SetPassword/>}/>

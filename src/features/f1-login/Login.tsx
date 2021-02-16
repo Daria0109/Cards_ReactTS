@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {authActions, login} from '../../main/m3-bll/auth-reducer';
+import {login} from '../../main/m3-bll/auth-reducer';
 import {NavLink, Redirect} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import s from './Login.module.css'
@@ -15,7 +15,6 @@ export const Login = () => {
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-  const requestLoginError = useSelector<AppRootStateType, string | null>(state => state.auth.loginError)
   const dispatch = useDispatch()
 
 
@@ -30,14 +29,13 @@ export const Login = () => {
   }
   const onSubmit = () => {
     dispatch(login({email, password, rememberMe}))
-    dispatch(authActions.setLoginError(null))
   }
 
   if (isLoggedIn) {
     return <Redirect to={PATH.PROFILE}/>
   }
 
-  return (
+  return <div className={s.formWrapper}>
     <div className={s.container}>
       <h2 className={s.title}>Log in</h2>
       <div className={s.itemForm}>
@@ -63,8 +61,7 @@ export const Login = () => {
       {appStatus === 'loading' && <div className={s.overflow}>Please, wait...</div>}
 
 
-      {requestLoginError && <div className={s.requestError}>{requestLoginError}</div>}
 
     </div>
-  )
+  </div>
 }

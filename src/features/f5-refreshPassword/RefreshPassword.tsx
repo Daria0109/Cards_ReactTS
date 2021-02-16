@@ -10,7 +10,6 @@ import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 export const RefreshPassword = () => {
   const isEmailSent = useSelector<AppRootStateType, boolean>(state => state.auth.isEmailSent)
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-  const sendEmailError = useSelector<AppRootStateType, string | null>(state => state.auth.refreshPasswordError)
   const dispatch = useDispatch();
 
   const [emailValue, setEmailValue] = useState('')
@@ -20,34 +19,32 @@ export const RefreshPassword = () => {
   }
   const sendEmailHandler = () => {
     dispatch(sendEmail(emailValue))
-    dispatch(authActions.setRefreshPasswordError(null))
   }
 
-  return <div className={s.container}>
-    {!isEmailSent &&
-    <div>
-      <h2 className={s.title}>Forgot your password?</h2>
-      <div className={s.editBlock}>
-        <div className={s.itemForm}>
-          <input type='text' placeholder='Enter email...' value={emailValue} onChange={changeEmailHandler}/>
+  return <div className={s.formWrapper}>
+    <div className={s.container}>
+      {!isEmailSent &&
+      <div>
+        <h2 className={s.title}>Forgot your password?</h2>
+        <div className={s.editBlock}>
+          <div className={s.itemForm}>
+            <input type='text' placeholder='Enter email...' value={emailValue} onChange={changeEmailHandler}/>
+          </div>
+          <div className={s.itemForm}>
+            <button className={s.button} onClick={sendEmailHandler} disabled={appStatus === 'loading'}>Send</button>
+          </div>
         </div>
-        <div className={s.itemForm}>
-          <button className={s.button} onClick={sendEmailHandler} disabled={appStatus === 'loading'}>Send</button>
-        </div>
-      </div>
-    </div>}
+      </div>}
 
-    {isEmailSent &&
-    <div className={s.sent}>
-      <p>Success!</p>
-      <p>The link was sent to your email!</p>
-    </div>}
+      {isEmailSent &&
+      <div className={s.sent}>
+        <p>Success!</p>
+        <p>The link was sent to your email!</p>
+      </div>}
 
-    {sendEmailError && <div className={s.requestError}>{sendEmailError}</div>}
+      <NavLink className={s.link} to={PATH.LOGIN}>Log In</NavLink>
 
-    <NavLink className={s.link} to={PATH.LOGIN}>Log In</NavLink>
-
-    {appStatus === 'loading' && <div className={s.overflow}>Please, wait...</div>}
-
+      {appStatus === 'loading' && <div className={s.overflow}>Please, wait...</div>}
+    </div>
   </div>
 }
