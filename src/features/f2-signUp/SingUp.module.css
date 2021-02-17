@@ -1,3 +1,10 @@
+.formWrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 .container {
     width: 400px;
     max-width: 100%;
@@ -11,6 +18,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    position: relative;
 }
 .title {
     font-family: 'Comfortaa_Bold', sans-serif;
@@ -57,4 +65,38 @@ input[type=text] {
     font-size: 16px;
     color: #7a4747;
     font-family: 'Comfortaa_Bold', sans-serif;
+}
+.overflow {
+    position: absolute;
+    padding-top: 20px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(212, 212, 212, 0.5);
+    font-size: 24px;
+    font-weight: bold;
+    pointer-events: none;
+}
+.requestError {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #775298;
+    padding: 10px 5px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+}
+.validateError {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #cc1b08;
+    padding: 10px 5px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
 }

@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {authActions, login} from '../../main/m3-bll/auth-reducer';
+import {login} from '../../main/m3-bll/auth-reducer';
 import {NavLink, Redirect} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import s from './Login.module.css'
+import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 
 
 export const Login = () => {
@@ -13,9 +14,7 @@ export const Login = () => {
   const [rememberMe, setRememberMe] = useState(false)
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
-  const isInitialized = useSelector<AppRootStateType, boolean>(state => state.profile.isInitialized)
-  const userName = useSelector<AppRootStateType, string | null>(state => state.profile.userName)
-  const error = useSelector<AppRootStateType, string | null>(state => state.auth.loginError)
+  const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
   const dispatch = useDispatch()
 
 
@@ -30,14 +29,13 @@ export const Login = () => {
   }
   const onSubmit = () => {
     dispatch(login({email, password, rememberMe}))
-    dispatch(authActions.setLoginError(null))
   }
 
   if (isLoggedIn) {
     return <Redirect to={PATH.PROFILE}/>
   }
 
-  return (
+  return <div className={s.formWrapper}>
     <div className={s.container}>
       <h2 className={s.title}>Log in</h2>
       <div className={s.itemForm}>
@@ -51,14 +49,19 @@ export const Login = () => {
                onChange={changeRememberMeHandler}/>
         <label htmlFor='remember'>Remember me</label>
       </div>
-      {error && <div className={s.error}>{error}</div>}
+
       <div className={s.forgot}>
         <NavLink to={PATH.REFRESH} className={s.link}>Forgot your password?</NavLink>
       </div>
       <div className={s.itemForm}>
-        <button className={s.button} onClick={onSubmit}>Submit</button>
+        <button className={s.button} onClick={onSubmit} disabled={appStatus === 'loading'}>Submit</button>
       </div>
         <NavLink to={PATH.SIGNUP} className={s.link}>Sign Up</NavLink>
+
+      {appStatus === 'loading' && <div className={s.overflow}>Please, wait...</div>}
+
+
+
     </div>
-  )
+  </div>
 }
