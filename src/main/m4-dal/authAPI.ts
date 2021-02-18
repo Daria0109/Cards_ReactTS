@@ -42,6 +42,9 @@ export const authAPI = {
 		return instance.delete('auth/me')
 			.then(res => res)
 	},
+	setNameProfile(token: string | undefined, name: string | null,avatar: string | null) {
+		return instance.put('auth/me', {token, name, avatar})
+	},
 	sendEmail(email: string) {
 		return instance.post('auth/forgot', {
 			email: email,

@@ -1,8 +1,16 @@
 // A c t i o n s
+import {authAPI} from "../m4-dal/authAPI";
+
 export const setUserData = (userName: string | null, cardsCount: number | null, userId: string | null) => ({
   type: 'cards/profile/SET-USER-DATA', userName, userId, cardsCount
 } as const)
-export type ProfileActionsTypes = ReturnType<typeof setUserData>
+export const setUserName = (userName: string | null) => ({
+  type: 'cards/profile/SET-USER-NAME', userName,
+} as const)
+
+
+
+export type ProfileActionsTypes = ReturnType<typeof setUserData> | ReturnType<typeof setUserName>
 
 // S t a t e
 const profileInitState = {
@@ -13,7 +21,7 @@ const profileInitState = {
 }
 export type ProfileStateType = typeof profileInitState
 
-// R d u c e r
+// R e d u c e r
 export const profileReducer = (state: ProfileStateType = profileInitState, action: ProfileActionsTypes): ProfileStateType => {
   switch (action.type) {
     case 'cards/profile/SET-USER-DATA':
@@ -23,9 +31,22 @@ export const profileReducer = (state: ProfileStateType = profileInitState, actio
         publicCardPacksCount: action.cardsCount,
         userId: action.userId
       }
+    case "cards/profile/SET-USER-NAME": {
+      return {
+        ...state,
+        userName: action.userName
+      }
+    }
     default:
       return {...state}
   }
+}
+
+export const setNameProfile = (token: string | undefined, name: string,avatar: string | null) => (dispatch: any) => {
+  return authAPI.setNameProfile(token, name, avatar)
+    .then( (res) => {
+      dispatch(setUserName(name))
+    } )
 }
 
 

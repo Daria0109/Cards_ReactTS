@@ -24,7 +24,6 @@
     border: 1px solid #c6c6c6;
     padding: 20px;
     display: flex;
-    align-items: center;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 1px 1px 5px rgba(000, 000, 000, 0.3);
     border-radius: 8px;
@@ -41,13 +40,29 @@
 }
 
 .dataRow {
+    width: 100%;
     text-align: left;
     margin-bottom: 10px;
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: bold;
+}
+.data {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .dataRow span {
     color: #cc1b08;
+}
+
+.wrappedButton {
+    width: 200px;
+
 }
 
