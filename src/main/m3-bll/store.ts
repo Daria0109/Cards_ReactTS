@@ -5,13 +5,15 @@ import {testReducer} from './test-reducer';
 import thunk from 'redux-thunk'
 import {appReducer} from "./app-reducer";
 import {packsReducer} from './packs-reducer';
+import {cardReducer} from "./card-reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   testPage: testReducer,
   profile: profileReducer,
   app: appReducer,
-  packs: packsReducer
+  packs: packsReducer,
+  card: cardReducer
 })
 
 

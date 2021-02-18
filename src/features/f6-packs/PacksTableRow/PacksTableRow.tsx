@@ -26,7 +26,7 @@ export const PacksTableRow: React.FC<PackItemPropsType> = ({title, countCards, d
     <div className={s.rowItem}>{countCards}</div>
     <div className={s.rowItem}>{dateUpdate}</div>
     <div className={s.rowItem}>
-      <NavLink to={PATH.CARDS} className={s.cardsLink}>Open</NavLink>
+      <NavLink to={PATH.CARDS + `/${packId}`} className={s.cardsLink}>Open</NavLink>
     </div>
     <div className={s.rowItem}>
       {isOwner
