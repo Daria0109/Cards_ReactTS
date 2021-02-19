@@ -1,26 +1,27 @@
 {
   "files": {
-    "main.css": "/Cards_ReactTS/static/css/main.ad584137.chunk.css",
-    "main.js": "/Cards_ReactTS/static/js/main.d26882c5.chunk.js",
-    "main.js.map": "/Cards_ReactTS/static/js/main.d26882c5.chunk.js.map",
-    "runtime-main.js": "/Cards_ReactTS/static/js/runtime-main.42131b9a.js",
-    "runtime-main.js.map": "/Cards_ReactTS/static/js/runtime-main.42131b9a.js.map",
-    "static/js/2.80abe774.chunk.js": "/Cards_ReactTS/static/js/2.80abe774.chunk.js",
-    "static/js/2.80abe774.chunk.js.map": "/Cards_ReactTS/static/js/2.80abe774.chunk.js.map",
-    "static/js/3.30296d08.chunk.js": "/Cards_ReactTS/static/js/3.30296d08.chunk.js",
-    "static/js/3.30296d08.chunk.js.map": "/Cards_ReactTS/static/js/3.30296d08.chunk.js.map",
+    "main.css": "/Cards_ReactTS/static/css/main.6ecedf38.chunk.css",
+    "main.js": "/Cards_ReactTS/static/js/main.0084fea7.chunk.js",
+    "main.js.map": "/Cards_ReactTS/static/js/main.0084fea7.chunk.js.map",
+    "runtime-main.js": "/Cards_ReactTS/static/js/runtime-main.0cb179d1.js",
+    "runtime-main.js.map": "/Cards_ReactTS/static/js/runtime-main.0cb179d1.js.map",
+    "static/js/2.574c6cbe.chunk.js": "/Cards_ReactTS/static/js/2.574c6cbe.chunk.js",
+    "static/js/2.574c6cbe.chunk.js.map": "/Cards_ReactTS/static/js/2.574c6cbe.chunk.js.map",
+    "static/js/3.cef92a42.chunk.js": "/Cards_ReactTS/static/js/3.cef92a42.chunk.js",
+    "static/js/3.cef92a42.chunk.js.map": "/Cards_ReactTS/static/js/3.cef92a42.chunk.js.map",
     "index.html": "/Cards_ReactTS/index.html",
-    "static/css/main.ad584137.chunk.css.map": "/Cards_ReactTS/static/css/main.ad584137.chunk.css.map",
-    "static/js/2.80abe774.chunk.js.LICENSE.txt": "/Cards_ReactTS/static/js/2.80abe774.chunk.js.LICENSE.txt",
+    "static/css/main.6ecedf38.chunk.css.map": "/Cards_ReactTS/static/css/main.6ecedf38.chunk.css.map",
+    "static/js/2.574c6cbe.chunk.js.LICENSE.txt": "/Cards_ReactTS/static/js/2.574c6cbe.chunk.js.LICENSE.txt",
     "static/media/404-error.8c0adfd2.jpg": "/Cards_ReactTS/static/media/404-error.8c0adfd2.jpg",
     "static/media/index.css": "/Cards_ReactTS/static/media/Comfortaa-Regular.99567c98.ttf",
     "static/media/default-avatar.98d79ab0.png": "/Cards_ReactTS/static/media/default-avatar.98d79ab0.png",
-    "static/media/App.module.css": "/Cards_ReactTS/static/media/main-bg.9d28d947.png"
+    "static/media/App.module.css": "/Cards_ReactTS/static/media/main-bg.9d28d947.png",
+    "static/media/SearchForm.module.css": "/Cards_ReactTS/static/media/search-icon.792c9620.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.42131b9a.js",
-    "static/js/2.80abe774.chunk.js",
-    "static/css/main.ad584137.chunk.css",
-    "static/js/main.d26882c5.chunk.js"
+    "static/js/runtime-main.0cb179d1.js",
+    "static/js/2.574c6cbe.chunk.js",
+    "static/css/main.6ecedf38.chunk.css",
+    "static/js/main.0084fea7.chunk.js"
   ]
 }
