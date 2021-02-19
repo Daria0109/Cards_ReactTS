@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseLocalhostURL = 'http://localhost:7542/2.0/'
 const baseHerokuURL = 'https://neko-back.herokuapp.com/2.0/'
 const instance = axios.create({
-	baseURL: baseLocalhostURL,
+	baseURL: baseHerokuURL,
 	withCredentials: true,
 })
 export type CardPackType = {
@@ -43,11 +43,47 @@ export type DeleteResponsePacksCardsType = {
 	token: string
 	tokenDeathTime: string
 }
+
+export type CardType = {
+	_id: string
+	cardsPack_id: string
+	user_id: string
+	answer: string
+	question: string
+	grade: number
+	shots: number
+	comments: string
+	type: 'card',
+	rating: number
+	more_id: string
+	created: string
+	updated: string
+	__v: number
+	answerImg: string
+	answerVideo: string
+	questionImg: string
+	questionVideo: string
+}
+export type GetResponseCardsType = {
+	cards: Array<CardType>
+	packUserId: string
+	page: number
+	pageCount: number
+	cardsTotalCount: number
+	minGrade: number
+	maxGrade: number
+	token: string
+	tokenDeathTime: number
+}
+
+
 export const packsCardsAPI = {
-	fetchPacks(pageNumber: number, pageSize: number, userId?: string) {
+	fetchPacks(pageNumber: number, pageSize: number, packName?: string, sort?: string, userId?: string) {
 		return instance.get<GetResponsePacksCardsType>(userId
 			? `cards/pack?page=${pageNumber}&pageCount=${pageSize}&user_id=${userId}`
-			: `cards/pack?page=${pageNumber}&pageCount=${pageSize}`)
+			+ (packName ? `&packName=${packName}` : '') + (sort ? `&sortPacks=${sort}` : '')
+			: `cards/pack?page=${pageNumber}&pageCount=${pageSize}`
+			+ (packName ? `&packName=${packName}` : '') + (sort ? `&sortPacks=${sort}` : ''))
 			.then(res => res.data)
 	},
 	createCardsPack(name: string) {
@@ -61,8 +97,11 @@ export const packsCardsAPI = {
 	}
 }
 export const cardsAPI = {
-	fetchCard(cardId?: string | null) {
-		return instance.get(`cards/card?cardsPack_id=${cardId}`)
+	fetchCards(packId: string, pageNumber: number, pageSize: number, sort?: string, cardQuestion?: string) {
+		return instance.get<GetResponseCardsType>(
+			`cards/card?cardsPack_id=${packId}&page=${pageNumber}&pageCount=${pageSize}`
+			+ (sort ? `&sortCards=${sort}` : '') + (cardQuestion ? `&cardQuestion=${cardQuestion}` : ''))
+			.then(res => res.data)
 	},
 	createCard(cardId?: string) {
 		return instance.post(`cards/card`, {card: {cardsPack_id: cardId}})

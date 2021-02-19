@@ -1,14 +1,13 @@
-.packsPage {
+.cardsPage {
     width: 100%;
     min-height: 100vh;
-    padding-top: 85px;
+    padding-top: 100px;
     padding-bottom: 10px;
 }
-
 .table {
     height: 65vh;
+    margin-bottom: 10px;
 }
-
 .headerTable {
     display: flex;
     border-top-left-radius: 8px;
@@ -16,7 +15,6 @@
     overflow: hidden;
     background: #775298;
 }
-
 .headerItem {
     display: flex;
     align-items: center;
@@ -27,7 +25,6 @@
     font-weight: bold;
     color: #ffffff;
 }
-
 .rows {
     border: 1px solid #4e4e4e;
     height: 80%;
@@ -35,17 +32,10 @@
     background-color: rgba(232, 205, 241, 0.9);
 }
 .tableControls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.pageControls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.addBtn {
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .button {
     cursor: pointer;
@@ -59,18 +49,8 @@
     transition: 0.2s;
     text-transform: uppercase;
 }
-.button:hover {
-    background-color: #cb6049;
-    color: #fff;
-}
-.showMine {
-    margin-bottom: 5px;
+.pageControls  {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
-.showMine * {
-    cursor: pointer;
-}
-
-
-

@@ -1,10 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {
-  createCardsPack,
-  fetchPacks, packActions
-} from '../../main/m3-bll/packs-reducer';
-import React, {useEffect} from 'react';
+import {createCardsPack, fetchPacks, packActions} from '../../main/m3-bll/packs-reducer';
+import React, {useCallback, useEffect} from 'react';
 import {Preloader} from '../../main/m2-components/Preloader/Preloader';
 import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 import s from './Packs.module.css'
@@ -15,6 +12,8 @@ import {initializeUser} from '../../main/m3-bll/auth-reducer';
 import {Paginator} from '../../main/m2-components/Paginator/Paginator';
 import {PageSizeSelector} from '../../main/m2-components/PageSizeSelector/PageSizeSelector';
 import {PacksTableRow} from './PacksTableRow/PacksTableRow';
+import {SearchForm} from '../../main/m2-components/SearchForm/SearchForm';
+import {Sort} from '../../main/m2-components/Sort/Sort';
 
 
 export const Packs = () => {
@@ -26,6 +25,9 @@ export const Packs = () => {
   const packName = useSelector<AppRootStateType, string>(state => state.packs.packName)
   const isMyPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isMyPacks)
   const userId = useSelector<AppRootStateType, string | null>(state => state.profile.userId)
+  const searchPackName = useSelector<AppRootStateType, string>(state => state.packs.searchPackName)
+  const sortPacksValue = useSelector<AppRootStateType, string>(state => state.packs.sortPacksValue)
+  const totalPacksCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,17 +38,33 @@ export const Packs = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(fetchPacks(pageNumber, pageSize))
+      dispatch(fetchPacks(pageNumber))
     }
-  }, [isLoggedIn, pageNumber, pageSize, isMyPacks])
+  }, [isLoggedIn, pageNumber, pageSize, isMyPacks, searchPackName, sortPacksValue])
 
 
   const addPackHandler = () => {
-    dispatch(createCardsPack(pageSize, packName, isMyPacks))
+    dispatch(createCardsPack(pageSize, packName))
   }
   const showMyPacksHandler = () => {
     dispatch(packActions.setIsMyPacks(!isMyPacks))
   }
+  const setActivePacksPageSize = useCallback((pageSize: number) => {
+    dispatch(packActions.setActivePageSize(pageSize))
+  }, [])
+  const setActivePacksPageNumber = useCallback((page: number) => {
+    dispatch(packActions.setActivePageNumber(page))
+  }, [])
+  const searchPackNameHandler = useCallback((value: string) => {
+    dispatch(packActions.setSearchPackName(value))
+  }, [])
+  const upSortHandler = useCallback(() => {
+    dispatch(packActions.setSortPacksValue('0cardsCount'))
+  }, [])
+  const downSortHandler = useCallback(() => {
+    dispatch(packActions.setSortPacksValue('1cardsCount'))
+  }, [])
+
   const tableRows = cardPacks.map(p => <PacksTableRow key={p.created}
                                                       title={p.name}
                                                       countCards={p.cardsCount}
@@ -61,36 +79,47 @@ export const Packs = () => {
   }
 
   return <div className={s.packsPage}>
-    <div className={s.showMine}>
-      <input type='checkbox' id='myPacks' checked={isMyPacks} onChange={showMyPacksHandler}/>
-      <label htmlFor='myPacks'>Show my packs</label>
-    </div>
-    <div className={s.addBtn}>
-    <button className={s.button} onClick={addPackHandler}>Add new Pack</button>
+    <div className={s.tableControls}>
+      <div>
+        <div className={s.showMine}>
+          <input type='checkbox' id='myPacks' checked={isMyPacks} onChange={showMyPacksHandler}/>
+          <label htmlFor='myPacks'>Show my packs</label>
+        </div>
+        <div className={s.addBtn}>
+          <button className={s.button} onClick={addPackHandler}>Add new Pack</button>
+        </div>
+      </div>
+      <SearchForm searchParam={searchPackName}
+                  placeholder={'Title...'}
+                  search={searchPackNameHandler}/>
     </div>
     <div className={s.table}>
       <div className={s.headerTable}>
         <div className={s.headerItem}>Title</div>
-        <div className={s.headerItem}>Count of cards</div>
+        <div className={s.headerItem}>Count of cards
+          <Sort up={'0cardsCount'}
+                down={'1cardsCount'}
+                upSort={upSortHandler}
+                downSort={downSortHandler}
+                sortSetValue={sortPacksValue}/>
+        </div>
         <div className={s.headerItem}>Updated</div>
         <div className={s.headerItem}>Cards</div>
-        <div className={s.headerItem}>Delete</div>
         <div className={s.headerItem}>Update</div>
+        <div className={s.headerItem}>Delete</div>
       </div>
       <div className={s.rows}>
         {tableRows}
       </div>
     </div>
     <div className={s.pageControls}>
-      <PageSizeSelector/>
-      <Paginator/>
+      <PageSizeSelector pageSize={pageSize} setActivePageSize={setActivePacksPageSize}/>
+      <Paginator totalItemsCount={totalPacksCount}
+                 setActivePageNumber={setActivePacksPageNumber}
+                 pageNumber={pageNumber}
+                 pageSize={pageSize}/>
     </div>
+
 
   </div>
 }
-
-
-
-
-
-

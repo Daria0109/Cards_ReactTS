@@ -9,7 +9,7 @@
 
 .rowItem {
     padding: 10px 5px;
-    flex-basis: 14%;
+    flex-basis: 18%;
     text-align: center;
 }
 .button {
@@ -29,12 +29,4 @@
 .button:hover {
     background-color: #be2608;
     color: #fff;
-}
-
-.cardsLink {
-    color: #6d0606;
-    margin-left: 10px;
-}
-.cardsLink:hover {
-    color: #f19105;
 }
