@@ -36,7 +36,7 @@ export const CardsTableRow: React.FC<CardTablePropsType> = (
 		</div>
 		<div className={s.rowItem}>{question}</div>
 		<div className={s.rowItem}>{answer}</div>
-		<div className={s.rowItem}>{grade}</div>
+		<div className={s.rowItem}>{grade.toFixed(3)}</div>
 		<div className={s.rowItem}>{update}</div>
 	</div>
 };

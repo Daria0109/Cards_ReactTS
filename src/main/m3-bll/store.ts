@@ -6,6 +6,7 @@ import thunk from 'redux-thunk'
 import {appReducer} from "./app-reducer";
 import {packsReducer} from './packs-reducer';
 import {cardsReducer} from "./cards-reducer";
+import {learningReducer} from './learning-reducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   app: appReducer,
   packs: packsReducer,
-  cards: cardsReducer
+  cards: cardsReducer,
+  learning: learningReducer
 })
 
 

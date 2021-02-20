@@ -76,6 +76,23 @@ export type GetResponseCardsType = {
   tokenDeathTime: number
 }
 
+export type UpdateCardGradeType = {
+  updatedGrade: {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
+    more_id: string
+    created: string
+    updated: string
+    "__v": number
+  },
+  "token": string
+  "tokenDeathTime": number
+}
+
 
 export const packsCardsAPI = {
   fetchPacks(page: number, pageCount: number, packName: string | null,
@@ -119,5 +136,14 @@ export const cardsAPI = {
   },
   deleteCard(cardId?: string) {
     return instance.delete(`cards/card?id=${cardId}`)
+  }
+}
+
+export const learningAPI = {
+  setGrade(grade: number, cardId: string) {
+    return instance.put<UpdateCardGradeType>(`cards/grade`, {
+      grade,
+      card_id: cardId
+    }).then(res => res.data)
   }
 }

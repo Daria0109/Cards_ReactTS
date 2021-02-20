@@ -33,6 +33,11 @@ export const Header = () => {
       <li className={s.menuItem}>
         <NavLink to={`/cards/${openedPackId}`} className={s.link} activeClassName={s.active}>Cards</NavLink>
       </li>
+
+      <li className={s.menuItem}>
+        <NavLink to={`/learn/${openedPackId}`} className={s.link} activeClassName={s.active}>Learn</NavLink>
+      </li>
+
       <li className={s.menuItem}>
         <NavLink to={PATH.REFRESH} className={s.link} activeClassName={s.active}>Forgot your password?</NavLink>
       </li>

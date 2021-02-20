@@ -49,7 +49,9 @@ export const PacksTableRow: React.FC<PackItemPropsType> = ({title, countCards, d
     <div className={s.rowItem}>{countCards}</div>
     <div className={s.rowItem}>{dateUpdate}</div>
     <div className={s.rowItem}>
-      <button className={s.button}>Learn</button>
+      <NavLink to={`/learn/${packId}`}>
+        <button className={s.button}>Learn</button>
+      </NavLink>
     </div>
   </div>
 }
