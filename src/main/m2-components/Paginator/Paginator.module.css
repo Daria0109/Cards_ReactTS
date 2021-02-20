@@ -1,11 +1,13 @@
 .container {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 3px;
 }
 
 .item {
     cursor: pointer;
-    line-height: 18px;
+    line-height: 1;
     margin-right: 3px;
     display: flex;
     align-items: center;
@@ -13,12 +15,12 @@
     border: 1px solid #775298;
     background-color: #fff;
     border-radius: 4px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .button {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     font-size: 22px;
     font-weight: bold;
     padding-bottom: 2px;
@@ -26,8 +28,8 @@
 
 .page {
     padding-top: 2px;
-    width: 30px;
-    height: 30px;
+    width: 27px;
+    height: 27px;
     transition: 0.3s;
 }
 .page:hover {

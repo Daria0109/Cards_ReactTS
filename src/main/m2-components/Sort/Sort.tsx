@@ -6,7 +6,7 @@ type SortPropsType = {
   down: string
   upSort: () => void
   downSort: () => void
-  sortSetValue: string
+  sortSetValue: string | null
 }
 
 export const Sort: React.FC<SortPropsType> = React.memo(

@@ -1,26 +1,35 @@
 .row {
+    background-color: rgba(232, 205, 241, 0.9);
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #4e4e4e;
+    border: 1px solid #4e4e4e;
+    border-top: none;
 }
+
 .opened {
-    background-color: rgba(255, 255, 255, 0.35);
+    background-color: rgba(255, 255, 255, 0.7);
 }
-.row:last-child {
-    border-bottom: none;
-}
+
+/*.row:last-child {*/
+/*    border-bottom: none;*/
+/*}*/
 
 .rowItem {
     padding: 10px 5px;
-    flex-basis: 18%;
+    flex-basis: 20%;
     text-align: center;
 }
-.button {
-    margin-left: 12px;
+
+.btnRowItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.iconButton {
     cursor: pointer;
     line-height: 1;
-    padding: 8px 12px;
-    background-color: #ff7b5b;
+    padding: 6px 9px;
+    background-color: #fff5f1;
     font-size: 14px;
     border: none;
     outline: none;
@@ -28,16 +37,30 @@
     transition: 0.2s;
 }
 
-
-.button:hover {
-    background-color: #be2608;
-    color: #fff;
+.iconButton:hover {
+    background-color: #ffc3af;
 }
 
 .cardsLink {
     color: #6d0606;
-    margin-left: 10px;
 }
+
 .cardsLink:hover {
     color: #f19105;
+}
+.button {
+    cursor: pointer;
+    line-height: 1;
+    padding: 12px 15px;
+    background-color: #ff7b5b;
+    font-size: 15px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    transition: 0.2s;
+    text-decoration: none;
+}
+.button:hover {
+    background-color: #be2608;
+    color: #fff;
 }

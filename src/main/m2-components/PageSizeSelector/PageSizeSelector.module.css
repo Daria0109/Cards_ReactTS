@@ -1,14 +1,15 @@
 .container {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .selector {
     padding-top: 2px;
-    width: 35px;
-    height: 35px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
-    line-height: 18px;
+    line-height: 1;
     margin-right: 3px;
     display: flex;
     align-items: center;
@@ -16,7 +17,7 @@
     border: 1px solid #775298;
     background-color: #fff;
     border-radius: 4px;
-    font-size: 18px;
+    font-size: 14px;
     transition: 0.3s;
 }
 .selector:hover  {

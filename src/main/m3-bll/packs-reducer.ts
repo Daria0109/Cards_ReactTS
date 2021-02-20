@@ -20,10 +20,10 @@ export const packActions = {
   setIsMyPacks: (isMine: boolean) => ({
     type: 'cards/packs/SET-IS-MY-PACKS', isMine
   } as const),
-  setSearchPackName: (packName: string) => ({
+  setSearchPackName: (packName: string | null) => ({
     type: 'cards/packs/SET-SEARCH-PACK-NAME', packName
   } as const),
-  setSortPacksValue: (sortValue: string) => ({
+  setSortPacksValue: (sortValue: string | null) => ({
     type: 'cards/packs/SET-SORT-PACKS-VALUE', sortValue
   } as const),
   setOpenedPackId: (packId: string) => ({
@@ -39,8 +39,8 @@ const packsInitialState = {
   cardPacksTotalCount: 0,
   packName: 'Super Pack',
   isMyPacks: false,
-  searchPackName: '',
-  sortPacksValue: '',
+  searchPackName: null as string | null,
+  sortPacksValue: null as string | null,
   openedPackId: ''
 }
 export type PackStateType = typeof packsInitialState;

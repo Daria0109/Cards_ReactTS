@@ -8,6 +8,7 @@ import s from './Header.module.css'
 
 export const Header = () => {
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  const openedPackId = useSelector<AppRootStateType, string>(state => state.packs.openedPackId)
   const dispatch = useDispatch()
 
   const logoutHandler = () => {
@@ -30,7 +31,7 @@ export const Header = () => {
       </li>
 
       <li className={s.menuItem}>
-        <NavLink to={PATH.CARDS} className={s.link} activeClassName={s.active}>Cards</NavLink>
+        <NavLink to={`/cards/${openedPackId}`} className={s.link} activeClassName={s.active}>Cards</NavLink>
       </li>
       <li className={s.menuItem}>
         <NavLink to={PATH.REFRESH} className={s.link} activeClassName={s.active}>Forgot your password?</NavLink>

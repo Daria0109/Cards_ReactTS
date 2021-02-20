@@ -25,8 +25,8 @@ export const Packs = () => {
   const packName = useSelector<AppRootStateType, string>(state => state.packs.packName)
   const isMyPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isMyPacks)
   const userId = useSelector<AppRootStateType, string | null>(state => state.profile.userId)
-  const searchPackName = useSelector<AppRootStateType, string>(state => state.packs.searchPackName)
-  const sortPacksValue = useSelector<AppRootStateType, string>(state => state.packs.sortPacksValue)
+  const searchPackName = useSelector<AppRootStateType, string | null>(state => state.packs.searchPackName)
+  const sortPacksValue = useSelector<AppRootStateType, string | null>(state => state.packs.sortPacksValue)
   const totalPacksCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
   const dispatch = useDispatch();
 
@@ -81,20 +81,31 @@ export const Packs = () => {
   return <div className={s.packsPage}>
     <div className={s.tableControls}>
       <div>
+        <div className={s.searchForm}>
+        <SearchForm searchParam={searchPackName}
+                    placeholder={'Title...'}
+                    search={searchPackNameHandler}/>
+        </div>
         <div className={s.showMine}>
           <input type='checkbox' id='myPacks' checked={isMyPacks} onChange={showMyPacksHandler}/>
           <label htmlFor='myPacks'>Show my packs</label>
         </div>
-        <div className={s.addBtn}>
-          <button className={s.button} onClick={addPackHandler}>Add new Pack</button>
-        </div>
       </div>
-      <SearchForm searchParam={searchPackName}
-                  placeholder={'Title...'}
-                  search={searchPackNameHandler}/>
+
+      <div className={s.pageControls}>
+        <Paginator totalItemsCount={totalPacksCount}
+                   setActivePageNumber={setActivePacksPageNumber}
+                   pageNumber={pageNumber}
+                   pageSize={pageSize}/>
+        <PageSizeSelector pageSize={pageSize} setActivePageSize={setActivePacksPageSize}/>
+      </div>
     </div>
+
     <div className={s.table}>
       <div className={s.headerTable}>
+        <div className={s.headerItem}>
+          <button className={s.addButton} onClick={addPackHandler}>Pack</button>
+        </div>
         <div className={s.headerItem}>Title</div>
         <div className={s.headerItem}>Count of cards
           <Sort up={'0cardsCount'}
@@ -104,20 +115,11 @@ export const Packs = () => {
                 sortSetValue={sortPacksValue}/>
         </div>
         <div className={s.headerItem}>Updated</div>
-        <div className={s.headerItem}>Cards</div>
-        <div className={s.headerItem}>Update</div>
-        <div className={s.headerItem}>Delete</div>
+        <div className={s.headerItem}>Learn</div>
       </div>
       <div className={s.rows}>
         {tableRows}
       </div>
-    </div>
-    <div className={s.pageControls}>
-      <PageSizeSelector pageSize={pageSize} setActivePageSize={setActivePacksPageSize}/>
-      <Paginator totalItemsCount={totalPacksCount}
-                 setActivePageNumber={setActivePacksPageNumber}
-                 pageNumber={pageNumber}
-                 pageSize={pageSize}/>
     </div>
 
 

@@ -3,12 +3,15 @@ import s from './SearchForm.module.css'
 import debounce from 'lodash.debounce'
 
 type SearchFormPropsType = {
-  searchParam: string
+  searchParam: string | null
   placeholder: string
   search: (value: string) => void
 }
 
 export const SearchForm: React.FC<SearchFormPropsType> = React.memo(({searchParam, placeholder, search}) => {
+  if (searchParam === null) {
+    searchParam = ''
+  }
   const [searchValue, setSearchValue] = useState(searchParam)
 
   const debouncedSearch = useCallback(debounce((nextValue: string) => {

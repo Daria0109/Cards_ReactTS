@@ -19,8 +19,6 @@ export const PATH = {
   SET_TOKEN: '/set/:token',
   SET: '/set',
   PACKS: '/packs-of-cards',
-  CARDS: '/cards',
-  CARDS_packID: '/cards/:packIdParam',
   ERROR404: '/404'
 }
 
@@ -35,7 +33,7 @@ export const Routes = () => {
         <Route path={PATH.SIGNUP} render={() => <SignUp/>}/>
         <Route path={PATH.PROFILE} render={() => <Profile/>}/>
         <Route path={PATH.PACKS} render={() => <Packs/>}/>
-        <Route path={PATH.CARDS} render={() => <Cards/>}/>
+        <Route path={'/cards/:packIdParam?'} render={() => <Cards/>}/>
         <Route path={PATH.REFRESH} render={() => <RefreshPassword/>}/>
         <Route path={PATH.SET} exact render={() => <SetPassword/>}/>
         <Route path={PATH.SET_TOKEN} render={() => <SetPassword/>}/>

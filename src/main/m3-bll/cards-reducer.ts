@@ -31,8 +31,8 @@ const cardsInitialState = {
 	pageNumber: 1,
 	pageCount: 10,
 	pageSize: 10,
-	searchCardQuestion: '',
-	sortCardsValue: ''
+	searchCardQuestion: null as string | null,
+	sortCardsValue: null as string | null
 }
 export type CardStateType = typeof cardsInitialState;
 

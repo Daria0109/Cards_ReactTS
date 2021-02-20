@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
 import {CardType} from '../../main/m4-dal/packs-cards-API';
 import {Preloader} from '../../main/m2-components/Preloader/Preloader';
-import {Redirect} from 'react-router-dom';
+import {Redirect, useParams} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 import {cardsActions, createCards, fetchCards} from '../../main/m3-bll/cards-reducer';
@@ -14,19 +14,22 @@ import {initializeUser} from '../../main/m3-bll/auth-reducer';
 import s from './Cards.module.css'
 import {CardsTableRow} from './CardsTabelRow/CardsTabelRow';
 import {Sort} from '../../main/m2-components/Sort/Sort';
+import {packActions} from '../../main/m3-bll/packs-reducer';
 
 export const Cards = () => {
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   const userId = useSelector<AppRootStateType, string | null>(state => state.profile.userId)
   const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
-  const packId = useSelector<AppRootStateType, string>(state => state.packs.openedPackId)
+  const openedPackId = useSelector<AppRootStateType, string>(state => state.packs.openedPackId)
   const pageNumber = useSelector<AppRootStateType, number>(state => state.cards.pageNumber)
   const pageSize = useSelector<AppRootStateType, number>(state => state.cards.pageSize)
   const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
-  const searchCardQuestion = useSelector<AppRootStateType, string>(state => state.cards.searchCardQuestion)
-  const sortCardsValue = useSelector<AppRootStateType, string>(state => state.cards.sortCardsValue)
+  const searchCardQuestion = useSelector<AppRootStateType, string | null>(state => state.cards.searchCardQuestion)
+  const sortCardsValue = useSelector<AppRootStateType, string | null>(state => state.cards.sortCardsValue)
   const dispatch = useDispatch()
+  const {packIdParam} = useParams<{ packIdParam?: string }>()
+  console.log(packIdParam)
 
 
   useEffect(() => {
@@ -35,10 +38,19 @@ export const Cards = () => {
     }
   }, [])
   useEffect(() => {
-    if (isLoggedIn && packId) {
-      dispatch(fetchCards(packId))
+    if (isLoggedIn && !packIdParam) {
+      return
     }
-  }, [pageNumber, pageSize, searchCardQuestion, sortCardsValue])
+    if (isLoggedIn && openedPackId) {
+      dispatch(fetchCards(openedPackId))
+    }
+    if (isLoggedIn && !openedPackId && packIdParam) {
+      dispatch(packActions.setOpenedPackId(packIdParam))
+      dispatch(fetchCards(packIdParam))
+    }
+  }, [isLoggedIn, pageNumber, pageSize, searchCardQuestion, sortCardsValue])
+
+
   const setActiveCardsPageSize = useCallback((pageSize: number) => {
     dispatch(cardsActions.setActivePageSize(pageSize))
   }, [])
@@ -49,7 +61,7 @@ export const Cards = () => {
     dispatch(cardsActions.setSearchCardQuestion(value))
   }, [])
   const createNewCard = () => {
-    dispatch(createCards(packId))
+    dispatch(createCards(openedPackId))
   }
   const upSortHandler = useCallback(() => {
     dispatch(cardsActions.setSortCardsValue('0grade'))
@@ -57,8 +69,6 @@ export const Cards = () => {
   const downSortHandler = useCallback(() => {
     dispatch(cardsActions.setSortCardsValue('1grade'))
   }, [])
-
-
 
 
   const tableRows = cards.map(c => <CardsTableRow key={c._id}
@@ -77,37 +87,40 @@ export const Cards = () => {
 
   return <div className={s.cardsPage}>
     <div className={s.tableControls}>
-      <button className={s.button} onClick={createNewCard}>Add new Card</button>
       <SearchForm searchParam={searchCardQuestion}
                   placeholder={'Question...'}
                   search={searchCardQuestionHandler}/>
+      <div className={s.pageControls}>
+        <Paginator pageSize={pageSize}
+                   pageNumber={pageNumber}
+                   setActivePageNumber={setActiveCardsPageNumber}
+                   totalItemsCount={cardsTotalCount}/>
+        <PageSizeSelector pageSize={pageSize}
+                          setActivePageSize={setActiveCardsPageSize}/>
+      </div>
+
     </div>
     <div className={s.table}>
       <div className={s.headerTable}>
+        <div className={s.headerItem}>
+          <button className={s.addButton} onClick={createNewCard}>Card</button>
+        </div>
         <div className={s.headerItem}>Question</div>
         <div className={s.headerItem}>Answer</div>
-          <div className={s.headerItem}>Grade
+        <div className={s.headerItem}>Grade
           <Sort up={'0grade'}
                 down={'1grade'}
                 upSort={upSortHandler}
                 downSort={downSortHandler}
                 sortSetValue={sortCardsValue}/>
-          </div>
+        </div>
         <div className={s.headerItem}>Updated</div>
-        <div className={s.headerItem}>Update</div>
-        <div className={s.headerItem}>Delete</div>
       </div>
       <div className={s.rows}>
+        {isLoggedIn && !packIdParam && <div>Choose a Pack...</div>}
         {tableRows}
       </div>
     </div>
-    <div className={s.pageControls}>
-      <PageSizeSelector pageSize={pageSize}
-                        setActivePageSize={setActiveCardsPageSize}/>
-      <Paginator pageSize={pageSize}
-                 pageNumber={pageNumber}
-                 setActivePageNumber={setActiveCardsPageNumber}
-                 totalItemsCount={cardsTotalCount}/>
-    </div>
+
   </div>
 };

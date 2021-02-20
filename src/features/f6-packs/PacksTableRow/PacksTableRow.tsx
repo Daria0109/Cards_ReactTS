@@ -3,8 +3,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {deleteCardsPack, packActions} from '../../../main/m3-bll/packs-reducer';
 import s from './PacksTableRow.module.css'
 import {NavLink} from 'react-router-dom';
-import {PATH} from '../../../main/m2-components/Routes/Routes';
 import {AppRootStateType} from '../../../main/m3-bll/store';
+import editIcon from './../../../assets/edit.svg'
+import deleteIcon from './../../../assets/delete.svg'
 
 
 type PackItemPropsType = {
@@ -29,19 +30,26 @@ export const PacksTableRow: React.FC<PackItemPropsType> = ({title, countCards, d
 
 
   return <div className={rowStyle}>
-    <div className={s.rowItem}>{title}</div>
+    <div className={s.rowItem}>
+      {isOwner
+      && <div className={s.btnRowItem}>
+        <button className={s.iconButton}>
+          <img src={editIcon} alt='Edit' width='18px' height='18px'/>
+        </button>
+        <button className={s.iconButton} onClick={deletePackHandler}>
+          <img src={deleteIcon} alt='Delete' width='18px' height='18px'/>
+        </button>
+      </div>}
+    </div>
+    <div className={s.rowItem}>
+      <NavLink to={`/cards/${packId}`} className={s.cardsLink} onClick={openCardsHandler}>
+        {title}
+      </NavLink>
+    </div>
     <div className={s.rowItem}>{countCards}</div>
     <div className={s.rowItem}>{dateUpdate}</div>
     <div className={s.rowItem}>
-      <NavLink to={PATH.CARDS + `/${packId}`} className={s.cardsLink} onClick={openCardsHandler}>Open</NavLink>
-    </div>
-    <div className={s.rowItem}>
-      {isOwner
-      && <button className={s.button}>Update</button>}
-    </div>
-    <div className={s.rowItem}>
-      {isOwner
-      && <button className={s.button} onClick={deletePackHandler}>Delete</button>}
+      <button className={s.button}>Learn</button>
     </div>
   </div>
 }
