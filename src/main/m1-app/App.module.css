@@ -1,8 +1,10 @@
 .mainPage {
     height: 100vh;
     overflow-y: auto;
-    background-color: #ffecd5;
-    background-image: url("/src/assets/main-bg.png");
+    /*background-color: #ffecd5;*/
+    /*background-image: url("/src/assets/main-bg.png");*/
+    background: rgb(255,236,213);
+    background: radial-gradient(circle, rgba(255,236,213,1) 17%, rgba(245,194,158,1) 83%);
     background-repeat: no-repeat;
     background-position: 5% 65%;
 

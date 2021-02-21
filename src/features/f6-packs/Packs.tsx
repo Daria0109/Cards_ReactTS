@@ -34,7 +34,7 @@ export const Packs = () => {
     if (!isLoggedIn) {
       dispatch(initializeUser())
     }
-  }, [])
+  }, [isLoggedIn])
 
   useEffect(() => {
     if (isLoggedIn) {

@@ -38,7 +38,7 @@ export const Profile = () => {
 		if (!isLoggedIn) {
 			dispatch(initializeUser())
 		}
-	}, [])
+	}, [isLoggedIn])
 	if (appStatus === 'loading') {
 		return <Preloader/>
 	}

@@ -12,7 +12,7 @@ type PaginatorPropsType = {
 export const Paginator: React.FC<PaginatorPropsType> = React.memo(({
                                                                      pageSize, pageNumber, setActivePageNumber, totalItemsCount
                                                                    }) => {
-  const portionSize = 10
+  const portionSize = 7
   const [portionNumber, setPortionNumber] = useState(Math.ceil(pageNumber / portionSize));
 
   const prevButtonHandler = () => {

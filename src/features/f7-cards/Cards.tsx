@@ -29,24 +29,23 @@ export const Cards = () => {
   const sortCardsValue = useSelector<AppRootStateType, string | null>(state => state.cards.sortCardsValue)
   const dispatch = useDispatch()
   const {packIdParam} = useParams<{ packIdParam?: string }>()
-  console.log(packIdParam)
 
 
   useEffect(() => {
     if (!isLoggedIn) {
       dispatch(initializeUser())
     }
-  }, [])
+  }, [isLoggedIn])
   useEffect(() => {
-    if (isLoggedIn && !packIdParam) {
-      return
-    }
-    if (isLoggedIn && openedPackId) {
-      dispatch(fetchCards(openedPackId))
-    }
-    if (isLoggedIn && !openedPackId && packIdParam) {
-      dispatch(packActions.setOpenedPackId(packIdParam))
-      dispatch(fetchCards(packIdParam))
+    if (isLoggedIn) {
+      if (!packIdParam) return
+      if (!openedPackId && packIdParam) {
+        dispatch(packActions.setOpenedPackId(packIdParam))
+        dispatch(fetchCards(packIdParam))
+      }
+      if (openedPackId && packIdParam) {
+        dispatch(fetchCards(openedPackId))
+      }
     }
   }, [isLoggedIn, pageNumber, pageSize, searchCardQuestion, sortCardsValue])
 
@@ -118,6 +117,7 @@ export const Cards = () => {
       </div>
       <div className={s.rows}>
         {isLoggedIn && !packIdParam && <div>Choose a Pack...</div>}
+        {packIdParam && cards.length === 0 && <div>There are no cards in this pack... Return to packs</div>}
         {tableRows}
       </div>
     </div>
