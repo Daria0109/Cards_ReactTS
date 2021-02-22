@@ -21,7 +21,7 @@ export const RefreshPassword = () => {
     dispatch(sendEmail(emailValue))
   }
 
-  return <div className={s.formWrapper}>
+  return <div className={s.formPage}>
     <div className={s.container}>
       {!isEmailSent &&
       <div>

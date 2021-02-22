@@ -1,10 +1,12 @@
 // A c t i o n s
+import { Dispatch } from "redux";
 import {authAPI} from "../m4-dal/authAPI";
+import {appActions} from './app-reducer';
 
-export const setUserData = (userName: string | null, cardsCount: number | null, userId: string | null) => ({
-  type: 'cards/profile/SET-USER-DATA', userName, userId, cardsCount
+export const setUserData = (userName: string, email: string | null, cardsCount: number | null, userId: string | null) => ({
+  type: 'cards/profile/SET-USER-DATA', userName, userId, cardsCount, email
 } as const)
-export const setUserName = (userName: string | null) => ({
+export const setUserName = (userName: string) => ({
   type: 'cards/profile/SET-USER-NAME', userName,
 } as const)
 
@@ -14,8 +16,9 @@ export type ProfileActionsTypes = ReturnType<typeof setUserData> | ReturnType<ty
 
 // S t a t e
 const profileInitState = {
-  userName: null as string | null,
+  userName: '',
   publicCardPacksCount: null as number | null,
+  email: null as string | null,
   userId: null as string | null,
   avatar: '',
 }
@@ -28,6 +31,7 @@ export const profileReducer = (state: ProfileStateType = profileInitState, actio
       return {
         ...state,
         userName: action.userName,
+        email: action.email,
         publicCardPacksCount: action.cardsCount,
         userId: action.userId
       }
@@ -42,11 +46,21 @@ export const profileReducer = (state: ProfileStateType = profileInitState, actio
   }
 }
 
-export const setNameProfile = (token: string | undefined, name: string,avatar: string | null) => (dispatch: any) => {
-  return authAPI.setNameProfile(token, name, avatar)
-    .then( (res) => {
-      dispatch(setUserName(name))
-    } )
+export const updateUserName = (name: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(appActions.setAppStatus('loading'))
+      const data = await authAPI.updateUserName(name)
+      dispatch(setUserName(data.updatedUser.name))
+      console.log(data)
+    } catch(error) {
+      dispatch((appActions.setRequestError(error.response ? error.response.data.error
+        : error.message ? error.message
+          : 'Some error occurred')))
+    } finally {
+      dispatch(appActions.setAppStatus('succeeded'))
+    }
+  }
 }
 
 

@@ -1,18 +1,23 @@
 .row {
-    background-color: rgba(232, 205, 241, 0.9);
+    background-color: rgba(255, 255, 255, 0.7);
     display: flex;
-    align-items: center;
     border: 1px solid #4e4e4e;
     border-top: none;
 }
-/*.row:last-child {*/
-/*    border-bottom: none;*/
-/*}*/
 
 .rowItem {
     padding: 10px 5px;
-    flex-basis: 20%;
-    text-align: center;
+    flex-basis: 18%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #4e4e4e;
+}
+.questionRowItem, .answerRowItem {
+    flex-basis: 28%;
+}
+.updatedRowItem {
+    border-right: none;
 }
 .btnRowItem {
     display: flex;
@@ -22,16 +27,14 @@
 .iconButton {
     cursor: pointer;
     line-height: 1;
-    padding: 6px 9px;
-    background-color: #fff5f1;
-    font-size: 14px;
-    border: none;
+    padding: 5px 7px;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
     outline: none;
-    border-radius: 4px;
-    transition: 0.2s;
+    transition: 0.3s;
+    margin-right: 3px;
 }
-
 .iconButton:hover {
-    background-color: #ffc3af;
+    border: 1px solid #4e4e4e;
 }
 

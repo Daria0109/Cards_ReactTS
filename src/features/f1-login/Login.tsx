@@ -35,7 +35,7 @@ export const Login = () => {
     return <Redirect to={PATH.PROFILE}/>
   }
 
-  return <div className={s.formWrapper}>
+  return <div className={s.formPage}>
     <div className={s.container}>
       <h2 className={s.title}>Log in</h2>
       <div className={s.itemForm}>

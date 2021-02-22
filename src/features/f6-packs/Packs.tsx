@@ -103,10 +103,10 @@ export const Packs = () => {
 
     <div className={s.table}>
       <div className={s.headerTable}>
-        <div className={s.headerItem}>
+        <div className={`${s.headerItem} ${s.headerEdit}`}>
           <button className={s.addButton} onClick={addPackHandler}>Pack</button>
         </div>
-        <div className={s.headerItem}>Title</div>
+        <div className={`${s.headerItem} ${s.headerTitle}`}>Title</div>
         <div className={s.headerItem}>Count of cards
           <Sort up={'0cardsCount'}
                 down={'1cardsCount'}
@@ -115,7 +115,7 @@ export const Packs = () => {
                 sortSetValue={sortPacksValue}/>
         </div>
         <div className={s.headerItem}>Updated</div>
-        <div className={s.headerItem}>Learn</div>
+        <div className={`${s.headerItem} ${s.headerLearn}`}>Learn</div>
       </div>
       <div className={s.rows}>
         {tableRows}

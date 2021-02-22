@@ -23,6 +23,11 @@ type ResponseUserType = {
 	__v: number
 	_id: string
 }
+type ResponseUpdatedUserType = {
+	token: string
+	tokenDeathTime: number
+	updatedUser: ResponseUserType
+}
 
 
 export const authAPI = {
@@ -42,9 +47,6 @@ export const authAPI = {
 		return instance.delete('auth/me')
 			.then(res => res)
 	},
-	setNameProfile(token: string | undefined, name: string | null,avatar: string | null) {
-		return instance.put('auth/me', {token, name, avatar})
-	},
 	sendEmail(email: string) {
 		return instance.post('auth/forgot', {
 			email: email,
@@ -59,7 +61,11 @@ export const authAPI = {
 			password,
 			resetPasswordToken: token
 		}).then(res => res)
-	}
+	},
+	updateUserName(name: string) {
+		return instance.put<ResponseUpdatedUserType>('auth/me', {name})
+			.then(res => res.data)
+	},
 }
 
 

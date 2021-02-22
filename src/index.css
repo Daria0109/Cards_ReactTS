@@ -3,9 +3,14 @@
   margin: 0;
   padding: 0;
   color: #1d1d1d;
-  font-family: 'Comfortaa', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
+@font-face {
+  font-family: 'Roboto';
+  src: local('Roboto'), url("assets/fonts/Roboto/Roboto-Medium.ttf") format("truetype");
+  font-weight: normal;
+}
 @font-face {
   font-family: 'Comfortaa';
   src: local('Comfortaa'), url("assets/fonts/Comfortaa/static/Comfortaa-Regular.ttf") format("truetype");
@@ -22,7 +27,9 @@
   font-weight: bold;
 }
 body {
-
+  background-color: #f1c50e;
+  padding-bottom: 10px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+

@@ -1,18 +1,4 @@
-.mainPage {
-    height: 100vh;
-    overflow-y: auto;
-    /*background-color: #ffecd5;*/
-    /*background-image: url("/src/assets/main-bg.png");*/
-    background: rgb(255,236,213);
-    background: radial-gradient(circle, rgba(255,236,213,1) 17%, rgba(245,194,158,1) 83%);
-    background-repeat: no-repeat;
-    background-position: 5% 65%;
+/*.mainPage {*/
+/*    background-color: #f1c50e;*/
+/*}*/
 
-}
-
-.mainContainer {
-    width: 1200px;
-    max-width: 100%;
-    padding: 0 20px;
-    margin: 0 auto;
-}

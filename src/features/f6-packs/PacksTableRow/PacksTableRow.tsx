@@ -30,25 +30,25 @@ export const PacksTableRow: React.FC<PackItemPropsType> = ({title, countCards, d
 
 
   return <div className={rowStyle}>
-    <div className={s.rowItem}>
+    <div className={`${s.rowItem} ${s.editRowItem}`}>
       {isOwner
       && <div className={s.btnRowItem}>
         <button className={s.iconButton}>
-          <img src={editIcon} alt='Edit' width='18px' height='18px'/>
+          <img src={editIcon} alt='Edit' width='15px' height='15px'/>
         </button>
         <button className={s.iconButton} onClick={deletePackHandler}>
-          <img src={deleteIcon} alt='Delete' width='18px' height='18px'/>
+          <img src={deleteIcon} alt='Delete' width='15px' height='15px'/>
         </button>
       </div>}
     </div>
-    <div className={s.rowItem}>
+    <div className={`${s.rowItem} ${s.titleRowItem}`}>
       <NavLink to={`/cards/${packId}`} className={s.cardsLink} onClick={openCardsHandler}>
         {title}
       </NavLink>
     </div>
     <div className={s.rowItem}>{countCards}</div>
     <div className={s.rowItem}>{dateUpdate}</div>
-    <div className={s.rowItem}>
+    <div className={`${s.rowItem} ${s.learnRowItem}`}>
       <NavLink to={`/learn/${packId}`}>
         <button className={s.button}>Learn</button>
       </NavLink>

@@ -27,16 +27,16 @@ export const CardsTableRow: React.FC<CardTablePropsType> = (
 			{isOwner
 			&& <div className={s.btnRowItem}>
 				<button className={s.iconButton}>
-					<img src={editIcon} alt='Edit' width='18px' height='18px'/>
+					<img src={editIcon} alt='Edit' width='15px' height='15px'/>
 				</button>
 				<button className={s.iconButton} onClick={deleteCard}>
-					<img src={deleteIcon} alt='Delete' width='18px' height='18px'/>
+					<img src={deleteIcon} alt='Delete' width='15px' height='15px'/>
 				</button>
 			</div>}
 		</div>
-		<div className={s.rowItem}>{question}</div>
-		<div className={s.rowItem}>{answer}</div>
+		<div className={`${s.rowItem} ${s.questionRowItem}`}>{question}</div>
+		<div className={`${s.rowItem} ${s.answerRowItem}`}>{answer}</div>
 		<div className={s.rowItem}>{grade.toFixed(3)}</div>
-		<div className={s.rowItem}>{update}</div>
+		<div className={`${s.rowItem} ${s.updatedRowItem}`}>{update}</div>
 	</div>
 };

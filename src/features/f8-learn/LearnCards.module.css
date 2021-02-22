@@ -1,22 +1,21 @@
 .learnPage {
-    width: 100%;
+    width: 1200px;
+    max-width: 100%;
+    margin: 0 auto;
     min-height: 100vh;
-    padding-top: 95px;
-    padding-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    /*position: relative;*/
 }
 .card {
-    overflow: hidden;
     width: 600px;
     max-width: 100%;
     height: auto;
     text-align: center;
-    border-radius: 8px;
     box-shadow: 1px 1px 5px rgba(000, 000, 000, 0.3);
     transform-style: preserve-3d;
-    transition: 300ms;
+    transition: 0.3s;
     transform: perspective(1000px) rotateY(0);
 }
 .card.flip {
@@ -24,15 +23,14 @@
 }
 .front {
     padding: 20px;
-    background-color: #775298;
+    background-color: #292d33;
 }
 .card .back {
     transform: rotateY(180deg);
 }
 .back {
-
     padding: 20px;
-    background-color: #ff7b5b;
+    background-color: #d9d9db;
     color: #000000;
 }
 .title {
@@ -41,10 +39,10 @@
     margin-bottom: 20px;
     color: #ffffff;
     font-size: 24px;
+    font-weight: normal;
 }
 .titleBack {
     color: inherit;
-    /*transform: rotateY(180deg);*/
 }
 .textBlock {
     text-align: left;
@@ -55,10 +53,10 @@
     margin-bottom: 20px;
 }
 .textBlock.question {
-    border: 1px #b681ec dashed;
+    border: 1px #d9d9db dashed;
 }
 .textBlock.answer {
-    border: 1px #cb4725 dashed;
+    border: 1px #292d33 dashed;
     color: inherit;
 }
 .grades {
@@ -71,30 +69,30 @@
     cursor: pointer;
     line-height: 1;
     padding: 15px 20px;
-    background-color: #ff7b5b;
+    background-color: #292d33;
     font-size: 16px;
-    border: none;
+    color: #ffffff;
+    border: 2px solid #ffffff;
     outline: none;
-    border-radius: 4px;
     transition: 0.2s;
 }
 
 .button:hover {
-    background-color: #be2608;
-    color: #fff;
+    background-color: #ffffff;
+    color: #292d33;
 }
 .buttonBack {
-    background-color: #775298;
+    background-color: #d9d9db;
+    color: #292d33;
+    border: 2px solid #292d33;
 }
 .buttonBack:hover {
-    background-color: #4e3460;
+    background-color: #292d33;
+    color: #d9d9db;
 }
 .grade {
-    background-color: #b681ec;
+    background-color: #d9d9db;
     padding: 10px 15px;
     font-size: 14px;
-}
-grade:hover {
-    background-color: #775298;
 }
 

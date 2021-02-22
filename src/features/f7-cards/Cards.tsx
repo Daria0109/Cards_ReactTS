@@ -104,8 +104,8 @@ export const Cards = () => {
         <div className={s.headerItem}>
           <button className={s.addButton} onClick={createNewCard}>Card</button>
         </div>
-        <div className={s.headerItem}>Question</div>
-        <div className={s.headerItem}>Answer</div>
+        <div className={`${s.headerItem} ${s.questionHeaderItem}`}>Question</div>
+        <div className={`${s.headerItem} ${s.answerHeaderItem}`}>Answer</div>
         <div className={s.headerItem}>Grade
           <Sort up={'0grade'}
                 down={'1grade'}
@@ -113,7 +113,7 @@ export const Cards = () => {
                 downSort={downSortHandler}
                 sortSetValue={sortCardsValue}/>
         </div>
-        <div className={s.headerItem}>Updated</div>
+        <div className={`${s.headerItem} ${s.updatedHeaderItem}`}>Updated</div>
       </div>
       <div className={s.rows}>
         {isLoggedIn && !packIdParam && <div>Choose a Pack...</div>}

@@ -18,3 +18,8 @@ export const App = () => {
   </div>
 }
 
+
+// bg-grey: #e3e5e4
+// darker-grey: #d9d9db;
+// dark: #292d33;
+// yellow: #f1c50e;

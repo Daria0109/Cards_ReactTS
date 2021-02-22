@@ -40,7 +40,7 @@ export const initializeUser = () => {
       const data = await authAPI.me()
       dispatch(authActions.setIsLoggedIn(true))
       dispatch(authActions.setIsInitialized(true))
-      dispatch(setUserData(data.name, data.publicCardPacksCount, data._id))
+      dispatch(setUserData(data.name, data.email, data.publicCardPacksCount, data._id))
       dispatch(appActions.setAppStatus('succeeded'))
       console.log('Initialized')
 
@@ -87,7 +87,7 @@ export const login = (loginData: LoginDataType) => {
     try {
       dispatch(appActions.setAppStatus('loading'))
       const data = await authAPI.login(loginData)
-      dispatch(setUserData(data.name, data.publicCardPacksCount, data._id))
+      dispatch(setUserData(data.name, data.email, data.publicCardPacksCount, data._id))
       dispatch(authActions.setIsLoggedIn(true))
       console.log('LogIn')
 
@@ -107,7 +107,7 @@ export const logout = () => {
       // dispatch(setAppStatus('loading'))
       await authAPI.logout()
       dispatch(authActions.setIsLoggedIn(false))
-      dispatch(setUserData(null, null, null))
+      dispatch(setUserData('', null, null, null))
       console.log('LogOut')
     } catch (error) {
       dispatch(appActions.setRequestError(error.response ? error.response.data.error

@@ -45,7 +45,7 @@ export const SignUp = () => {
     return <Redirect to={PATH.LOGIN}/>
   }
 
-  return <div className={s.formWrapper}>
+  return <div className={s.formPage}>
     <div className={s.container}>
       <h2 className={s.title}>Sign Up</h2>
       {status === 'loading' && <div>Please wait...</div>}

@@ -53,7 +53,7 @@ export const SetPassword = () => {
     return <Redirect to={'/login'}/>
   }
 
-  return <div className={s.formWrapper}>
+  return <div className={s.formPage}>
     <div className={s.container}>
       <h2 className={s.title}>Set new password</h2>
       <div className={s.itemForm}>

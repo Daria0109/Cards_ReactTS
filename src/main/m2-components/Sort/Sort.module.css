@@ -7,13 +7,13 @@
 .button {
     cursor: pointer;
     line-height: 1;
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     border: none;
     outline: none;
     background-color: #fff;
-    border-radius: 4px;
-    font-size: 18px;
+    border-radius: 2px;
+    font-size: 16px;
 }
 
 .up {
@@ -26,6 +26,6 @@
 }
 
 .button:hover, .active {
-    background-color: #ff7b5b;
+    background-color: #292d33;
     color: #fff;
 }
