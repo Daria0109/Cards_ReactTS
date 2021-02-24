@@ -3,7 +3,8 @@ import s from './Modal.module.css'
 
 export type ModalsType = 'delete pack'
   | 'delete card'
-  | 'edit'
+  | 'edit pack'
+  | 'edit card'
   | 'add pack'
   | 'add card'
   | null

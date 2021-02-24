@@ -14,9 +14,8 @@ import {PageSizeSelector} from '../../main/m2-components/PageSizeSelector/PageSi
 import {PacksTableRow} from './PacksTableRow/PacksTableRow';
 import {SearchForm} from '../../main/m2-components/SearchForm/SearchForm';
 import {Sort} from '../../main/m2-components/Sort/Sort';
-import {ModalDelete} from '../../main/m2-components/Modals/ModalDelete/ModalDelete';
 import {ModalsType} from '../../main/m2-components/Modals/Modal/Modal';
-import {ModalAdd} from '../../main/m2-components/Modals/ModalAdd/ModalAdd';
+import {ModalsContainer} from '../../main/m2-components/Modals/MadalsContainer';
 
 
 export const Packs = () => {
@@ -86,14 +85,10 @@ export const Packs = () => {
   }
 
   return <div className={s.packsPage}>
-    <ModalDelete modal={modal}
-                 isModal={modal === 'delete pack'}
-                 setModal={setModal}
-                 deleteItem={deletePackHandler}/>
-    <ModalAdd modal={modal}
-              isModal={modal === 'add pack'}
-              setModal={setModal}
-              addItem={addPackHandler}/>
+    <ModalsContainer modal={modal}
+                     setModal={setModal}
+                     addItem={addPackHandler}
+                     deleteItem={deletePackHandler}/>
     <div className={s.tableControls}>
       <div>
         <div className={s.searchForm}>

@@ -16,8 +16,7 @@ import {CardsTableRow} from './CardsTabelRow/CardsTabelRow';
 import {Sort} from '../../main/m2-components/Sort/Sort';
 import {packActions} from '../../main/m3-bll/packs-reducer';
 import {ModalsType} from '../../main/m2-components/Modals/Modal/Modal';
-import {ModalDelete} from '../../main/m2-components/Modals/ModalDelete/ModalDelete';
-import {ModalAdd} from '../../main/m2-components/Modals/ModalAdd/ModalAdd';
+import {ModalsContainer} from '../../main/m2-components/Modals/MadalsContainer';
 
 export const Cards = () => {
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
@@ -94,14 +93,10 @@ export const Cards = () => {
   }
 
   return <div className={s.cardsPage}>
-    <ModalDelete modal={modal}
-                 isModal={modal === 'delete card'}
-                 setModal={setModal}
-                 deleteItem={deleteCardHandler}/>
-    <ModalAdd modal={modal}
-              isModal={modal === 'add card'}
-              setModal={setModal}
-              addItem={addCardHandler}/>
+    <ModalsContainer modal={modal}
+                     setModal={setModal}
+                     addItem={addCardHandler}
+                     deleteItem={deleteCardHandler}/>
     <div className={s.tableControls}>
       <SearchForm searchParam={searchCardQuestion}
                   placeholder={'Question...'}
