@@ -17,11 +17,12 @@ import {Sort} from '../../main/m2-components/Sort/Sort';
 import {packActions} from '../../main/m3-bll/packs-reducer';
 import {ModalsType} from '../../main/m2-components/Modals/Modal/Modal';
 import {ModalDelete} from '../../main/m2-components/Modals/ModalDelete/ModalDelete';
+import {ModalAdd} from '../../main/m2-components/Modals/ModalAdd/ModalAdd';
 
 export const Cards = () => {
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
-
+  const userId = useSelector<AppRootStateType, string | null>(state => state.profile.userId)
   const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
   const openedPackId = useSelector<AppRootStateType, string>(state => state.packs.openedPackId)
   const pageNumber = useSelector<AppRootStateType, number>(state => state.cards.pageNumber)
@@ -31,6 +32,9 @@ export const Cards = () => {
   const sortCardsValue = useSelector<AppRootStateType, string | null>(state => state.cards.sortCardsValue)
   const dispatch = useDispatch()
   const {packIdParam} = useParams<{ packIdParam?: string }>()
+  const isOwner = cards.every(c => c.user_id === userId)
+  const headerItemStyle = isOwner ? s.headerItem : `${s.headerItem} ${s.headerItemGeneral}`
+  const mainHeaderItemStyle = isOwner ? `${headerItemStyle} ${s.mainHeaderItem}` : `${headerItemStyle} ${s.mainHeaderItemGeneral}`
 
   const [cardId, setCardId] = useState('')
   const [modal, setModal] = useState<ModalsType>(null)
@@ -58,6 +62,9 @@ export const Cards = () => {
     dispatch(deleteCards(cardId))
     setCardId('')
   }
+  const addCardHandler = () => {
+    dispatch(createCards(openedPackId))
+  }
   const setActiveCardsPageSize = useCallback((pageSize: number) => {
     dispatch(cardsActions.setActivePageSize(pageSize))
   }, [])
@@ -67,9 +74,6 @@ export const Cards = () => {
   const searchCardQuestionHandler = useCallback((value: string) => {
     dispatch(cardsActions.setSearchCardQuestion(value))
   }, [])
-  const createNewCard = () => {
-    dispatch(createCards(openedPackId))
-  }
   const upSortHandler = useCallback(() => {
     dispatch(cardsActions.setSortCardsValue('0grade'))
   }, [])
@@ -94,6 +98,10 @@ export const Cards = () => {
                  isModal={modal === 'delete card'}
                  setModal={setModal}
                  deleteItem={deleteCardHandler}/>
+    <ModalAdd modal={modal}
+              isModal={modal === 'add card'}
+              setModal={setModal}
+              addItem={addCardHandler}/>
     <div className={s.tableControls}>
       <SearchForm searchParam={searchCardQuestion}
                   placeholder={'Question...'}
@@ -110,19 +118,21 @@ export const Cards = () => {
     </div>
     <div className={s.table}>
       <div className={s.headerTable}>
-        <div className={s.headerItem}>
-          <button className={s.addButton} onClick={createNewCard}>Card</button>
-        </div>
-        <div className={`${s.headerItem} ${s.questionHeaderItem}`}>Question</div>
-        <div className={`${s.headerItem} ${s.answerHeaderItem}`}>Answer</div>
-        <div className={s.headerItem}>Grade
+        {isOwner &&
+        <div className={headerItemStyle}>
+          <button className={s.addButton} onClick={() => setModal('add card')}>Card</button>
+        </div>}
+
+        <div className={mainHeaderItemStyle}>Question</div>
+        <div className={mainHeaderItemStyle}>Answer</div>
+        <div className={headerItemStyle}>Grade
           <Sort up={'0grade'}
                 down={'1grade'}
                 upSort={upSortHandler}
                 downSort={downSortHandler}
                 sortSetValue={sortCardsValue}/>
         </div>
-        <div className={`${s.headerItem} ${s.updatedHeaderItem}`}>Updated</div>
+        <div className={`${headerItemStyle} ${s.updatedHeaderItem}`}>Updated</div>
       </div>
       <div className={s.rows}>
         {isLoggedIn && !packIdParam && <div>Choose a Pack...</div>}

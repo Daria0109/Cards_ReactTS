@@ -13,8 +13,14 @@
     justify-content: center;
     border-right: 1px solid #4e4e4e;
 }
-.questionRowItem, .answerRowItem {
+.rowItemGeneral {
+    flex-basis: 20%;
+}
+.mainRowItem {
     flex-basis: 28%;
+}
+.mainRowItemGeneral {
+    flex-basis: 30%;
 }
 .updatedRowItem {
     border-right: none;

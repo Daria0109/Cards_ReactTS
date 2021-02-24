@@ -1,7 +1,12 @@
 import React from 'react';
 import s from './Modal.module.css'
 
-export type ModalsType = 'delete pack' | 'delete card' | 'edit' | 'add' | null
+export type ModalsType = 'delete pack'
+  | 'delete card'
+  | 'edit'
+  | 'add pack'
+  | 'add card'
+  | null
 type ModalPropsType = {
   setModal: (modal: ModalsType) => void
 }

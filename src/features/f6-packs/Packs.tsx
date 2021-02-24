@@ -16,6 +16,7 @@ import {SearchForm} from '../../main/m2-components/SearchForm/SearchForm';
 import {Sort} from '../../main/m2-components/Sort/Sort';
 import {ModalDelete} from '../../main/m2-components/Modals/ModalDelete/ModalDelete';
 import {ModalsType} from '../../main/m2-components/Modals/Modal/Modal';
+import {ModalAdd} from '../../main/m2-components/Modals/ModalAdd/ModalAdd';
 
 
 export const Packs = () => {
@@ -89,6 +90,10 @@ export const Packs = () => {
                  isModal={modal === 'delete pack'}
                  setModal={setModal}
                  deleteItem={deletePackHandler}/>
+    <ModalAdd modal={modal}
+              isModal={modal === 'add pack'}
+              setModal={setModal}
+              addItem={addPackHandler}/>
     <div className={s.tableControls}>
       <div>
         <div className={s.searchForm}>
@@ -114,7 +119,7 @@ export const Packs = () => {
     <div className={s.table}>
       <div className={s.headerTable}>
         <div className={`${s.headerItem} ${s.headerEdit}`}>
-          <button className={s.addButton} onClick={addPackHandler}>Pack</button>
+          <button className={s.addButton} onClick={() => setModal('add pack')}>Pack</button>
         </div>
         <div className={`${s.headerItem} ${s.headerTitle}`}>Title</div>
         <div className={s.headerItem}>Count of cards

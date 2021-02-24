@@ -46,8 +46,14 @@
     flex-basis: 18%;
     border-right: 1px solid #4e4e4e;
 }
-.questionHeaderItem, .answerHeaderItem {
+.headerItemGeneral {
+    flex-basis: 20%;
+}
+.mainHeaderItem {
     flex-basis: 28%;
+}
+.mainHeaderItemGeneral {
+    flex-basis: 30%;
 }
 .updatedHeaderItem {
     border-right: none;

@@ -5,12 +5,12 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 99;
     /*pointer-events: none;*/
 }
 .container {
-    position: absolute;
+    position: fixed;
     padding: 0 8px;
     top: 50%;
     left: 50%;
@@ -24,5 +24,5 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    box-shadow: 0px 0px 7px rgba(000, 000, 000, 0.1);
+    box-shadow: 0 0 7px rgba(000, 000, 000, 0.1);
 }
