@@ -1,0 +1,26 @@
+.title {
+    font-size: 26px;
+    margin-bottom: 70px;
+}
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.button {
+    cursor: pointer;
+    line-height: 1;
+    padding: 12px;
+    background-color: #ffffff;
+    font-size: 16px;
+    /*border: 1px solid #ffffff;*/
+    border: none;
+    outline: none;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+.button:hover {
+    /*border: 1px solid #4e4e4e;*/
+    background-color: #000000;
+    color: #ffffff;
+}

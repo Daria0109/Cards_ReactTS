@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {createCardsPack, fetchPacks, packActions} from '../../main/m3-bll/packs-reducer';
-import React, {useCallback, useEffect} from 'react';
+import {createCardsPack, deleteCardsPack, fetchPacks, packActions} from '../../main/m3-bll/packs-reducer';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Preloader} from '../../main/m2-components/Preloader/Preloader';
 import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 import s from './Packs.module.css'
@@ -14,6 +14,8 @@ import {PageSizeSelector} from '../../main/m2-components/PageSizeSelector/PageSi
 import {PacksTableRow} from './PacksTableRow/PacksTableRow';
 import {SearchForm} from '../../main/m2-components/SearchForm/SearchForm';
 import {Sort} from '../../main/m2-components/Sort/Sort';
+import {ModalDelete} from '../../main/m2-components/Modals/ModalDelete/ModalDelete';
+import {ModalsType} from '../../main/m2-components/Modals/Modal/Modal';
 
 
 export const Packs = () => {
@@ -24,11 +26,13 @@ export const Packs = () => {
   const pageSize = useSelector<AppRootStateType, number>(state => state.packs.pageSize)
   const packName = useSelector<AppRootStateType, string>(state => state.packs.packName)
   const isMyPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isMyPacks)
-  const userId = useSelector<AppRootStateType, string | null>(state => state.profile.userId)
   const searchPackName = useSelector<AppRootStateType, string | null>(state => state.packs.searchPackName)
   const sortPacksValue = useSelector<AppRootStateType, string | null>(state => state.packs.sortPacksValue)
   const totalPacksCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
   const dispatch = useDispatch();
+
+  const [packId, setPackId] = useState('')
+  const [modal, setModal] = useState<ModalsType>(null)
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -43,6 +47,10 @@ export const Packs = () => {
   }, [isLoggedIn, pageNumber, pageSize, isMyPacks, searchPackName, sortPacksValue])
 
 
+  const deletePackHandler = () => {
+    dispatch(deleteCardsPack(packId))
+    setPackId('')
+  }
   const addPackHandler = () => {
     dispatch(createCardsPack(pageSize, packName))
   }
@@ -65,12 +73,10 @@ export const Packs = () => {
     dispatch(packActions.setSortPacksValue('1cardsCount'))
   }, [])
 
-  const tableRows = cardPacks.map(p => <PacksTableRow key={p.created}
-                                                      title={p.name}
-                                                      countCards={p.cardsCount}
-                                                      dateUpdate={p.updated.slice(0, 10)}
-                                                      packId={p._id}
-                                                      isOwner={userId === p.user_id}/>)
+  const tableRows = cardPacks.map(p => <PacksTableRow key={p._id}
+                                                      pack={p}
+                                                      setPackId={setPackId}
+                                                      setModal={setModal}/>)
   if (appStatus === 'loading') {
     return <Preloader/>
   }
@@ -79,12 +85,16 @@ export const Packs = () => {
   }
 
   return <div className={s.packsPage}>
+    <ModalDelete modal={modal}
+                 isModal={modal === 'delete pack'}
+                 setModal={setModal}
+                 deleteItem={deletePackHandler}/>
     <div className={s.tableControls}>
       <div>
         <div className={s.searchForm}>
-        <SearchForm searchParam={searchPackName}
-                    placeholder={'Title...'}
-                    search={searchPackNameHandler}/>
+          <SearchForm searchParam={searchPackName}
+                      placeholder={'Title...'}
+                      search={searchPackNameHandler}/>
         </div>
         <div className={s.showMine}>
           <input type='checkbox' id='myPacks' checked={isMyPacks} onChange={showMyPacksHandler}/>

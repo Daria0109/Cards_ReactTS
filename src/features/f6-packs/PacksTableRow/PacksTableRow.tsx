@@ -1,57 +1,60 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteCardsPack, packActions} from '../../../main/m3-bll/packs-reducer';
+import {packActions} from '../../../main/m3-bll/packs-reducer';
 import s from './PacksTableRow.module.css'
 import {NavLink} from 'react-router-dom';
 import {AppRootStateType} from '../../../main/m3-bll/store';
 import editIcon from './../../../assets/edit.svg'
 import deleteIcon from './../../../assets/delete.svg'
+import {CardPackType} from '../../../main/m4-dal/packs-cards-API';
+import {ModalsType} from '../../../main/m2-components/Modals/Modal/Modal';
 
 
 type PackItemPropsType = {
-  title: string
-  countCards: number
-  dateUpdate: string
-  packId: string
-  isOwner: boolean
+  pack: CardPackType
+  setModal: (modal: ModalsType) => void
+  setPackId: (id: string) => void
 }
 
-export const PacksTableRow: React.FC<PackItemPropsType> = ({title, countCards, dateUpdate, packId, isOwner}) => {
+export const PacksTableRow: React.FC<PackItemPropsType> = React.memo(({pack, setModal, setPackId}) => {
+  const userId = useSelector<AppRootStateType, string | null>(state => state.profile.userId)
   const openedPack = useSelector<AppRootStateType, string>(state => state.packs.openedPackId)
   const dispatch = useDispatch()
-  const rowStyle = openedPack === packId ? `${s.row} ${s.opened}` : `${s.row}`
+  const rowStyle = openedPack === pack._id ? `${s.row} ${s.opened}` : `${s.row}`
 
-  const deletePackHandler = () => {
-    dispatch(deleteCardsPack(packId))
+  const onSetModalHandler = () => {
+    setModal('delete pack')
+    setPackId(pack._id)
   }
   const openCardsHandler = () => {
-    dispatch(packActions.setOpenedPackId(packId))
+    dispatch(packActions.setOpenedPackId(pack._id))
   }
 
 
   return <div className={rowStyle}>
+
     <div className={`${s.rowItem} ${s.editRowItem}`}>
-      {isOwner
+      {userId === pack.user_id
       && <div className={s.btnRowItem}>
         <button className={s.iconButton}>
           <img src={editIcon} alt='Edit' width='15px' height='15px'/>
         </button>
-        <button className={s.iconButton} onClick={deletePackHandler}>
+        <button className={s.iconButton} onClick={onSetModalHandler}>
           <img src={deleteIcon} alt='Delete' width='15px' height='15px'/>
         </button>
       </div>}
     </div>
     <div className={`${s.rowItem} ${s.titleRowItem}`}>
-      <NavLink to={`/cards/${packId}`} className={s.cardsLink} onClick={openCardsHandler}>
-        {title}
+      <NavLink to={`/cards/${pack._id}`} className={s.cardsLink} onClick={openCardsHandler}>
+        {pack.name}
       </NavLink>
     </div>
-    <div className={s.rowItem}>{countCards}</div>
-    <div className={s.rowItem}>{dateUpdate}</div>
+    <div className={s.rowItem}>{pack.cardsCount}</div>
+    <div className={s.rowItem}>{pack.updated.slice(0, 10)}</div>
     <div className={`${s.rowItem} ${s.learnRowItem}`}>
-      <NavLink to={`/learn/${packId}`}>
+      <NavLink to={`/learn/${pack._id}`}>
         <button className={s.button}>Learn</button>
       </NavLink>
     </div>
   </div>
-}
+})
