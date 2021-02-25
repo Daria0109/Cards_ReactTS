@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {createCardsPack, deleteCardsPack, fetchPacks, packActions} from '../../main/m3-bll/packs-reducer';
+import {deleteCardsPack, fetchPacks, packActions, updateCardsPack} from '../../main/m3-bll/packs-reducer';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Preloader} from '../../main/m2-components/Preloader/Preloader';
 import {RequestStatusType} from '../../main/m3-bll/app-reducer';
@@ -16,7 +16,6 @@ import {SearchForm} from '../../main/m2-components/SearchForm/SearchForm';
 import {Sort} from '../../main/m2-components/Sort/Sort';
 import {ModalsType} from '../../main/m2-components/Modals/Modal/Modal';
 import {ModalsContainer} from '../../main/m2-components/Modals/MadalsContainer';
-
 
 export const Packs = () => {
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
@@ -51,9 +50,11 @@ export const Packs = () => {
     dispatch(deleteCardsPack(packId))
     setPackId('')
   }
-  const addPackHandler = () => {
-    dispatch(createCardsPack(pageSize, packName))
+  const updatePackHandler = () => {
+    dispatch(updateCardsPack(packId, packName))
+    setPackId('')
   }
+
   const showMyPacksHandler = () => {
     dispatch(packActions.setIsMyPacks(!isMyPacks))
   }
@@ -73,6 +74,7 @@ export const Packs = () => {
     dispatch(packActions.setSortPacksValue('1cardsCount'))
   }, [])
 
+
   const tableRows = cardPacks.map(p => <PacksTableRow key={p._id}
                                                       pack={p}
                                                       setPackId={setPackId}
@@ -87,7 +89,7 @@ export const Packs = () => {
   return <div className={s.packsPage}>
     <ModalsContainer modal={modal}
                      setModal={setModal}
-                     addItem={addPackHandler}
+                     updateCardHandler={updatePackHandler}
                      deleteItem={deletePackHandler}/>
     <div className={s.tableControls}>
       <div>

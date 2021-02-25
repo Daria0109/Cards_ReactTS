@@ -22,14 +22,14 @@ export const PacksTableRow: React.FC<PackItemPropsType> = React.memo(({pack, set
   const dispatch = useDispatch()
   const rowStyle = openedPack === pack._id ? `${s.row} ${s.opened}` : `${s.row}`
 
-  const onDeleteModalHandler = () => {
-    setModal('delete pack')
-    setPackId(pack._id)
-  }
   const openCardsHandler = () => {
     dispatch(packActions.setOpenedPackId(pack._id))
   }
 
+  const setModalHandler = (modal: ModalsType) => {
+    setModal(modal)
+    setPackId(pack._id)
+  }
 
   return <div className={rowStyle}>
 
@@ -37,9 +37,9 @@ export const PacksTableRow: React.FC<PackItemPropsType> = React.memo(({pack, set
       {userId === pack.user_id
       && <div className={s.btnRowItem}>
         <button className={s.iconButton}>
-          <img src={editIcon} alt='Edit' width='15px' height='15px'/>
+          <img src={editIcon} alt='Edit' width='15px' height='15px' onClick={()=> setModalHandler('update pack')}/>
         </button>
-        <button className={s.iconButton} onClick={onDeleteModalHandler}>
+        <button className={s.iconButton} onClick={()=> setModalHandler('delete pack')}>
           <img src={deleteIcon} alt='Delete' width='15px' height='15px'/>
         </button>
       </div>}

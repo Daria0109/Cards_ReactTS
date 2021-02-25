@@ -12,6 +12,7 @@ type CardTablePropsType = {
   card: CardType
   setModal: (modal: ModalsType) => void
   setCardId: (id: string) => void
+
 }
 
 export const CardsTableRow: React.FC<CardTablePropsType> = (
@@ -29,7 +30,7 @@ export const CardsTableRow: React.FC<CardTablePropsType> = (
   return <div className={s.row}>
     {userId === card.user_id && <div className={s.rowItem}>
       <div className={s.btnRowItem}>
-        <button className={s.iconButton}>
+        <button className={s.iconButton} onClick={()=> setModalHandler('update card')}>
           <img src={editIcon} alt='Edit' width='15px' height='15px'/>
         </button>
         <button className={s.iconButton} onClick={() => setModalHandler('delete card')}>

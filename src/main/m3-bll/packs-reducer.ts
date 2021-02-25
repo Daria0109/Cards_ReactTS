@@ -27,7 +27,9 @@ export const packActions = {
     type: 'cards/packs/SET-SORT-PACKS-VALUE', sortValue
   } as const),
   setOpenedPackId: (packId: string) => ({
-    type: 'cards/cards/SET-OPENED-PACK-ID', packId}as const)
+    type: 'cards/cards/SET-OPENED-PACK-ID', packId}as const),
+  changePackName: (packName: string) => ({
+    type: 'cards/cards/PACK_NAME', packName}as const)
 }
 export type PacksActionType = ReturnType<ActionsType<typeof packActions>>
 
@@ -37,11 +39,11 @@ const packsInitialState = {
   pageNumber: 1,
   pageSize: 10,
   cardPacksTotalCount: 0,
-  packName: 'Super Pack',
+  packName: '',
   isMyPacks: false,
   searchPackName: null as string | null,
   sortPacksValue: null as string | null,
-  openedPackId: ''
+  openedPackId: '',
 }
 export type PackStateType = typeof packsInitialState;
 
@@ -87,6 +89,10 @@ export const packsReducer = (state: PackStateType = packsInitialState, action: P
         ...state,
         openedPackId: action.packId
       }
+    case "cards/cards/PACK_NAME":
+      return {
+        ...state, packName: action.packName
+      }
     default:
       return state
   }
@@ -129,6 +135,24 @@ export const createCardsPack = (pageSize: number, packName: string) => {
     try {
       dispatch(appActions.setAppStatus('loading'))
       await packsCardsAPI.createCardsPack(packName)
+      await dispatch(fetchPacks(1))
+      console.log('Pack was created')
+    } catch (error) {
+      dispatch(appActions.setRequestError(error.response ? error.response.data.error
+        : error.message ? error.message
+          : 'Some error occurred'))
+      console.log('Pack is NOT created')
+    } finally {
+      dispatch(appActions.setAppStatus('succeeded'))
+    }
+  }
+}
+
+export const updateCardsPack = (packId: string, newPackName: string) => {
+  return async (dispatch: Dispatch<PacksActionType | AppActionsType | any>) => {
+    try {
+      dispatch(appActions.setAppStatus('loading'))
+      await packsCardsAPI.updatePack(packId, newPackName)
       await dispatch(fetchPacks(1))
       console.log('Pack was created')
     } catch (error) {

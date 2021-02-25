@@ -3,10 +3,10 @@ import s from './Modal.module.css'
 
 export type ModalsType = 'delete pack'
   | 'delete card'
-  | 'edit pack'
-  | 'edit card'
   | 'add pack'
   | 'add card'
+  | 'update card'
+  | 'update pack'
   | null
 type ModalPropsType = {
   setModal: (modal: ModalsType) => void

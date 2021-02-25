@@ -21,6 +21,12 @@ export const cardsActions = {
 	setSortCardsValue: (sortValue: string) => ({
 		type: 'cards/cards/SET-SORT-CARDS-VALUE', sortValue
 	} as const),
+	questionValueChange: (questionValue: string) => ({
+		type: 'cards/cards/QUESTION-VALUE', questionValue
+	} as const),
+	answerValueChange: (answerValue: string) => ({
+		type: 'cards/cards/ANSWER-VALUE', answerValue
+	} as const),
 }
 export type CardActionType = ReturnType<ActionsType<typeof cardsActions>>
 
@@ -32,7 +38,9 @@ const cardsInitialState = {
 	pageCount: 10,
 	pageSize: 10,
 	searchCardQuestion: null as string | null,
-	sortCardsValue: null as string | null
+	sortCardsValue: null as string | null,
+	question: '',
+	answer: ''
 }
 export type CardStateType = typeof cardsInitialState;
 
@@ -68,6 +76,14 @@ export const cardsReducer = (state: CardStateType = cardsInitialState, action: C
 				...state,
 				sortCardsValue: action.sortValue
 			}
+		case "cards/cards/ANSWER-VALUE":
+			return {
+				...state, answer: action.answerValue
+			}
+		case "cards/cards/QUESTION-VALUE":
+			return {
+				...state, question: action.questionValue
+			}
 		default:
 			return state
 	}
@@ -94,13 +110,30 @@ export const fetchCards = (packID: string) => {
 		}
 	}
 }
-export const createCards = (packID: string) => {
+export const createCards = (packID: string, question: string, answer: string) => {
 	return async (dispatch: Dispatch<CardActionType | AppActionsType | any>) => {
 		try {
 			dispatch(appActions.setAppStatus('loading'))
-			await cardsAPI.createCard(packID)
+			await cardsAPI.createCard(packID, question, answer)
 			await dispatch(fetchCards(packID))
 			console.log('Card is created')
+		} catch (error) {
+			dispatch(appActions.setRequestError(error.response ? error.response.data.error
+				: error.message ? error.message
+					: 'Some error occurred'))
+			console.log('Card is NOT created')
+		} finally {
+			dispatch(appActions.setAppStatus('succeeded'))
+		}
+	}
+}
+export const updateCards = (packID: string, cardId:string, question: string, answer: string) => {
+	return async (dispatch: Dispatch<CardActionType | AppActionsType | any>) => {
+		try {
+			dispatch(appActions.setAppStatus('loading'))
+			await cardsAPI.updateCard(cardId, question, answer)
+			await dispatch(fetchCards(packID))
+			console.log('Card is update')
 		} catch (error) {
 			dispatch(appActions.setRequestError(error.response ? error.response.data.error
 				: error.message ? error.message

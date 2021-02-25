@@ -116,6 +116,9 @@ export const packsCardsAPI = {
   deleteCardsPack(packId: string) {
     return instance.delete<DeleteResponsePacksCardsType>(`cards/pack?id=${packId}`)
       .then(res => res.data)
+  },
+  updatePack (packId?: string, newNamePack?: string) {
+    return instance.put(`cards/pack`, {cardsPack: {_id: packId, name: newNamePack}})
   }
 }
 export const cardsAPI = {
@@ -131,11 +134,14 @@ export const cardsAPI = {
     })
       .then(res => res.data)
   },
-  createCard(cardId?: string) {
-    return instance.post(`cards/card`, {card: {cardsPack_id: cardId}})
+  createCard(cardId?: string, question?: string, answer?: string) {
+    return instance.post(`cards/card`, {card: {cardsPack_id: cardId, question, answer}})
   },
   deleteCard(cardId?: string) {
     return instance.delete(`cards/card?id=${cardId}`)
+  },
+  updateCard(cardId?: string, question?: string, answer?: string) {
+    return instance.put('cards/card', {card: {_id: cardId, question, answer, comments: ''  } })
   }
 }
 

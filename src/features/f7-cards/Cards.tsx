@@ -9,7 +9,7 @@ import {Preloader} from '../../main/m2-components/Preloader/Preloader';
 import {Redirect, useParams} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import {RequestStatusType} from '../../main/m3-bll/app-reducer';
-import {cardsActions, createCards, deleteCards, fetchCards} from '../../main/m3-bll/cards-reducer';
+import {cardsActions, deleteCards, fetchCards, updateCards} from '../../main/m3-bll/cards-reducer';
 import {initializeUser} from '../../main/m3-bll/auth-reducer';
 import s from './Cards.module.css'
 import {CardsTableRow} from './CardsTabelRow/CardsTabelRow';
@@ -29,6 +29,9 @@ export const Cards = () => {
   const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
   const searchCardQuestion = useSelector<AppRootStateType, string | null>(state => state.cards.searchCardQuestion)
   const sortCardsValue = useSelector<AppRootStateType, string | null>(state => state.cards.sortCardsValue)
+  const question = useSelector<AppRootStateType, string >(state => state.cards.question)
+  const answer = useSelector<AppRootStateType, string >(state => state.cards.answer)
+
   const dispatch = useDispatch()
   const {packIdParam} = useParams<{ packIdParam?: string }>()
   const isOwner = cards.every(c => c.user_id === userId)
@@ -61,9 +64,11 @@ export const Cards = () => {
     dispatch(deleteCards(cardId))
     setCardId('')
   }
-  const addCardHandler = () => {
-    dispatch(createCards(openedPackId))
+  const updateCardHandler = () => {
+    dispatch(updateCards(packIdParam!, cardId, question, answer))
+    setCardId('')
   }
+
   const setActiveCardsPageSize = useCallback((pageSize: number) => {
     dispatch(cardsActions.setActivePageSize(pageSize))
   }, [])
@@ -95,7 +100,7 @@ export const Cards = () => {
   return <div className={s.cardsPage}>
     <ModalsContainer modal={modal}
                      setModal={setModal}
-                     addItem={addCardHandler}
+                     updateCardHandler={updateCardHandler}
                      deleteItem={deleteCardHandler}/>
     <div className={s.tableControls}>
       <SearchForm searchParam={searchCardQuestion}
