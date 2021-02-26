@@ -13,65 +13,61 @@ type ModalAddPropsType = {
 export const ModalAdd: React.FC<ModalAddPropsType> = React.memo((
   {modal, isModal, setModal, addPack, addCard}) => {
   const [packName, setPackName] = useState('')
-  const [cardModal, setCardModal] = useState({question: '', answer: ''})
+  const [cardData, setCardData] = useState({question: '', answer: ''})
 
-  const setAddPack = () => {
+  const setAdd = () => {
     if (addPack) {
       addPack(packName)
       setPackName('')
       setModal(null)
     }
-  }
-  const setAddCard = () => {
     if (addCard) {
-      addCard(cardModal.question, cardModal.answer)
-      setCardModal({question: '', answer: ''})
+      addCard(cardData.question, cardData.answer)
+      setCardData({question: '', answer: ''})
       setModal(null)
     }
   }
   const setCancel = () => {
     setModal(null)
+    setPackName('')
+    setCardData({question: '', answer: ''})
   }
   const changePackNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setPackName(e.currentTarget.value)
   }
   const changeCardModalQuestionHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const question = e.currentTarget.value
-    setCardModal({...cardModal, question})
+    setCardData({...cardData, question})
   }
   const changeCardModalAnswerHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const answer = e.currentTarget.value
-    setCardModal({...cardModal, answer})
+    setCardData({...cardData, answer})
   }
 
   if (!isModal) return null
-  return <Modal setModal={setModal}>
-    {modal === 'add pack' &&
-    <div className={s.title}>Add a new pack?</div>}
-    {modal === 'add pack' &&
-    <input type="text" value={packName} onChange={changePackNameHandler} placeholder='Pack name...'/>
-    }
+  return <Modal setCancel={setCancel}>
+    {modal === 'add pack' && <div className={s.input}>
+      <input className={s.nameInput}
+             type="text"
+             value={packName}
+             onChange={changePackNameHandler}
+             placeholder='Pack name...'/>
+    </div>}
 
-    {modal === 'add card' &&
-    <div className={s.title}>Add a new card?</div>}
-    {modal === 'add card' &&
-    <div>
-      <textarea value={cardModal.question} onChange={changeCardModalQuestionHandler} placeholder='Question'/>
-      <textarea value={cardModal.answer} onChange={changeCardModalAnswerHandler} placeholder='Answer'/>
-    </div>
-    }
+    {modal === 'add card' && <div className={s.textarea}>
+      <textarea className={s.cardData} rows={3}
+                value={cardData.question}
+                onChange={changeCardModalQuestionHandler}
+                placeholder='Question'/>
+      <textarea className={s.cardData} rows={3}
+                value={cardData.answer}
+                onChange={changeCardModalAnswerHandler}
+                placeholder='Answer'/>
+    </div>}
 
-    {modal === 'add card' &&
     <div className={s.buttons}>
       <button className={s.button} onClick={setCancel}>Cancel</button>
-      <button className={s.button} onClick={setAddCard}>Add Card</button>
+      <button className={s.button} onClick={setAdd}>Add</button>
     </div>
-    }
-    {modal === 'add pack' &&
-    <div className={s.buttons}>
-      <button className={s.button} onClick={setCancel}>Cancel</button>
-      <button className={s.button} onClick={setAddPack}>Add Pack</button>
-    </div>
-    }
   </Modal>
 })

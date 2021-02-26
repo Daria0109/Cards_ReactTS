@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import {Modal, ModalsType} from '../Modal/Modal';
-import s from '../ModalDelete/ModalDelete.module.css'
+import s from './ModalUpdate.module.css'
 
 type ModalUpdatePropsType = {
   modal: ModalsType
@@ -15,20 +15,24 @@ export const ModalUpdate: React.FC<ModalUpdatePropsType> = React.memo((
   const [newPackName, setNewPackName] = useState('')
   const [newCardData, setNewCardData] = useState({question: '', answer: ''})
 
-  const setUpdatePack = () => {
+  const setUpdate = () => {
     if (updatePack) {
       updatePack(newPackName)
+      setNewPackName('')
+      setNewCardData({question: '', answer: ''})
       setModal(null)
     }
-  }
-  const setUpdateCard = () => {
     if (updateCard) {
       updateCard(newCardData.question, newCardData.answer)
+      setNewPackName('')
+      setNewCardData({question: '', answer: ''})
       setModal(null)
     }
   }
   const setCancel = () => {
     setModal(null)
+    setNewPackName('')
+    setNewCardData({question: '', answer: ''})
   }
   const changePackNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewPackName(e.currentTarget.value)
@@ -43,28 +47,27 @@ export const ModalUpdate: React.FC<ModalUpdatePropsType> = React.memo((
   }
 
   if (!isModal) return null
-  return <Modal setModal={setModal}>
-    {modal === 'update pack' &&
-    <div className={s.title}>Do you want to re name this pack?</div>}
-    {modal === 'update pack' &&
-    <input type="text" value={newPackName} onChange={changePackNameHandler}/>
-    }
-    {modal === 'update card' &&
-    <div className={s.title}>Write a new question and answer</div>}
-    {modal === 'update card' &&
-    <div>
-      <textarea value={newCardData.question} onChange={changeQuestionHandler} placeholder={'Question'}/>
-      <textarea value={newCardData.answer} onChange={changeAnswerHandler} placeholder={'Answer'}/>
+  return <Modal setCancel={setCancel}>
+    {modal === 'update pack' && <div className={s.input}>
+    <input className={s.nameInput}
+           type="text"
+           value={newPackName}
+           onChange={changePackNameHandler}/>
+    </div>}
+    {modal === 'update card' && <div className={s.textarea}>
+      <textarea className={s.cardData} rows={3}
+                value={newCardData.question}
+                onChange={changeQuestionHandler}
+                placeholder='Question'/>
+      <textarea className={s.cardData} rows={3}
+                value={newCardData.answer}
+                onChange={changeAnswerHandler}
+                placeholder='Answer'/>
     </div>}
 
-    {modal === 'update pack' && <div className={s.buttons}>
+     <div className={s.buttons}>
       <button className={s.button} onClick={setCancel}>Cancel</button>
-      <button className={s.button} onClick={setUpdatePack}>Update</button>
-    </div>}
-    {modal === 'update card' && <div className={s.buttons}>
-      <button className={s.button} onClick={setCancel}>Cancel</button>
-      <button className={s.button} onClick={setUpdateCard}>Update</button>
-    </div>}
-
+      <button className={s.button} onClick={setUpdate}>Update</button>
+    </div>
   </Modal>
 })

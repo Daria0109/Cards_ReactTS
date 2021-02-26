@@ -21,12 +21,6 @@ export const cardsActions = {
 	setSortCardsValue: (sortValue: string) => ({
 		type: 'cards/cards/SET-SORT-CARDS-VALUE', sortValue
 	} as const),
-	questionValueChange: (questionValue: string) => ({
-		type: 'cards/cards/QUESTION-VALUE', questionValue
-	} as const),
-	answerValueChange: (answerValue: string) => ({
-		type: 'cards/cards/ANSWER-VALUE', answerValue
-	} as const),
 }
 export type CardActionType = ReturnType<ActionsType<typeof cardsActions>>
 
@@ -39,8 +33,6 @@ const cardsInitialState = {
 	pageSize: 10,
 	searchCardQuestion: null as string | null,
 	sortCardsValue: null as string | null,
-	question: '',
-	answer: ''
 }
 export type CardStateType = typeof cardsInitialState;
 
@@ -75,14 +67,6 @@ export const cardsReducer = (state: CardStateType = cardsInitialState, action: C
 			return {
 				...state,
 				sortCardsValue: action.sortValue
-			}
-		case "cards/cards/ANSWER-VALUE":
-			return {
-				...state, answer: action.answerValue
-			}
-		case "cards/cards/QUESTION-VALUE":
-			return {
-				...state, question: action.questionValue
 			}
 		default:
 			return state

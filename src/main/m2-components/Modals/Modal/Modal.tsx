@@ -9,14 +9,14 @@ export type ModalsType = 'delete pack'
   | 'update pack'
   | null
 type ModalPropsType = {
-  setModal: (modal: ModalsType) => void
+  setCancel: () => void
 }
 
 export const Modal: React.FC<ModalPropsType> = (
-  {children, setModal}) => {
+  {children, setCancel}) => {
 
   return <>
-    <div className={s.modalPage} onClick={() => setModal(null)}/>
+    <div className={s.modalPage} onClick={() => setCancel()}/>
       <div className={s.container}>
         {children}
       </div>

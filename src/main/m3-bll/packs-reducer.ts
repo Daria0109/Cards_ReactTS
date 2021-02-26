@@ -28,8 +28,6 @@ export const packActions = {
   } as const),
   setOpenedPackId: (packId: string) => ({
     type: 'cards/cards/SET-OPENED-PACK-ID', packId}as const),
-  // changePackName: (packName: string) => ({
-  //   type: 'cards/cards/PACK_NAME', packName}as const)
 }
 export type PacksActionType = ReturnType<ActionsType<typeof packActions>>
 
@@ -88,10 +86,6 @@ export const packsReducer = (state: PackStateType = packsInitialState, action: P
         ...state,
         openedPackId: action.packId
       }
-    // case "cards/cards/PACK_NAME":
-    //   return {
-    //     ...state, packName: action.packName
-    //   }
     default:
       return state
   }

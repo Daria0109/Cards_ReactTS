@@ -24,5 +24,6 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    text-align: center;
     box-shadow: 0 0 7px rgba(000, 000, 000, 0.1);
 }

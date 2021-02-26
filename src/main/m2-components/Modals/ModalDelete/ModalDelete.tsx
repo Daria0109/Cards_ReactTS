@@ -20,7 +20,7 @@ export const ModalDelete: React.FC<ModalDeletePropsType> = React.memo((
   }
 
   if (!isModal) return null
-  return <Modal setModal={setModal}>
+  return <Modal setCancel={setCancel}>
     {modal === 'delete pack' &&
     <div className={s.title}>Do you want to delete this pack?</div>}
     {modal === 'delete card' &&
