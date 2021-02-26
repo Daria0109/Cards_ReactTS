@@ -9,7 +9,7 @@ import {Preloader} from '../../main/m2-components/Preloader/Preloader';
 import {Redirect, useParams} from 'react-router-dom';
 import {PATH} from '../../main/m2-components/Routes/Routes';
 import {RequestStatusType} from '../../main/m3-bll/app-reducer';
-import {cardsActions, deleteCards, fetchCards, updateCards} from '../../main/m3-bll/cards-reducer';
+import {cardsActions, createCards, deleteCards, fetchCards, updateCards} from '../../main/m3-bll/cards-reducer';
 import {initializeUser} from '../../main/m3-bll/auth-reducer';
 import s from './Cards.module.css'
 import {CardsTableRow} from './CardsTabelRow/CardsTabelRow';
@@ -68,6 +68,9 @@ export const Cards = () => {
     dispatch(updateCards(packIdParam!, cardId, question, answer))
     setCardId('')
   }
+  const addCardHandler = (question: string, answer: string) => {
+    dispatch(createCards(openedPackId, question, answer))
+  }
 
   const setActiveCardsPageSize = useCallback((pageSize: number) => {
     dispatch(cardsActions.setActivePageSize(pageSize))
@@ -101,6 +104,7 @@ export const Cards = () => {
     <ModalsContainer modal={modal}
                      setModal={setModal}
                      updateCardHandler={updateCardHandler}
+                     addCard={addCardHandler}
                      deleteItem={deleteCardHandler}/>
     <div className={s.tableControls}>
       <SearchForm searchParam={searchCardQuestion}
@@ -136,7 +140,7 @@ export const Cards = () => {
       </div>
       <div className={s.rows}>
         {isLoggedIn && !packIdParam && <div>Choose a Pack...</div>}
-        {packIdParam && cards.length === 0 && <div>There are no cards in this pack... Return to packs</div>}
+        {packIdParam && cards.length === 0 && <div>There are no cards in this pack...</div>}
         {tableRows}
       </div>
     </div>

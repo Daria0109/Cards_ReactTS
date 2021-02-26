@@ -1,6 +1,12 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../main/m3-bll/store';
-import {deleteCardsPack, fetchPacks, packActions, updateCardsPack} from '../../main/m3-bll/packs-reducer';
+import {
+  createCardsPack,
+  deleteCardsPack,
+  fetchPacks,
+  packActions,
+  updateCardsPack
+} from '../../main/m3-bll/packs-reducer';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Preloader} from '../../main/m2-components/Preloader/Preloader';
 import {RequestStatusType} from '../../main/m3-bll/app-reducer';
@@ -54,6 +60,10 @@ export const Packs = () => {
     dispatch(updateCardsPack(packId, packName))
     setPackId('')
   }
+  const addPackHandler = (name: string) => {
+    if (name) dispatch(createCardsPack(pageSize, name))
+  }
+
 
   const showMyPacksHandler = () => {
     dispatch(packActions.setIsMyPacks(!isMyPacks))
@@ -90,7 +100,8 @@ export const Packs = () => {
     <ModalsContainer modal={modal}
                      setModal={setModal}
                      updateCardHandler={updatePackHandler}
-                     deleteItem={deletePackHandler}/>
+                     deleteItem={deletePackHandler}
+                     addPack={addPackHandler}/>
     <div className={s.tableControls}>
       <div>
         <div className={s.searchForm}>

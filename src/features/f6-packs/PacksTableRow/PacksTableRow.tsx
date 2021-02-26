@@ -36,8 +36,8 @@ export const PacksTableRow: React.FC<PackItemPropsType> = React.memo(({pack, set
     <div className={`${s.rowItem} ${s.editRowItem}`}>
       {userId === pack.user_id
       && <div className={s.btnRowItem}>
-        <button className={s.iconButton}>
-          <img src={editIcon} alt='Edit' width='15px' height='15px' onClick={()=> setModalHandler('update pack')}/>
+        <button className={s.iconButton} onClick={()=> setModalHandler('update pack')}>
+          <img src={editIcon} alt='Edit' width='15px' height='15px' />
         </button>
         <button className={s.iconButton} onClick={()=> setModalHandler('delete pack')}>
           <img src={deleteIcon} alt='Delete' width='15px' height='15px'/>

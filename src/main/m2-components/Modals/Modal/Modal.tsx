@@ -13,8 +13,7 @@ type ModalPropsType = {
 }
 
 export const Modal: React.FC<ModalPropsType> = (
-  {children,
-    setModal}) => {
+  {children, setModal}) => {
 
   return <>
     <div className={s.modalPage} onClick={() => setModal(null)}/>

@@ -2,20 +2,23 @@ import React, {ChangeEvent, useCallback} from 'react';
 import {ModalDelete} from './ModalDelete/ModalDelete';
 import {ModalsType} from './Modal/Modal';
 import {ModalAdd} from './ModalAdd/ModalAdd';
-import {ModalUpdate} from "./ModalUpdate/ModalUpdate";
-import {createCardsPack, packActions} from "../../m3-bll/packs-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../m3-bll/store";
-import {cardsActions, createCards} from '../../m3-bll/cards-reducer';
+import {ModalUpdate} from './ModalUpdate/ModalUpdate';
+import {packActions} from '../../m3-bll/packs-reducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from '../../m3-bll/store';
+import {cardsActions} from '../../m3-bll/cards-reducer';
 
 type ModalsContainerPropsType = {
 	modal: ModalsType
 	setModal: (modal: ModalsType) => void
 	deleteItem: () => void
 	updateCardHandler: () => void
+	// addItem: ((name: string) => void)
+	addPack?: ((name: string) => void) | undefined
+	addCard?: ((answer: string, question: string) => void) | undefined
 }
 export const ModalsContainer: React.FC<ModalsContainerPropsType> = (
-	{modal, setModal, deleteItem, updateCardHandler}) => {
+	{modal, setModal, deleteItem, updateCardHandler, addPack, addCard}) => {
 	const openedPackId = useSelector<AppRootStateType, string>(state => state.packs.openedPackId)
 	const question = useSelector<AppRootStateType, string>(state => state.cards.question)
 	const answer = useSelector<AppRootStateType, string>(state => state.cards.answer)
@@ -34,14 +37,6 @@ export const ModalsContainer: React.FC<ModalsContainerPropsType> = (
 		const value = e.currentTarget.value
 		dispatch(cardsActions.answerValueChange(value))
 	}, [dispatch])
-	const addCardHandler = () => {
-		dispatch(createCards(openedPackId, question, answer))
-	}
-	const addPackHandler = () => {
-		dispatch(createCardsPack(pageSize, packName))
-		dispatch(packActions.changePackName(''))
-	}
-
 
 
 	return <>
@@ -50,17 +45,10 @@ export const ModalsContainer: React.FC<ModalsContainerPropsType> = (
 								 setModal={setModal}
 								 deleteItem={deleteItem}/>
 		<ModalAdd modal={modal}
-							packName={packName}
-							question={question}
-							answer={answer}
 							isModal={modal === 'add pack' || modal === 'add card'}
 							setModal={setModal}
-							addCard={addCardHandler}
-							addPack={addPackHandler}
-							changePackNameHandler={changePackNameHandler}
-							questionNameHandler={questionNameHandler}
-							answerNameHandler={answerNameHandler}
-		/>
+							addPack={addPack}
+							addCard={addCard}/>
 		<ModalUpdate modal={modal}
 								 isModal={modal === 'update pack' || modal === 'update card'}
 								 setModal={setModal}
