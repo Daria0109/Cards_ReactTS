@@ -29,11 +29,9 @@ export const Cards = () => {
   const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTotalCount)
   const searchCardQuestion = useSelector<AppRootStateType, string | null>(state => state.cards.searchCardQuestion)
   const sortCardsValue = useSelector<AppRootStateType, string | null>(state => state.cards.sortCardsValue)
-  const question = useSelector<AppRootStateType, string >(state => state.cards.question)
-  const answer = useSelector<AppRootStateType, string >(state => state.cards.answer)
 
   const dispatch = useDispatch()
-  const {packIdParam} = useParams<{ packIdParam?: string }>()
+  const {packIdParam} = useParams<{ packIdParam: string }>()
   const isOwner = cards.every(c => c.user_id === userId)
   const headerItemStyle = isOwner ? s.headerItem : `${s.headerItem} ${s.headerItemGeneral}`
   const mainHeaderItemStyle = isOwner ? `${headerItemStyle} ${s.mainHeaderItem}` : `${headerItemStyle} ${s.mainHeaderItemGeneral}`
@@ -64,8 +62,8 @@ export const Cards = () => {
     dispatch(deleteCards(cardId))
     setCardId('')
   }
-  const updateCardHandler = () => {
-    dispatch(updateCards(packIdParam!, cardId, question, answer))
+  const updateCardHandler = (question: string, answer: string) => {
+    dispatch(updateCards(packIdParam, cardId, question, answer))
     setCardId('')
   }
   const addCardHandler = (question: string, answer: string) => {
@@ -103,7 +101,7 @@ export const Cards = () => {
   return <div className={s.cardsPage}>
     <ModalsContainer modal={modal}
                      setModal={setModal}
-                     updateCardHandler={updateCardHandler}
+                     updateCard={updateCardHandler}
                      addCard={addCardHandler}
                      deleteItem={deleteCardHandler}/>
     <div className={s.tableControls}>

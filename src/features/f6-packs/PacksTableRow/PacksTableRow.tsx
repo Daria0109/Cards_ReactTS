@@ -16,7 +16,8 @@ type PackItemPropsType = {
   setPackId: (id: string) => void
 }
 
-export const PacksTableRow: React.FC<PackItemPropsType> = React.memo(({pack, setModal, setPackId}) => {
+export const PacksTableRow: React.FC<PackItemPropsType> = React.memo(
+  ({pack, setModal, setPackId}) => {
   const userId = useSelector<AppRootStateType, string | null>(state => state.profile.userId)
   const openedPack = useSelector<AppRootStateType, string>(state => state.packs.openedPackId)
   const dispatch = useDispatch()
@@ -27,8 +28,8 @@ export const PacksTableRow: React.FC<PackItemPropsType> = React.memo(({pack, set
   }
 
   const setModalHandler = (modal: ModalsType) => {
-    setModal(modal)
     setPackId(pack._id)
+    setModal(modal)
   }
 
   return <div className={rowStyle}>

@@ -28,8 +28,8 @@ export const packActions = {
   } as const),
   setOpenedPackId: (packId: string) => ({
     type: 'cards/cards/SET-OPENED-PACK-ID', packId}as const),
-  changePackName: (packName: string) => ({
-    type: 'cards/cards/PACK_NAME', packName}as const)
+  // changePackName: (packName: string) => ({
+  //   type: 'cards/cards/PACK_NAME', packName}as const)
 }
 export type PacksActionType = ReturnType<ActionsType<typeof packActions>>
 
@@ -39,7 +39,6 @@ const packsInitialState = {
   pageNumber: 1,
   pageSize: 10,
   cardPacksTotalCount: 0,
-  packName: '',
   isMyPacks: false,
   searchPackName: null as string | null,
   sortPacksValue: null as string | null,
@@ -89,10 +88,10 @@ export const packsReducer = (state: PackStateType = packsInitialState, action: P
         ...state,
         openedPackId: action.packId
       }
-    case "cards/cards/PACK_NAME":
-      return {
-        ...state, packName: action.packName
-      }
+    // case "cards/cards/PACK_NAME":
+    //   return {
+    //     ...state, packName: action.packName
+    //   }
     default:
       return state
   }
@@ -119,12 +118,10 @@ export const fetchPacks = (pageNumber: number) => {
         }
       }
       dispatch(packActions.setCardPacksData(data.cardPacks, data.page, data.pageCount, data.cardPacksTotalCount))
-      console.log('NEW PACK')
     } catch (error) {
       dispatch(appActions.setRequestError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
-      console.log('NO PACK')
     } finally {
       dispatch(appActions.setAppStatus('succeeded'))
     }
@@ -136,12 +133,10 @@ export const createCardsPack = (pageSize: number, packName: string) => {
       dispatch(appActions.setAppStatus('loading'))
       await packsCardsAPI.createCardsPack(packName)
       await dispatch(fetchPacks(1))
-      console.log('Pack was created')
     } catch (error) {
       dispatch(appActions.setRequestError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
-      console.log('Pack is NOT created')
     } finally {
       dispatch(appActions.setAppStatus('succeeded'))
     }
@@ -154,12 +149,10 @@ export const updateCardsPack = (packId: string, newPackName: string) => {
       dispatch(appActions.setAppStatus('loading'))
       await packsCardsAPI.updatePack(packId, newPackName)
       await dispatch(fetchPacks(1))
-      console.log('Pack was created')
     } catch (error) {
       dispatch(appActions.setRequestError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
-      console.log('Pack is NOT created')
     } finally {
       dispatch(appActions.setAppStatus('succeeded'))
     }
@@ -172,12 +165,10 @@ export const deleteCardsPack = (packId: string) => {
       const pageNumber = getState().packs.pageNumber
       await packsCardsAPI.deleteCardsPack(packId)
       await dispatch(fetchPacks(pageNumber))
-      console.log('Pack is deleted')
     } catch (error) {
       dispatch(appActions.setRequestError(error.response ? error.response.data.error
         : error.message ? error.message
           : 'Some error occurred'))
-      console.log('Pack is NOT deleted')
     } finally {
       dispatch(appActions.setAppStatus('succeeded'))
     }

@@ -13,7 +13,7 @@ type ModalAddPropsType = {
 export const ModalAdd: React.FC<ModalAddPropsType> = React.memo((
   {modal, isModal, setModal, addPack, addCard}) => {
   const [packName, setPackName] = useState('')
-  const [cardModal, setCardModal] = useState({ question: '', answer: ''})
+  const [cardModal, setCardModal] = useState({question: '', answer: ''})
 
   const setAddPack = () => {
     if (addPack) {
@@ -21,8 +21,8 @@ export const ModalAdd: React.FC<ModalAddPropsType> = React.memo((
       setPackName('')
       setModal(null)
     }
-    }
-    const setAddCard = () => {
+  }
+  const setAddCard = () => {
     if (addCard) {
       addCard(cardModal.question, cardModal.answer)
       setCardModal({question: '', answer: ''})
@@ -55,10 +55,10 @@ export const ModalAdd: React.FC<ModalAddPropsType> = React.memo((
     {modal === 'add card' &&
     <div className={s.title}>Add a new card?</div>}
     {modal === 'add card' &&
-      <div>
-        <textarea value={cardModal.question}  onChange={changeCardModalQuestionHandler} placeholder='Question'/>
-        <textarea value={cardModal.answer}  onChange={changeCardModalAnswerHandler} placeholder='Answer'/>
-      </div>
+    <div>
+      <textarea value={cardModal.question} onChange={changeCardModalQuestionHandler} placeholder='Question'/>
+      <textarea value={cardModal.answer} onChange={changeCardModalAnswerHandler} placeholder='Answer'/>
+    </div>
     }
 
     {modal === 'add card' &&

@@ -29,7 +29,6 @@ export const Packs = () => {
   const cardPacks = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
   const pageNumber = useSelector<AppRootStateType, number>(state => state.packs.pageNumber)
   const pageSize = useSelector<AppRootStateType, number>(state => state.packs.pageSize)
-  const packName = useSelector<AppRootStateType, string>(state => state.packs.packName)
   const isMyPacks = useSelector<AppRootStateType, boolean>(state => state.packs.isMyPacks)
   const searchPackName = useSelector<AppRootStateType, string | null>(state => state.packs.searchPackName)
   const sortPacksValue = useSelector<AppRootStateType, string | null>(state => state.packs.sortPacksValue)
@@ -56,12 +55,12 @@ export const Packs = () => {
     dispatch(deleteCardsPack(packId))
     setPackId('')
   }
-  const updatePackHandler = () => {
-    dispatch(updateCardsPack(packId, packName))
+  const updatePackHandler = (newName: string) => {
+    dispatch(updateCardsPack(packId, newName))
     setPackId('')
   }
   const addPackHandler = (name: string) => {
-    if (name) dispatch(createCardsPack(pageSize, name))
+    dispatch(createCardsPack(pageSize, name))
   }
 
 
@@ -99,7 +98,7 @@ export const Packs = () => {
   return <div className={s.packsPage}>
     <ModalsContainer modal={modal}
                      setModal={setModal}
-                     updateCardHandler={updatePackHandler}
+                     updatePack={updatePackHandler}
                      deleteItem={deletePackHandler}
                      addPack={addPackHandler}/>
     <div className={s.tableControls}>
