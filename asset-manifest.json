@@ -1,27 +1,30 @@
 {
   "files": {
-    "main.css": "/Cards_ReactTS/static/css/main.6ecedf38.chunk.css",
-    "main.js": "/Cards_ReactTS/static/js/main.0084fea7.chunk.js",
-    "main.js.map": "/Cards_ReactTS/static/js/main.0084fea7.chunk.js.map",
-    "runtime-main.js": "/Cards_ReactTS/static/js/runtime-main.0cb179d1.js",
-    "runtime-main.js.map": "/Cards_ReactTS/static/js/runtime-main.0cb179d1.js.map",
-    "static/js/2.574c6cbe.chunk.js": "/Cards_ReactTS/static/js/2.574c6cbe.chunk.js",
-    "static/js/2.574c6cbe.chunk.js.map": "/Cards_ReactTS/static/js/2.574c6cbe.chunk.js.map",
-    "static/js/3.cef92a42.chunk.js": "/Cards_ReactTS/static/js/3.cef92a42.chunk.js",
-    "static/js/3.cef92a42.chunk.js.map": "/Cards_ReactTS/static/js/3.cef92a42.chunk.js.map",
+    "main.css": "/Cards_ReactTS/static/css/main.6c3ea74e.chunk.css",
+    "main.js": "/Cards_ReactTS/static/js/main.64bea9c1.chunk.js",
+    "main.js.map": "/Cards_ReactTS/static/js/main.64bea9c1.chunk.js.map",
+    "runtime-main.js": "/Cards_ReactTS/static/js/runtime-main.f7be0807.js",
+    "runtime-main.js.map": "/Cards_ReactTS/static/js/runtime-main.f7be0807.js.map",
+    "static/js/2.2926062a.chunk.js": "/Cards_ReactTS/static/js/2.2926062a.chunk.js",
+    "static/js/2.2926062a.chunk.js.map": "/Cards_ReactTS/static/js/2.2926062a.chunk.js.map",
+    "static/js/3.ff109046.chunk.js": "/Cards_ReactTS/static/js/3.ff109046.chunk.js",
+    "static/js/3.ff109046.chunk.js.map": "/Cards_ReactTS/static/js/3.ff109046.chunk.js.map",
     "index.html": "/Cards_ReactTS/index.html",
-    "static/css/main.6ecedf38.chunk.css.map": "/Cards_ReactTS/static/css/main.6ecedf38.chunk.css.map",
-    "static/js/2.574c6cbe.chunk.js.LICENSE.txt": "/Cards_ReactTS/static/js/2.574c6cbe.chunk.js.LICENSE.txt",
+    "static/css/main.6c3ea74e.chunk.css.map": "/Cards_ReactTS/static/css/main.6c3ea74e.chunk.css.map",
+    "static/js/2.2926062a.chunk.js.LICENSE.txt": "/Cards_ReactTS/static/js/2.2926062a.chunk.js.LICENSE.txt",
     "static/media/404-error.8c0adfd2.jpg": "/Cards_ReactTS/static/media/404-error.8c0adfd2.jpg",
-    "static/media/index.css": "/Cards_ReactTS/static/media/Comfortaa-Regular.99567c98.ttf",
-    "static/media/default-avatar.98d79ab0.png": "/Cards_ReactTS/static/media/default-avatar.98d79ab0.png",
-    "static/media/App.module.css": "/Cards_ReactTS/static/media/main-bg.9d28d947.png",
+    "static/media/index.css": "/Cards_ReactTS/static/media/Roboto-Medium.13a29228.ttf",
+    "static/media/Cards.module.css": "/Cards_ReactTS/static/media/add.857211cd.svg",
+    "static/media/default-avatar2.a47f2183.jpg": "/Cards_ReactTS/static/media/default-avatar2.a47f2183.jpg",
+    "static/media/delete.e4efcb06.svg": "/Cards_ReactTS/static/media/delete.e4efcb06.svg",
+    "static/media/edit.3c70b537.svg": "/Cards_ReactTS/static/media/edit.3c70b537.svg",
+    "static/media/save.53273fd2.svg": "/Cards_ReactTS/static/media/save.53273fd2.svg",
     "static/media/SearchForm.module.css": "/Cards_ReactTS/static/media/search-icon.792c9620.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.0cb179d1.js",
-    "static/js/2.574c6cbe.chunk.js",
-    "static/css/main.6ecedf38.chunk.css",
-    "static/js/main.0084fea7.chunk.js"
+    "static/js/runtime-main.f7be0807.js",
+    "static/js/2.2926062a.chunk.js",
+    "static/css/main.6c3ea74e.chunk.css",
+    "static/js/main.64bea9c1.chunk.js"
   ]
 }
