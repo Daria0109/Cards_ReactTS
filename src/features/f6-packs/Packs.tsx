@@ -21,7 +21,7 @@ import {PacksTableRow} from './PacksTableRow/PacksTableRow';
 import {SearchForm} from '../../main/m2-components/SearchForm/SearchForm';
 import {Sort} from '../../main/m2-components/Sort/Sort';
 import {ModalsType} from '../../main/m2-components/Modals/Modal/Modal';
-import {ModalsContainer} from '../../main/m2-components/Modals/MadalsContainer';
+import {PacksModals} from '../../main/m2-components/Modals/PacksModals/PacksModals';
 
 export const Packs = () => {
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
@@ -37,6 +37,10 @@ export const Packs = () => {
 
   const [packId, setPackId] = useState('')
   const [modal, setModal] = useState<ModalsType>(null)
+  let pack;
+  if (packId) {
+    pack = cardPacks.find(p => p._id === packId)
+  }
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -96,11 +100,12 @@ export const Packs = () => {
   }
 
   return <div className={s.packsPage}>
-    <ModalsContainer modal={modal}
-                     setModal={setModal}
-                     updatePack={updatePackHandler}
-                     deleteItem={deletePackHandler}
-                     addPack={addPackHandler}/>
+    <PacksModals modal={modal}
+                 setModal={setModal}
+                 deletePack={deletePackHandler}
+                 addPack={addPackHandler}
+                 updatePack={updatePackHandler}
+                 pack={pack as CardPackType}/>
     <div className={s.tableControls}>
       <div>
         <div className={s.searchForm}>
@@ -126,7 +131,7 @@ export const Packs = () => {
     <div className={s.table}>
       <div className={s.headerTable}>
         <div className={`${s.headerItem} ${s.headerEdit}`}>
-          <button className={s.addButton} onClick={() => setModal('add pack')}>Pack</button>
+          <button className={s.addButton} onClick={() => setModal('add')}>Pack</button>
         </div>
         <div className={`${s.headerItem} ${s.headerTitle}`}>Title</div>
         <div className={s.headerItem}>Count of cards
@@ -143,7 +148,5 @@ export const Packs = () => {
         {tableRows}
       </div>
     </div>
-
-
   </div>
 }
