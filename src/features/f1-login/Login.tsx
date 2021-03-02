@@ -9,8 +9,8 @@ import {RequestStatusType} from '../../main/m3-bll/app-reducer';
 
 
 export const Login = () => {
-  const [email, setEmail] = useState('abcabc@grr.la')
-  const [password, setPassword] = useState('777777777')
+  const [email, setEmail] = useState('testuser@test.com')
+  const [password, setPassword] = useState('1234567890')
   const [rememberMe, setRememberMe] = useState(false)
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)

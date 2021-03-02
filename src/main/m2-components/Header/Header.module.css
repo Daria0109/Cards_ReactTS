@@ -50,7 +50,7 @@
     cursor: pointer;
     line-height: 1;
     padding: 15px 20px;
-    background-color: #f1c50e;
+    background-color: #e3e5e4;
     font-size: 16px;
     border: none;
     outline: none;
@@ -58,6 +58,6 @@
     text-decoration: none;
 }
 .button:hover {
-    background-color: #caa70e;
+    background-color: #d9d9db;
     /*color: #fff;*/
 }

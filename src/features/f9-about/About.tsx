@@ -9,7 +9,9 @@ import about5 from './../../assets/about/about-5.png';
 
 export const About = () => {
   return <div className={s.aboutPage}>
-    <h2 className={s.title}>The Smart Cards app is a great way to learn with flash cards</h2>
+    <h2 className={s.title}>
+      The Smart Cards app is a great way to organize your learning process using flash cards
+    </h2>
     <ol className={s.aboutList}>
       <li className={s.aboutItem}>
         <div className={s.aboutBox} style={{backgroundImage: `url(${about1})`}}>
@@ -27,6 +29,7 @@ export const About = () => {
           <div className={s.description}>
              <span className={s.text}>
             Add Cards into new Pack with question and answer.
+               You can add unlimited quantity of Packs.
              </span>
           </div>
         </div>

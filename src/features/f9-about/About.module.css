@@ -32,6 +32,7 @@
     list-style: none;
     background-color: #e3e5e4;
     padding: 10px 20px;
+    box-shadow: 1px 1px 5px rgba(000, 000, 000, 0.3);
 }
 .aboutItem:nth-child(even) {
     align-self: flex-start;
