@@ -1,13 +1,7 @@
 import React from 'react';
 import s from './Modal.module.css'
 
-export type ModalsType = 'delete pack'
-  | 'delete card'
-  | 'add pack'
-  | 'add card'
-  | 'update card'
-  | 'update pack'
-  | null
+export type ModalsType = 'delete' | 'add' | 'update' | null
 type ModalPropsType = {
   setCancel: () => void
 }

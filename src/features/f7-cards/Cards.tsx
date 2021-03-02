@@ -16,7 +16,7 @@ import {CardsTableRow} from './CardsTabelRow/CardsTabelRow';
 import {Sort} from '../../main/m2-components/Sort/Sort';
 import {packActions} from '../../main/m3-bll/packs-reducer';
 import {ModalsType} from '../../main/m2-components/Modals/Modal/Modal';
-import {ModalsContainer} from '../../main/m2-components/Modals/MadalsContainer';
+import {CardsModals} from '../../main/m2-components/Modals/CardsModals/CardsModals';
 
 export const Cards = () => {
   const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
@@ -38,6 +38,10 @@ export const Cards = () => {
 
   const [cardId, setCardId] = useState('')
   const [modal, setModal] = useState<ModalsType>(null)
+  let card;
+  if (cardId) {
+    card = cards.find(c => c._id === cardId)
+  }
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -99,11 +103,12 @@ export const Cards = () => {
   }
 
   return <div className={s.cardsPage}>
-    <ModalsContainer modal={modal}
-                     setModal={setModal}
-                     updateCard={updateCardHandler}
-                     addCard={addCardHandler}
-                     deleteItem={deleteCardHandler}/>
+    <CardsModals modal={modal}
+                 setModal={setModal}
+                 updateCard={updateCardHandler}
+                 addCard={addCardHandler}
+                 deleteCard={deleteCardHandler}
+                 card={card as CardType}/>
     <div className={s.tableControls}>
       <SearchForm searchParam={searchCardQuestion}
                   placeholder={'Question...'}
@@ -122,7 +127,7 @@ export const Cards = () => {
       <div className={s.headerTable}>
         {isOwner &&
         <div className={headerItemStyle}>
-          <button className={s.addButton} onClick={() => setModal('add card')}>Card</button>
+          <button className={s.addButton} onClick={() => setModal('add')}>Card</button>
         </div>}
 
         <div className={mainHeaderItemStyle}>Question</div>

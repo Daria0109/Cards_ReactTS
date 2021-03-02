@@ -30,10 +30,10 @@ export const CardsTableRow: React.FC<CardTablePropsType> = (
   return <div className={s.row}>
     {userId === card.user_id && <div className={s.rowItem}>
       <div className={s.btnRowItem}>
-        <button className={s.iconButton} onClick={()=> setModalHandler('update card')}>
+        <button className={s.iconButton} onClick={()=> setModalHandler('update')}>
           <img src={editIcon} alt='Edit' width='15px' height='15px'/>
         </button>
-        <button className={s.iconButton} onClick={() => setModalHandler('delete card')}>
+        <button className={s.iconButton} onClick={() => setModalHandler('delete')}>
           <img src={deleteIcon} alt='Delete' width='15px' height='15px'/>
         </button>
       </div>
