@@ -4,17 +4,19 @@ import {Test} from '../../../features/f0-test/Test';
 import {Login} from '../../../features/f1-login/Login';
 import {SignUp} from '../../../features/f2-signUp/SignUp';
 import {Profile} from '../../../features/f3-profile/Profile';
-import {Error404} from '../../../features/f9-error404/Error404';
+import {Error404} from '../../../features/f10-error404/Error404';
 import {RefreshPassword} from '../../../features/f5-refreshPassword/RefreshPassword';
 import {SetPassword} from '../../../features/f4-setPassword/SetPassword';
 import {Packs} from '../../../features/f6-packs/Packs';
 import {Cards} from "../../../features/f7-cards/Cards";
 import {LearnCards} from '../../../features/f8-learn/LearnCards';
+import {About} from '../../../features/f9-about/About';
 
 export const PATH = {
   TEST: '/test',
   LOGIN: '/login',
   SIGNUP: '/signup',
+  ABOUT: '/about',
   PROFILE: '/profile',
   REFRESH: '/refresh',
   SET_TOKEN: '/set/:token',
@@ -32,6 +34,7 @@ export const Routes = () => {
         <Route path={PATH.LOGIN} render={() => <Login/>}/>
         <Route path={PATH.TEST} render={() => <Test/>}/>
         <Route path={PATH.SIGNUP} render={() => <SignUp/>}/>
+        <Route path={PATH.ABOUT} render={() => <About/>}/>
         <Route path={PATH.PROFILE} render={() => <Profile/>}/>
         <Route path={PATH.PACKS} render={() => <Packs/>}/>
         <Route path={'/cards/:packIdParam?'} render={() => <Cards/>}/>

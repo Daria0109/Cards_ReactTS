@@ -23,6 +23,10 @@ export const Header = () => {
     <ul className={s.menu}>
 
       <li className={s.menuItem}>
+        <NavLink to={PATH.ABOUT} className={s.link} activeClassName={s.active}>About</NavLink>
+      </li>
+
+      <li className={s.menuItem}>
         <NavLink to={PATH.PROFILE} className={s.link} activeClassName={s.active}>Profile</NavLink>
       </li>
 
