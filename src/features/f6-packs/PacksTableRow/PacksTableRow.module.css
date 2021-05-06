@@ -86,3 +86,35 @@
         flex-basis: 31%;
     }
 }
+@media (max-width: 768px) {
+    .row {
+        width: 750px;
+    }
+    .iconButton {
+        padding: 2px 4px;
+        background-color: transparent;
+        border: none;
+    }
+    .iconButton:hover {
+        border: none;
+    }
+    .editRowItem {
+        flex-basis: 10%;
+    }
+    .button {
+        padding: 2px;
+        background-color: transparent;
+        border: none;
+        color: #292d33;
+        font-size: 14px;
+    }
+    .button:hover {
+        border: none;
+    }
+    .titleRowItem {
+        flex-basis: 40%;
+    }
+    .rowItem {
+        font-size: 14px;
+    }
+}

@@ -1,10 +1,9 @@
 .packsPage {
-    width: 1200px;
-    max-width: 100%;
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 95px 10px 10px;
     min-height: 100vh;
-    /*position: relative;*/
 }
 
 .tableControls {
@@ -13,9 +12,11 @@
     justify-content: space-between;
     margin-bottom: 10px;
 }
+
 .searchForm {
     margin-bottom: 5px;
 }
+
 .showMine {
     display: flex;
     align-items: center;
@@ -24,6 +25,7 @@
 .showMine * {
     cursor: pointer;
 }
+
 .pageControls {
     text-align: right;
 }
@@ -42,12 +44,15 @@
     flex-basis: 18%;
     border-right: 1px solid #4e4e4e;
 }
+
 .headerEdit {
     flex-basis: 10%;
 }
+
 .headerTitle {
     flex-basis: 36%;
 }
+
 .headerLearn {
     border-right: none;
 }
@@ -68,6 +73,7 @@
     text-transform: uppercase;
     position: relative;
 }
+
 .addButton:hover {
     border: 1px solid #4e4e4e;
 }
@@ -76,11 +82,53 @@
     .headerItem {
         flex-basis: 18%;
     }
+
     .headerEdit {
         flex-basis: 15%;
     }
+
     .headerTitle {
         flex-basis: 31%;
+    }
+}
+
+@media (max-width: 768px) {
+    .addButton {
+        padding: 2px 2px 2px 20px;
+        background-position: top 0 left 0;
+        background-color: transparent;
+        border: none
+    }
+    .addButton:hover {
+        border: none;
+    }
+    .headerEdit {
+        flex-basis: 10%;
+    }
+    .headerTitle {
+        flex-basis: 40%;
+    }
+    .table {
+        max-width: 750px;
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .headerTable {
+        width: 750px;
+    }
+}
+@media (max-width: 580px) {
+    .tableControls {
+        flex-direction: column;
+        align-items: initial;
+    }
+}
+@media (max-width: 475px) {
+    .packsPage {
+        padding: 110px 10px 10px;
+    }
+    .pageControls {
+        margin-top: 20px;
     }
 }
 
