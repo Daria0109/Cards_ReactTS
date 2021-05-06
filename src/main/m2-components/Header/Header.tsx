@@ -23,10 +23,6 @@ export const Header = () => {
     <ul className={s.menu}>
 
       <li className={s.menuItem}>
-        <NavLink to={PATH.ABOUT} className={s.link} activeClassName={s.active}>About</NavLink>
-      </li>
-
-      <li className={s.menuItem}>
         <NavLink to={PATH.PROFILE} className={s.link} activeClassName={s.active}>Profile</NavLink>
       </li>
 
@@ -41,10 +37,6 @@ export const Header = () => {
       <li className={s.menuItem}>
         <NavLink to={`/learn/${openedPackId}`} className={s.link} activeClassName={s.active}>Learn</NavLink>
       </li>
-
-      {/*<li className={s.menuItem}>*/}
-      {/*  <NavLink to={PATH.REFRESH} className={s.link} activeClassName={s.active}>Forgot your password?</NavLink>*/}
-      {/*</li>*/}
 
     </ul>
 
