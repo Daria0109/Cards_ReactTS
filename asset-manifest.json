@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/Cards_ReactTS/static/css/main.8aa403e6.chunk.css",
-    "main.js": "/Cards_ReactTS/static/js/main.1aa25d87.chunk.js",
-    "main.js.map": "/Cards_ReactTS/static/js/main.1aa25d87.chunk.js.map",
+    "main.css": "/Cards_ReactTS/static/css/main.ddce7f38.chunk.css",
+    "main.js": "/Cards_ReactTS/static/js/main.f422d695.chunk.js",
+    "main.js.map": "/Cards_ReactTS/static/js/main.f422d695.chunk.js.map",
     "runtime-main.js": "/Cards_ReactTS/static/js/runtime-main.fdaf2abf.js",
     "runtime-main.js.map": "/Cards_ReactTS/static/js/runtime-main.fdaf2abf.js.map",
     "static/js/2.653b2517.chunk.js": "/Cards_ReactTS/static/js/2.653b2517.chunk.js",
@@ -10,7 +10,7 @@
     "static/js/3.c539feee.chunk.js": "/Cards_ReactTS/static/js/3.c539feee.chunk.js",
     "static/js/3.c539feee.chunk.js.map": "/Cards_ReactTS/static/js/3.c539feee.chunk.js.map",
     "index.html": "/Cards_ReactTS/index.html",
-    "static/css/main.8aa403e6.chunk.css.map": "/Cards_ReactTS/static/css/main.8aa403e6.chunk.css.map",
+    "static/css/main.ddce7f38.chunk.css.map": "/Cards_ReactTS/static/css/main.ddce7f38.chunk.css.map",
     "static/js/2.653b2517.chunk.js.LICENSE.txt": "/Cards_ReactTS/static/js/2.653b2517.chunk.js.LICENSE.txt",
     "static/media/404-error.8c0adfd2.jpg": "/Cards_ReactTS/static/media/404-error.8c0adfd2.jpg",
     "static/media/index.css": "/Cards_ReactTS/static/media/Roboto-Medium.13a29228.ttf",
@@ -24,7 +24,7 @@
   "entrypoints": [
     "static/js/runtime-main.fdaf2abf.js",
     "static/js/2.653b2517.chunk.js",
-    "static/css/main.8aa403e6.chunk.css",
-    "static/js/main.1aa25d87.chunk.js"
+    "static/css/main.ddce7f38.chunk.css",
+    "static/js/main.f422d695.chunk.js"
   ]
 }
