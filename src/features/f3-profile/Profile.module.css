@@ -1,24 +1,23 @@
 .profilePage {
-    width: 1200px;
-    max-width: 100%;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 10px;
     margin: 0 auto;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    /*position: relative;*/
 }
 
 .userProfile {
-    width: 70%;
-    max-width: 100%;
+    max-width: 850px;
+    width: 100%;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-around;
     background-color: #292d33;
     position: relative;
-    /*box-shadow: 1px 1px 5px rgba(000, 000, 000, 0.3);*/
 }
 
 .editBtn {
@@ -49,7 +48,6 @@
 
 .data {
     flex-basis: 55%;
-    /*border: 1px solid black;*/
 }
 
 .dataRow {
@@ -80,5 +78,31 @@
     border-bottom: 1px solid #f1c50e;
     color: #d9d9db;
     font-size: 18px;
+}
+
+@media (max-width: 890px) {
+    .userProfile {
+        max-width: 630px;
+        flex-direction: column;
+    }
+    .avatar {
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+    .data {
+        flex-basis: 100%;
+        width: 95%;
+    }
+    .info {
+        margin-right: 0;
+    }
+}
+@media (max-width: 450px) {
+    .dataRow {
+        flex-direction: column;
+    }
+    .info {
+        font-size: 18px;
+    }
 }
 
