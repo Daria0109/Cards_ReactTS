@@ -43,4 +43,20 @@
 .iconButton:hover {
     border: 1px solid #4e4e4e;
 }
+@media (max-width: 768px) {
+   .row {
+       width: 750px;
+   }
+    .rowItem {
+        font-size: 14px;
+    }
+    .iconButton {
+        padding: 2px 4px;
+        background-color: transparent;
+        border: none;
+    }
+    .iconButton:hover {
+        border: none;
+    }
+}
 
